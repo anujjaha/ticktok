@@ -37,6 +37,9 @@
 		D38FF07B1E86A639007972EB /* IQToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38FF0691E86A639007972EB /* IQToolbar.swift */; };
 		D38FF07C1E86A639007972EB /* IQUIView+IQKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38FF06A1E86A639007972EB /* IQUIView+IQKeyboardToolbar.swift */; };
 		D38FF07D1E86A639007972EB /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D38FF06C1E86A639007972EB /* IQKeyboardManager.bundle */; };
+		D3CB0E7F1E87DFA9004331D3 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E7E1E87DFA9004331D3 /* SettingsVC.swift */; };
+		D3CB0E841E87E078004331D3 /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E821E87E078004331D3 /* AppUtils.swift */; };
+		D3CB0E851E87E078004331D3 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E831E87E078004331D3 /* Constant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +76,9 @@
 		D38FF0691E86A639007972EB /* IQToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQToolbar.swift; sourceTree = "<group>"; };
 		D38FF06A1E86A639007972EB /* IQUIView+IQKeyboardToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IQUIView+IQKeyboardToolbar.swift"; sourceTree = "<group>"; };
 		D38FF06C1E86A639007972EB /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
+		D3CB0E7E1E87DFA9004331D3 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsVC.swift; path = SettingsViewController/SettingsVC.swift; sourceTree = "<group>"; };
+		D3CB0E821E87E078004331D3 /* AppUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; };
+		D3CB0E831E87E078004331D3 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,8 @@
 		D34794121E8437FE00D9D593 /* TickTock */ = {
 			isa = PBXGroup;
 			children = (
+				D3CB0E811E87E078004331D3 /* Utility */,
+				D3CB0E7D1E87DF7D004331D3 /* SettingsViewController */,
 				D38FF0551E86A639007972EB /* IQKeyboardManagerSwift */,
 				D38FF0521E8692E5007972EB /* SignupViewController */,
 				D38FF0421E8689FA007972EB /* fonts */,
@@ -205,6 +213,23 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		D3CB0E7D1E87DF7D004331D3 /* SettingsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D3CB0E7E1E87DFA9004331D3 /* SettingsVC.swift */,
+			);
+			name = SettingsViewController;
+			sourceTree = "<group>";
+		};
+		D3CB0E811E87E078004331D3 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				D3CB0E821E87E078004331D3 /* AppUtils.swift */,
+				D3CB0E831E87E078004331D3 /* Constant.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -294,14 +319,17 @@
 				D38FF0741E86A639007972EB /* IQKeyboardManagerConstantsInternal.swift in Sources */,
 				D38FF0721E86A639007972EB /* IQUIWindow+Hierarchy.swift in Sources */,
 				D38FF07C1E86A639007972EB /* IQUIView+IQKeyboardToolbar.swift in Sources */,
+				D3CB0E7F1E87DFA9004331D3 /* SettingsVC.swift in Sources */,
 				D38FF0541E86930C007972EB /* SignUpVC.swift in Sources */,
 				D38FF0701E86A639007972EB /* IQUIView+Hierarchy.swift in Sources */,
+				D3CB0E841E87E078004331D3 /* AppUtils.swift in Sources */,
 				D38FF0781E86A639007972EB /* IQBarButtonItem.swift in Sources */,
 				D38FF06E1E86A639007972EB /* IQUIScrollView+Additions.swift in Sources */,
 				D38FF0711E86A639007972EB /* IQUIViewController+Additions.swift in Sources */,
 				D38FF0731E86A639007972EB /* IQKeyboardManagerConstants.swift in Sources */,
 				D38FF07A1E86A639007972EB /* IQTitleBarButtonItem.swift in Sources */,
 				D34794141E8437FE00D9D593 /* AppDelegate.swift in Sources */,
+				D3CB0E851E87E078004331D3 /* Constant.swift in Sources */,
 				D38FF0771E86A639007972EB /* IQTextView.swift in Sources */,
 				D38FF07B1E86A639007972EB /* IQToolbar.swift in Sources */,
 			);

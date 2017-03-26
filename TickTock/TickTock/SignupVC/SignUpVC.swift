@@ -24,7 +24,7 @@ class SignUpVC: UIViewController,UITextFieldDelegate
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     @IBAction func backButtonPressed() {
