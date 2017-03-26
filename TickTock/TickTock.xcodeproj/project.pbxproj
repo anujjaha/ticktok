@@ -40,6 +40,10 @@
 		D3CB0E7F1E87DFA9004331D3 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E7E1E87DFA9004331D3 /* SettingsVC.swift */; };
 		D3CB0E841E87E078004331D3 /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E821E87E078004331D3 /* AppUtils.swift */; };
 		D3CB0E851E87E078004331D3 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E831E87E078004331D3 /* Constant.swift */; };
+		D3CB0E8B1E87EF67004331D3 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E8A1E87EF67004331D3 /* HomeVC.swift */; };
+		D3CB0E8D1E87EF75004331D3 /* BattleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E8C1E87EF75004331D3 /* BattleVC.swift */; };
+		D3CB0E8F1E87EF82004331D3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E8E1E87EF82004331D3 /* ProfileVC.swift */; };
+		D3CB0E911E87EF92004331D3 /* LeaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E901E87EF92004331D3 /* LeaderVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +83,10 @@
 		D3CB0E7E1E87DFA9004331D3 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsVC.swift; path = SettingsViewController/SettingsVC.swift; sourceTree = "<group>"; };
 		D3CB0E821E87E078004331D3 /* AppUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; };
 		D3CB0E831E87E078004331D3 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		D3CB0E8A1E87EF67004331D3 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		D3CB0E8C1E87EF75004331D3 /* BattleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleVC.swift; sourceTree = "<group>"; };
+		D3CB0E8E1E87EF82004331D3 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		D3CB0E901E87EF92004331D3 /* LeaderVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +119,10 @@
 		D34794121E8437FE00D9D593 /* TickTock */ = {
 			isa = PBXGroup;
 			children = (
+				D3CB0E861E87EF5B004331D3 /* HomeViewController */,
+				D3CB0E871E87EF5B004331D3 /* BattleView */,
+				D3CB0E881E87EF5B004331D3 /* ProfileViewController */,
+				D3CB0E891E87EF5B004331D3 /* LeaderboardView */,
 				D3CB0E811E87E078004331D3 /* Utility */,
 				D3CB0E7D1E87DF7D004331D3 /* SettingsViewController */,
 				D38FF0551E86A639007972EB /* IQKeyboardManagerSwift */,
@@ -230,6 +242,38 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		D3CB0E861E87EF5B004331D3 /* HomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D3CB0E8A1E87EF67004331D3 /* HomeVC.swift */,
+			);
+			path = HomeViewController;
+			sourceTree = "<group>";
+		};
+		D3CB0E871E87EF5B004331D3 /* BattleView */ = {
+			isa = PBXGroup;
+			children = (
+				D3CB0E8C1E87EF75004331D3 /* BattleVC.swift */,
+			);
+			path = BattleView;
+			sourceTree = "<group>";
+		};
+		D3CB0E881E87EF5B004331D3 /* ProfileViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D3CB0E8E1E87EF82004331D3 /* ProfileVC.swift */,
+			);
+			path = ProfileViewController;
+			sourceTree = "<group>";
+		};
+		D3CB0E891E87EF5B004331D3 /* LeaderboardView */ = {
+			isa = PBXGroup;
+			children = (
+				D3CB0E901E87EF92004331D3 /* LeaderVC.swift */,
+			);
+			path = LeaderboardView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -311,10 +355,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D38FF0761E86A639007972EB /* IQKeyboardReturnKeyHandler.swift in Sources */,
+				D3CB0E911E87EF92004331D3 /* LeaderVC.swift in Sources */,
 				D38FF0751E86A639007972EB /* IQKeyboardManager.swift in Sources */,
 				D38FF06D1E86A639007972EB /* IQNSArray+Sort.swift in Sources */,
 				D34794161E8437FE00D9D593 /* ViewController.swift in Sources */,
 				D38FF0791E86A639007972EB /* IQPreviousNextView.swift in Sources */,
+				D3CB0E8F1E87EF82004331D3 /* ProfileVC.swift in Sources */,
 				D38FF06F1E86A639007972EB /* IQUITextFieldView+Additions.swift in Sources */,
 				D38FF0741E86A639007972EB /* IQKeyboardManagerConstantsInternal.swift in Sources */,
 				D38FF0721E86A639007972EB /* IQUIWindow+Hierarchy.swift in Sources */,
@@ -323,6 +369,8 @@
 				D38FF0541E86930C007972EB /* SignUpVC.swift in Sources */,
 				D38FF0701E86A639007972EB /* IQUIView+Hierarchy.swift in Sources */,
 				D3CB0E841E87E078004331D3 /* AppUtils.swift in Sources */,
+				D3CB0E8B1E87EF67004331D3 /* HomeVC.swift in Sources */,
+				D3CB0E8D1E87EF75004331D3 /* BattleVC.swift in Sources */,
 				D38FF0781E86A639007972EB /* IQBarButtonItem.swift in Sources */,
 				D38FF06E1E86A639007972EB /* IQUIScrollView+Additions.swift in Sources */,
 				D38FF0711E86A639007972EB /* IQUIViewController+Additions.swift in Sources */,
@@ -397,7 +445,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -440,7 +488,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -453,7 +501,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TickTock/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TickTock.TickTock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -466,7 +514,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TickTock/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TickTock.TickTock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
