@@ -8,12 +8,21 @@
 
 import UIKit
 
-class HomeVC: UIViewController {
-
+class HomeVC: UIViewController
+{
+    @IBOutlet weak var vwGame : UIView!
+    @IBOutlet weak var vwPlayers : UIView!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        self.vwGame.layer.borderWidth = 1.0
+        self.vwGame.layer.borderColor = UIColor.black.cgColor
+
+        self.vwPlayers.layer.borderWidth = 1.0
+        self.vwPlayers.layer.borderColor = UIColor.black.cgColor
     }
     
     override func viewWillAppear(_ animated: Bool)
