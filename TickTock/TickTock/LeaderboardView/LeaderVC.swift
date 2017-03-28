@@ -11,13 +11,18 @@ import UIKit
 
 class LeaderVC: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    @IBOutlet weak var tblLeaderBoard : UITableView!
 
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         self.navigationController?.isNavigationBarHidden = true
     }
 
@@ -39,3 +44,30 @@ class LeaderVC: UIViewController {
     */
 
 }
+
+extension LeaderVC : UITableViewDelegate, UITableViewDataSource
+{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return 5
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LeaderCell") as! LeaderCell
+        
+        cell.preservesSuperviewLayoutMargins = false
+        cell.separatorInset = UIEdgeInsets.zero
+        cell.layoutMargins = UIEdgeInsets.zero
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return UITableViewAutomaticDimension
+    }
+}
+
+class LeaderCell: UITableViewCell
+{
+}
+
