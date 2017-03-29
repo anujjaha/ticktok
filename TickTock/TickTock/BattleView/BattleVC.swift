@@ -10,18 +10,28 @@ import UIKit
 
 class BattleVC: UIViewController {
 
-    override func viewDidLoad() {
+    @IBOutlet weak var vwJoinBattle : UIView!
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         self.navigationController?.isNavigationBarHidden = true
     }
 
+    @IBAction func JoinBattleButtonPressed()
+    {
+        vwJoinBattle.isHidden = true
+    }
 
-    override func didReceiveMemoryWarning() {
+
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
