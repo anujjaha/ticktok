@@ -626,12 +626,10 @@
                                                     <constraint firstAttribute="height" constant="2" id="FeB-pP-RBF"/>
                                                 </constraints>
                                             </imageView>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="vCZ-3y-zLY">
-                                                <frame key="frameInset" minX="4" minY="43" width="312" height="168"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="vCZ-3y-zLY">
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="60" id="DDP-rX-7tn">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BattleCell" rowHeight="60" id="DDP-rX-7tn" customClass="BattleCell" customModule="TickTock" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="1" width="312" height="60"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DDP-rX-7tn" id="bcg-I2-ajb">
@@ -676,12 +674,18 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock_icon" translatesAutoresizingMaskIntoConstraints="NO" id="xP2-jb-IOQ">
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="14" id="ANY-cZ-13P"/>
+                                                                        <constraint firstAttribute="width" constant="14" id="HRg-ZF-bkh"/>
+                                                                    </constraints>
+                                                                </imageView>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstItem="pKA-Ll-fXU" firstAttribute="leading" secondItem="jdO-LM-Nyi" secondAttribute="trailing" constant="15" id="0pV-Ln-aGz"/>
                                                                 <constraint firstItem="yc7-NI-AAG" firstAttribute="leading" secondItem="bcg-I2-ajb" secondAttribute="leading" id="63N-rw-Nae"/>
                                                                 <constraint firstAttribute="bottom" secondItem="jdO-LM-Nyi" secondAttribute="bottom" constant="8" id="CEQ-mP-6ea"/>
-                                                                <constraint firstItem="U7d-wU-Mx0" firstAttribute="leading" secondItem="yc7-NI-AAG" secondAttribute="trailing" constant="8" id="Cuc-ll-fv5"/>
+                                                                <constraint firstItem="xP2-jb-IOQ" firstAttribute="top" secondItem="bcg-I2-ajb" secondAttribute="top" constant="10" id="Cvw-LG-sX2"/>
                                                                 <constraint firstItem="U7d-wU-Mx0" firstAttribute="top" secondItem="bcg-I2-ajb" secondAttribute="top" constant="8" id="EPk-no-tie"/>
                                                                 <constraint firstAttribute="trailing" secondItem="mTN-vL-f7g" secondAttribute="trailing" id="I4S-Ss-pyg"/>
                                                                 <constraint firstItem="mTN-vL-f7g" firstAttribute="leading" secondItem="U7d-wU-Mx0" secondAttribute="trailing" constant="8" id="NnZ-uy-yhf"/>
@@ -689,6 +693,8 @@
                                                                 <constraint firstItem="yc7-NI-AAG" firstAttribute="top" secondItem="bcg-I2-ajb" secondAttribute="top" id="PNZ-p7-rsB"/>
                                                                 <constraint firstAttribute="bottom" secondItem="pKA-Ll-fXU" secondAttribute="bottom" constant="8" id="TZq-79-rjv"/>
                                                                 <constraint firstItem="mTN-vL-f7g" firstAttribute="top" secondItem="bcg-I2-ajb" secondAttribute="top" constant="8" id="WxY-We-py2"/>
+                                                                <constraint firstItem="U7d-wU-Mx0" firstAttribute="leading" secondItem="xP2-jb-IOQ" secondAttribute="trailing" constant="1" id="XgK-lT-cc4"/>
+                                                                <constraint firstItem="xP2-jb-IOQ" firstAttribute="leading" secondItem="yc7-NI-AAG" secondAttribute="trailing" constant="3" id="Xmn-I7-ZPD"/>
                                                                 <constraint firstItem="jdO-LM-Nyi" firstAttribute="top" secondItem="U7d-wU-Mx0" secondAttribute="bottom" constant="4" id="a6z-QR-xtq"/>
                                                                 <constraint firstItem="jdO-LM-Nyi" firstAttribute="leading" secondItem="yc7-NI-AAG" secondAttribute="trailing" constant="8" id="gFm-CX-sNu"/>
                                                                 <constraint firstItem="mTN-vL-f7g" firstAttribute="leading" secondItem="pKA-Ll-fXU" secondAttribute="trailing" constant="8" id="lIj-vQ-GyT"/>
@@ -697,17 +703,29 @@
                                                                 <constraint firstAttribute="bottom" secondItem="yc7-NI-AAG" secondAttribute="bottom" id="x35-qa-YrC"/>
                                                             </constraints>
                                                         </tableViewCellContentView>
+                                                        <connections>
+                                                            <outlet property="imgLock" destination="xP2-jb-IOQ" id="9OQ-2B-age"/>
+                                                            <outlet property="lblLevel" destination="yc7-NI-AAG" id="tan-29-qlE"/>
+                                                        </connections>
                                                     </tableViewCell>
                                                 </prototypes>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="EfS-P3-21d" id="A1x-fm-iaA"/>
+                                                    <outlet property="delegate" destination="EfS-P3-21d" id="A5N-xY-f88"/>
+                                                </connections>
                                             </tableView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="wdR-Lq-84r" firstAttribute="top" secondItem="gmT-Xc-PIg" secondAttribute="top" constant="8" id="4jW-rA-p8t"/>
                                             <constraint firstItem="DDI-BT-79V" firstAttribute="top" secondItem="wdR-Lq-84r" secondAttribute="bottom" constant="4" id="O9a-g2-WW2"/>
+                                            <constraint firstAttribute="trailing" secondItem="vCZ-3y-zLY" secondAttribute="trailing" constant="4" id="Oaa-bK-eDs"/>
+                                            <constraint firstAttribute="bottom" secondItem="vCZ-3y-zLY" secondAttribute="bottom" constant="8" id="WMU-28-GKc"/>
+                                            <constraint firstItem="vCZ-3y-zLY" firstAttribute="leading" secondItem="gmT-Xc-PIg" secondAttribute="leading" constant="4" id="ZJd-89-xeA"/>
                                             <constraint firstItem="DDI-BT-79V" firstAttribute="leading" secondItem="wdR-Lq-84r" secondAttribute="leading" id="e13-Q5-rYq"/>
                                             <constraint firstItem="wdR-Lq-84r" firstAttribute="centerX" secondItem="gmT-Xc-PIg" secondAttribute="centerX" id="fFV-p1-ih3"/>
                                             <constraint firstItem="DDI-BT-79V" firstAttribute="trailing" secondItem="wdR-Lq-84r" secondAttribute="trailing" id="hwk-5O-4Ua"/>
+                                            <constraint firstItem="vCZ-3y-zLY" firstAttribute="top" secondItem="DDI-BT-79V" secondAttribute="bottom" constant="8" id="zh9-Ac-Wk3"/>
                                         </constraints>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="advertise" translatesAutoresizingMaskIntoConstraints="NO" id="prD-hK-VRJ">
@@ -729,7 +747,7 @@
                                     <constraint firstItem="gmT-Xc-PIg" firstAttribute="top" secondItem="prD-hK-VRJ" secondAttribute="bottom" constant="8" id="cf0-wt-2sO"/>
                                     <constraint firstAttribute="bottom" secondItem="gmT-Xc-PIg" secondAttribute="bottom" constant="8" id="j9g-KP-H4s"/>
                                     <constraint firstItem="QeH-R2-yLe" firstAttribute="centerX" secondItem="o9k-zv-IvN" secondAttribute="centerX" id="oZy-xx-MEY"/>
-                                    <constraint firstAttribute="bottom" secondItem="5xF-H4-Aat" secondAttribute="bottom" constant="8" id="qjJ-G1-pOJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="5xF-H4-Aat" secondAttribute="bottom" constant="20" id="qjJ-G1-pOJ"/>
                                     <constraint firstItem="5xF-H4-Aat" firstAttribute="top" secondItem="prD-hK-VRJ" secondAttribute="bottom" constant="8" id="rSN-CD-Phg"/>
                                     <constraint firstItem="QeH-R2-yLe" firstAttribute="leading" secondItem="o9k-zv-IvN" secondAttribute="leading" id="uqY-If-CpP"/>
                                     <constraint firstItem="prD-hK-VRJ" firstAttribute="top" secondItem="o9k-zv-IvN" secondAttribute="top" id="wjJ-e8-HP4"/>
@@ -757,6 +775,8 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="tblBattleBoard" destination="vCZ-3y-zLY" id="SYg-5q-Vof"/>
+                        <outlet property="vwBattleList" destination="gmT-Xc-PIg" id="rib-2m-QrX"/>
                         <outlet property="vwJoinBattle" destination="5xF-H4-Aat" id="YKA-f6-cKf"/>
                     </connections>
                 </viewController>
@@ -2224,6 +2244,7 @@
         <image name="home_iconslt" width="17" height="16"/>
         <image name="leaderboard_icon" width="16" height="15"/>
         <image name="leaderboard_iconslt" width="16" height="15"/>
+        <image name="lock_icon" width="14" height="19"/>
         <image name="or_icon" width="285" height="11"/>
         <image name="password_icon" width="12" height="16"/>
         <image name="profile_icon" width="15" height="15"/>

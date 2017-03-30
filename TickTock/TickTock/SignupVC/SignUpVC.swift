@@ -15,35 +15,34 @@ class SignUpVC: UIViewController,UITextFieldDelegate
     @IBOutlet weak var txtEmailAddress : UITextField!
     @IBOutlet weak var txtConfirmPassword : UITextField!
 
-    
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-
-        
         // Do any additional setup after loading the view.
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         self.navigationController?.isNavigationBarHidden = true
     }
     
-    @IBAction func backButtonPressed() {
+    @IBAction func backButtonPressed()
+    {
         _ = self.navigationController?.popViewController(animated: true)
     }
 
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {   //delegate method
         textField.resignFirstResponder()
         return true
     }
     
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
     /*
     // MARK: - Navigation
 
