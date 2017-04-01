@@ -13,11 +13,13 @@ class BattleVC: UIViewController
     @IBOutlet weak var vwJoinBattle : UIView!
     @IBOutlet weak var vwBattleList : UIView!
     @IBOutlet weak var tblBattleBoard : UITableView!
+    @IBOutlet weak var vwBattleGame : UIView!
 
     override func viewDidLoad()
     {
         super.viewDidLoad()
         vwBattleList.isHidden = true
+        vwBattleGame.isHidden = true
         vwJoinBattle.layer.cornerRadius = 5.0
         // Do any additional setup after loading the view.
         
@@ -84,6 +86,12 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         return UITableViewAutomaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        vwBattleList.isHidden = true
+        vwBattleGame.isHidden = false
     }
 }
 class BattleCell: UITableViewCell
