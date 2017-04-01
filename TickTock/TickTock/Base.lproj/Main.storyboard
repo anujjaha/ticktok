@@ -295,6 +295,9 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Lato-Heavy" family="Lato" pointSize="17"/>
                                                 <state key="normal" title="Forgot Password"/>
+                                                <connections>
+                                                    <action selector="btnSendRequestPressed" destination="dZi-1x-zPk" eventType="touchUpInside" id="eeE-vk-FeC"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

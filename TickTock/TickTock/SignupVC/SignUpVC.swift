@@ -62,6 +62,10 @@ class SignUpVC: UIViewController,UITextFieldDelegate,UINavigationControllerDeleg
         {
             
             //       "url": "http://35.154.46.190:1337/api/user/register",
+            /*request("\(kServerURL)login.php", method: .post, parameters:parameters).responseString{ response in
+             debugPrint(response)
+             }*/
+
             showProgress(inView: self.view)
             // define parameters
             let parameters = [
@@ -75,14 +79,14 @@ class SignUpVC: UIViewController,UITextFieldDelegate,UINavigationControllerDeleg
                     
                     if let imageData2 = UIImageJPEGRepresentation(self.image, 1)
                     {
-                        multipartFormData.append(imageData2, withName: "image", fileName: "myImage.png", mimeType: "File")
+                        multipartFormData.append(imageData2, withName: "image", fileName: "myImage.jpg", mimeType: "file")
                     }
                     
                     for (key, value) in parameters
                     {
                         multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
                     }
-                }, to: "\(kServerURL)user/register", method: .post, headers: ["Content-Type": "application/x-www-form-urlencoded"], encodingCompletion:
+                }, to: "\(kServerURL)user/register", method: .post, headers:["Content-Type": "application/x-www-form-urlencoded"], encodingCompletion:
                 {
                     (result) in
                     switch result
@@ -95,20 +99,7 @@ class SignUpVC: UIViewController,UITextFieldDelegate,UINavigationControllerDeleg
                                 
                                 print(response.request) // original URL request
                                 print(response.response) // URL response
-                                print(response.data) // server data
-                                print(response.result) // result of response serialization
-                                
-                                /*  if let JSON = response.result.value
-                                 {
-                                 print("JSON: \(JSON)")
-                                 }
-                                 do {
-                                 let json = try JSONSerialization.jsonObject(with: response.data!, options: .allowFragments)
-                                 print(json)
-                                 //Why don't you use decoded JSON object? (`json` may not be a `String`)
-                                 } catch {
-                                 print("error serializing JSON: \(error)")
-                                 }*/
+                                print(response.result as Any) // result of response serialization
                                 
                                 if let json = response.result.value
                                 {
