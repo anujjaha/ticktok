@@ -32,8 +32,9 @@ class ForgotViewController: UIViewController {
         }
         else
         {
+            //     "url": "http://35.154.46.190:1337/api/user/password/forget",
             showProgress(inView: self.view)
-            request("\(kServerURL)forget.php", method: .post, parameters: ["email": "\(self.txtEmail.text!)",]).responseJSON { (response:DataResponse<Any>) in
+            request("\(kServerURL)user/password/forget", method: .post, parameters: ["email": "\(self.txtEmail.text!)",]).responseJSON { (response:DataResponse<Any>) in
                 
                 hideProgress()
                 switch(response.result) {
