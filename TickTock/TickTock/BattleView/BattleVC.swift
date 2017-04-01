@@ -28,7 +28,7 @@ class BattleVC: UIViewController
         vwJoinBattle.layer.cornerRadius = 5.0
         // Do any additional setup after loading the view.
         
-        self.tblBattleBoard.estimatedRowHeight = 60.0 ;
+        self.tblBattleBoard.estimatedRowHeight = 60.0
         self.tblBattleBoard.rowHeight = UITableViewAutomaticDimension
         
         self.vwBattleGame1.layer.borderWidth = 1.0
@@ -54,7 +54,6 @@ class BattleVC: UIViewController
         vwJoinBattle.isHidden = true
         vwBattleList.isHidden = false
     }
-
 
     override func didReceiveMemoryWarning()
     {

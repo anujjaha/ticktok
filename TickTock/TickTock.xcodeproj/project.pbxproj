@@ -32,6 +32,7 @@
 		D37C73CF1E8FB45700113D38 /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C73BA1E8FB45700113D38 /* Timeline.swift */; };
 		D37C73D01E8FB45700113D38 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C73BB1E8FB45700113D38 /* Validation.swift */; };
 		D37C73D11E8FB45700113D38 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C73BD1E8FB45700113D38 /* SwiftyJSON.swift */; };
+		D37C73D71E8FBE3C00113D38 /* ForgotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C73D61E8FBE3C00113D38 /* ForgotViewController.swift */; };
 		D38FF04A1E8689FA007972EB /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D38FF0431E8689FA007972EB /* Lato-Black.ttf */; };
 		D38FF04B1E8689FA007972EB /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D38FF0441E8689FA007972EB /* Lato-Bold.ttf */; };
 		D38FF04C1E8689FA007972EB /* Lato-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D38FF0451E8689FA007972EB /* Lato-Heavy.ttf */; };
@@ -107,6 +108,7 @@
 		D37C73BB1E8FB45700113D38 /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		D37C73BC1E8FB45700113D38 /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftyJSON.h; sourceTree = "<group>"; };
 		D37C73BD1E8FB45700113D38 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		D37C73D61E8FBE3C00113D38 /* ForgotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForgotViewController.swift; path = SignupVC/ForgotViewController.swift; sourceTree = "<group>"; };
 		D38FF0431E8689FA007972EB /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
 		D38FF0441E8689FA007972EB /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		D38FF0451E8689FA007972EB /* Lato-Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Heavy.ttf"; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 		D38FF0521E8692E5007972EB /* SignupViewController */ = {
 			isa = PBXGroup;
 			children = (
+				D37C73D61E8FBE3C00113D38 /* ForgotViewController.swift */,
 				D38FF0531E86930C007972EB /* SignUpVC.swift */,
 			);
 			name = SignupViewController;
@@ -510,6 +513,7 @@
 				D34794141E8437FE00D9D593 /* AppDelegate.swift in Sources */,
 				D37C73C91E8FB45700113D38 /* ResponseSerialization.swift in Sources */,
 				D3CB0E851E87E078004331D3 /* Constant.swift in Sources */,
+				D37C73D71E8FBE3C00113D38 /* ForgotViewController.swift in Sources */,
 				D37C73CF1E8FB45700113D38 /* Timeline.swift in Sources */,
 				D38FF0771E86A639007972EB /* IQTextView.swift in Sources */,
 				D38FF07B1E86A639007972EB /* IQToolbar.swift in Sources */,
