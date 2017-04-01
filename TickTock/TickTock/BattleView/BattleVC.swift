@@ -15,6 +15,11 @@ class BattleVC: UIViewController
     @IBOutlet weak var tblBattleBoard : UITableView!
     @IBOutlet weak var vwBattleGame : UIView!
 
+    @IBOutlet weak var vwBattleGame1 : UIView!
+    @IBOutlet weak var vwBattleGame2 : UIView!
+    @IBOutlet weak var vwBattleGame3 : UIView!
+    @IBOutlet weak var vwBattleGame4 : UIView!
+
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -24,7 +29,19 @@ class BattleVC: UIViewController
         // Do any additional setup after loading the view.
         
         self.tblBattleBoard.estimatedRowHeight = 60.0 ;
-        self.tblBattleBoard.rowHeight = UITableViewAutomaticDimension;
+        self.tblBattleBoard.rowHeight = UITableViewAutomaticDimension
+        
+        self.vwBattleGame1.layer.borderWidth = 1.0
+        self.vwBattleGame1.layer.borderColor = UIColor.black.cgColor
+
+        self.vwBattleGame2.layer.borderWidth = 1.0
+        self.vwBattleGame2.layer.borderColor = UIColor.black.cgColor
+ 
+        self.vwBattleGame3.layer.borderWidth = 1.0
+        self.vwBattleGame3.layer.borderColor = UIColor.black.cgColor
+        
+        self.vwBattleGame4.layer.borderWidth = 1.0
+        self.vwBattleGame4.layer.borderColor = UIColor.black.cgColor
     }
     
     override func viewWillAppear(_ animated: Bool)
