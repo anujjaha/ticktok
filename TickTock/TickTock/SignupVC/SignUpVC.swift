@@ -77,16 +77,17 @@ class SignUpVC: UIViewController,UITextFieldDelegate,UINavigationControllerDeleg
             upload(multipartFormData:
                 { (multipartFormData) in
                     
-                    if let imageData2 = UIImageJPEGRepresentation(self.image, 1)
-                    {
-                        multipartFormData.append(imageData2, withName: "image", fileName: "myImage.jpg", mimeType: "file")
-                    }
-                    
                     for (key, value) in parameters
                     {
                         multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
                     }
-                }, to: "\(kServerURL)user/register", method: .post, headers:["Content-Type": "application/x-www-form-urlencoded"], encodingCompletion:
+
+                    if let imageData2 = UIImageJPEGRepresentation(self.image, 1)
+                    {
+                        multipartFormData.append(imageData2, withName: "image", fileName: "myImage.jpg", mimeType: "File")
+                    }
+                    
+                }, to: "\(kServerURL)user/register", method: .post, headers:nil, encodingCompletion:
                 {
                     (result) in
                     switch result
@@ -108,7 +109,7 @@ class SignUpVC: UIViewController,UITextFieldDelegate,UINavigationControllerDeleg
                                     print("dictemp :> \(dictemp)")
                                     if dictemp.count > 0
                                     {
-                                        if  let dictemp2 = dictemp["data"] as? NSDictionary
+                                        if  let dictemp2 = ((dictemp["data"] as! NSArray).object(at: 0)) as? NSDictionary
                                         {
                                             if (dictemp2.count > 0)
                                             {
