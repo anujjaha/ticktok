@@ -116,6 +116,13 @@ class ViewController: UIViewController,UITextFieldDelegate
          self.navigationController?.pushViewController(tabbar, animated: true)*/
     }
     
+    @IBAction func btnSignupPressed()
+    {
+        let storyTab = UIStoryboard(name: "Main", bundle: nil)
+        let tabbar = storyTab.instantiateViewController(withIdentifier: "SignUpVC")
+        self.navigationController?.pushViewController(tabbar, animated: true)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
     }

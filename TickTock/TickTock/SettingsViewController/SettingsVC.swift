@@ -91,6 +91,22 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource
     {
         return UITableViewAutomaticDimension
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        if indexPath.row == 3
+        {
+            UserDefaults.standard.set("", forKey: kkeyLoginData)
+            UserDefaults.standard.set(false, forKey: kkeyisUserLogin)
+            
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let homeViewController = mainStoryboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+            let nav = UINavigationController(rootViewController: homeViewController)
+            nav.isNavigationBarHidden = true
+            appdelegate.window!.rootViewController = nav
+        }
+    }
 }
 class SettingsCell: UITableViewCell
 {
