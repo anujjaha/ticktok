@@ -28,7 +28,7 @@ class BattleVC: UIViewController
         vwJoinBattle.layer.cornerRadius = 5.0
         // Do any additional setup after loading the view.
         
-        self.tblBattleBoard.estimatedRowHeight = 60.0
+        self.tblBattleBoard.estimatedRowHeight = 65.0
         self.tblBattleBoard.rowHeight = UITableViewAutomaticDimension
         
         self.vwBattleGame1.layer.borderWidth = 1.0
@@ -96,12 +96,13 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return UITableViewAutomaticDimension
+        return UITableViewAutomaticDimension 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
