@@ -14,6 +14,9 @@ class BattleVC: UIViewController
     @IBOutlet weak var vwBattleList : UIView!
     @IBOutlet weak var tblBattleBoard : UITableView!
     @IBOutlet weak var vwBattleGame : UIView!
+    
+    @IBOutlet weak var lblBattleNO : UILabel!
+    @IBOutlet weak var lblPrizeNO : UILabel!
 
     @IBOutlet weak var vwBattleGame1 : UIView!
     @IBOutlet weak var vwBattleGame2 : UIView!
@@ -42,6 +45,13 @@ class BattleVC: UIViewController
         
         self.vwBattleGame4.layer.borderWidth = 1.0
         self.vwBattleGame4.layer.borderColor = UIColor.black.cgColor
+        
+        let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+        var underlineAttributedString = NSAttributedString(string: "Battle #21", attributes: underlineAttribute)
+        lblBattleNO.attributedText = underlineAttributedString
+        
+        underlineAttributedString = NSAttributedString(string: "Prize: 50 Bids", attributes: underlineAttribute)
+        lblPrizeNO.attributedText = underlineAttributedString
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -115,4 +125,18 @@ class BattleCell: UITableViewCell
 {
     @IBOutlet weak var lblLevel : UILabel!
     @IBOutlet weak var imgLock : UIImageView!
+}
+class UnderlinedLabel: UILabel
+{
+    override var text: String?
+        {
+        didSet {
+            guard let text = text else { return }
+            let textRange = NSMakeRange(0, text.characters.count)
+            let attributedText = NSMutableAttributedString(string: text)
+            attributedText.addAttribute(NSUnderlineStyleAttributeName , value: NSUnderlineStyle.styleSingle.rawValue, range: textRange)
+            // Add other attributes if needed
+            self.attributedText = attributedText
+        }
+    }
 }

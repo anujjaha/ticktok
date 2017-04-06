@@ -12,13 +12,34 @@ import UIKit
 class LeaderVC: UIViewController {
 
     @IBOutlet weak var tblLeaderBoard : UITableView!
+    @IBOutlet weak var btnGame : UIButton!
+    @IBOutlet weak var btnAllTime : UIButton!
+    @IBOutlet weak var btnCategory : UIButton!
 
     override func viewDidLoad()
     {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        self.tblLeaderBoard.estimatedRowHeight = 30.0 ;
+        self.tblLeaderBoard.rowHeight = UITableViewAutomaticDimension;
         
+        let attrs = [NSUnderlineStyleAttributeName : 1]
+        
+        var attributedString = NSMutableAttributedString(string:"")
+        var buttonTitleStr = NSMutableAttributedString(string:"Game #", attributes:attrs)
+        attributedString.append(buttonTitleStr)
+        btnGame.setAttributedTitle(attributedString, for: .normal)
+
+        attributedString = NSMutableAttributedString(string:"")
+        buttonTitleStr = NSMutableAttributedString(string:"All Time", attributes:attrs)
+        attributedString.append(buttonTitleStr)
+        btnAllTime.setAttributedTitle(attributedString, for: .normal)
+
+        attributedString = NSMutableAttributedString(string:"")
+        buttonTitleStr = NSMutableAttributedString(string:"Category", attributes:attrs)
+        attributedString.append(buttonTitleStr)
+        btnCategory.setAttributedTitle(attributedString, for: .normal)
     }
 
     override func viewWillAppear(_ animated: Bool)
@@ -49,7 +70,7 @@ extension LeaderVC : UITableViewDelegate, UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 5
+        return 10
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
