@@ -12,6 +12,7 @@ class HomeVC: UIViewController
 {
     @IBOutlet weak var vwGame : UIView!
     @IBOutlet weak var vwPlayers : UIView!
+    @IBOutlet weak var csofscrvwHieght : NSLayoutConstraint!
     
     override func viewDidLoad()
     {
@@ -23,6 +24,8 @@ class HomeVC: UIViewController
 
         self.vwPlayers.layer.borderWidth = 1.0
         self.vwPlayers.layer.borderColor = UIColor.black.cgColor
+        
+        csofscrvwHieght.constant = 322
     }
     
     override func viewWillAppear(_ animated: Bool)
