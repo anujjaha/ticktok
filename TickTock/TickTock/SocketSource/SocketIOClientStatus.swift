@@ -1,6 +1,8 @@
-//  SwiftyJSON.h
 //
-//  Copyright (c) 2014 - 2017 Ruoyu Fu, Pinglin Tang
+//  SocketIOClientStatus.swift
+//  Socket.IO-Client-Swift
+//
+//  Created by Erik Little on 8/14/15.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +22,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-@import Foundation;
+import Foundation
 
-//! Project version number for SwiftyJSON.
-FOUNDATION_EXPORT double SwiftyJSONVersionNumber;
-
-//! Project version string for SwiftyJSON.
-FOUNDATION_EXPORT const unsigned char SwiftyJSONVersionString[];
-
-
+/// **NotConnected**: initial state
+///
+/// **Disconnected**: connected before
+@objc public enum SocketIOClientStatus : Int {
+    case notConnected, disconnected, connecting, connected
+}

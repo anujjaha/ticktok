@@ -33,7 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let outData = userDefaults.data(forKey: kkeyLoginData)
             let dict = NSKeyedUnarchiver.unarchiveObject(with: outData!)
             self.arrLoginData = dict as! NSDictionary
-            
+            print("self.arrLoginData :> \(self.arrLoginData)")
+
             
             let appdelegate = UIApplication.shared.delegate as! AppDelegate
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

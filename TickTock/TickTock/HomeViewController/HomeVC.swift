@@ -14,6 +14,16 @@ class HomeVC: UIViewController
     @IBOutlet weak var vwPlayers : UIView!
     @IBOutlet weak var csofscrvwHieght : NSLayoutConstraint!
     
+    @IBOutlet weak var lblDoomdsDayClock: MZTimerLabel!
+    
+    @IBOutlet weak var txtGameClock: UITextField!
+    @IBOutlet weak var txtDoomdsDayClock: UITextField!
+    @IBOutlet weak var txtAmount: UITextField!
+    
+    var socket = SocketIOClient(socketURL: URL(string: "http://35.154.46.190:1337")!, config: [.log(true), .forcePolling(true), .connectParams(["__sails_io_sdk_version":"0.11.0"])])
+    var dictHomeData = NSDictionary()
+    var dataofHome = NSDictionary()
+
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -26,6 +36,32 @@ class HomeVC: UIViewController
         self.vwPlayers.layer.borderColor = UIColor.black.cgColor
         
         csofscrvwHieght.constant = 322
+        
+        lblDoomdsDayClock.layer.borderColor = UIColor.black.cgColor
+        lblDoomdsDayClock.layer.borderWidth = 1.0
+        
+
+        socket.on("connect") {data, ack in
+            print("socket connected")
+            
+//            socket.emit("get", ["url": "/test"]) // I get the sails error
+            
+            self.socket.emitWithAck("post",  ["url": "/api/home?user_id=\(appDelegate.arrLoginData[kkeyuserid]!)"]).timingOut(after: 0) {data in
+                if (data.count > 0)
+                {
+                    print("data:>\(data)")
+                    self.dictHomeData = (data[0] as? NSDictionary)!
+                    print("self.dictHomeData:>\(self.dictHomeData)")
+                    self.dataofHome = (self.dictHomeData.object(forKey: "body") as! NSDictionary).object(forKey: "data") as! NSDictionary
+                    print("self.dataofHome:>\(self.dataofHome)")
+                }
+            }
+            
+//            socket.emitWithAck("/api/home",  ["user_id": "\(appDelegate.arrLoginData[kkeyuserid]!)"]).timingOut(after: 0) {data in
+//                print("data:>\(data)")
+//            }
+        }
+        socket.connect()
     }
     
     override func viewWillAppear(_ animated: Bool)
