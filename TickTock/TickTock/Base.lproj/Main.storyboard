@@ -2328,7 +2328,7 @@
                                         <fontDescription key="fontDescription" name="Lato-Heavy" family="Lato" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="59:52" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Qc-Nr-1Yh">
+                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="59:52" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Qc-Nr-1Yh">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="QhF-NX-Ti8"/>
                                             <constraint firstAttribute="width" constant="87" id="grc-At-RCr"/>
@@ -2345,6 +2345,20 @@
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fwk-hv-bsx" customClass="MZTimerLabel">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="1fi-Me-CQd"/>
+                                            <constraint firstAttribute="width" constant="87" id="OX9-Vc-jbU"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Login_logo" translatesAutoresizingMaskIntoConstraints="NO" id="FFb-MI-z9Z">
                                         <constraints>
@@ -2390,11 +2404,13 @@
                                     <constraint firstItem="em1-oa-o5V" firstAttribute="top" secondItem="lJ2-rh-Agt" secondAttribute="bottom" constant="2" id="0no-mB-p05"/>
                                     <constraint firstItem="LbK-kA-cJM" firstAttribute="top" secondItem="lJ2-rh-Agt" secondAttribute="bottom" constant="2" id="5dx-mj-3pG"/>
                                     <constraint firstItem="txK-XH-d6g" firstAttribute="centerX" secondItem="FAS-iK-v5T" secondAttribute="centerX" id="8U1-YJ-HJk"/>
+                                    <constraint firstItem="Fwk-hv-bsx" firstAttribute="leading" secondItem="FAS-iK-v5T" secondAttribute="leading" constant="8" id="BdC-7T-4Tj"/>
                                     <constraint firstAttribute="trailing" secondItem="em1-oa-o5V" secondAttribute="trailing" constant="8" id="C8h-XW-JTI"/>
                                     <constraint firstItem="lJ2-rh-Agt" firstAttribute="leading" secondItem="LbK-kA-cJM" secondAttribute="leading" id="GX4-1D-vBc"/>
                                     <constraint firstItem="em1-oa-o5V" firstAttribute="leading" secondItem="lJ2-rh-Agt" secondAttribute="leading" id="MsM-1M-arp"/>
                                     <constraint firstItem="lJ2-rh-Agt" firstAttribute="top" secondItem="txK-XH-d6g" secondAttribute="bottom" constant="5" id="NNd-TA-UKK"/>
                                     <constraint firstAttribute="height" constant="100" id="NmM-JE-Ffn"/>
+                                    <constraint firstItem="Fwk-hv-bsx" firstAttribute="top" secondItem="yBh-3Q-kFj" secondAttribute="bottom" constant="2" id="Ss3-zR-Bz4"/>
                                     <constraint firstItem="8Qc-Nr-1Yh" firstAttribute="leading" secondItem="FAS-iK-v5T" secondAttribute="leading" constant="8" id="TV8-B9-He3"/>
                                     <constraint firstItem="yBh-3Q-kFj" firstAttribute="leading" secondItem="FAS-iK-v5T" secondAttribute="leading" constant="8" id="U3y-jI-Jor"/>
                                     <constraint firstItem="FFb-MI-z9Z" firstAttribute="centerX" secondItem="FAS-iK-v5T" secondAttribute="centerX" id="UZf-k7-QTh"/>
@@ -2651,6 +2667,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Lato-Heavy" family="Lato" pointSize="20"/>
                                 <state key="normal" title="BID"/>
+                                <connections>
+                                    <action selector="btnBidAction" destination="zKE-K2-sUX" eventType="touchUpInside" id="I5d-Jv-Zl8"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2678,8 +2697,21 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="btnBid" destination="QeD-EW-ctW" id="bqQ-gI-aFi"/>
                         <outlet property="csofscrvwHieght" destination="fDy-PY-yOY" id="FCF-aa-rrL"/>
+                        <outlet property="lblActivePlayers" destination="qSF-cX-KQk" id="tUs-kb-qiK"/>
+                        <outlet property="lblAverageBidBank" destination="Sal-w9-YMh" id="Y6K-4w-Tt4"/>
                         <outlet property="lblDoomdsDayClock" destination="em1-oa-o5V" id="UCl-kU-zTm"/>
+                        <outlet property="lblGameClock" destination="Fwk-hv-bsx" id="GKb-It-5qJ"/>
+                        <outlet property="lblLongestBid" destination="KAY-FU-peB" id="v1d-4u-27l"/>
+                        <outlet property="lblPlayersRemaining" destination="QCa-Kx-Nhh" id="EkN-s8-zp0"/>
+                        <outlet property="lblUserBattleStreak" destination="bmV-1e-zhQ" id="bqn-O8-VAx"/>
+                        <outlet property="lblUserBattleWon" destination="0Jf-jw-g7H" id="bLU-C8-LHF"/>
+                        <outlet property="lblUserBidBank" destination="wsk-kj-bdr" id="oAq-70-sbl"/>
+                        <outlet property="lblUserLognestBid" destination="lLw-Pb-vMH" id="yxW-jW-pos"/>
+                        <outlet property="lblcurrentBid" destination="fhY-xN-nCj" id="Cg5-VX-zi7"/>
+                        <outlet property="lblcurrentBidLength" destination="Y8h-Vs-rQ0" id="9tt-Xp-qg1"/>
+                        <outlet property="txtAmount" destination="txK-XH-d6g" id="voI-wn-n2H"/>
                         <outlet property="vwGame" destination="ic4-I2-hQn" id="NjC-DB-N0W"/>
                         <outlet property="vwPlayers" destination="r3b-pH-hkm" id="pIL-L2-epx"/>
                     </connections>

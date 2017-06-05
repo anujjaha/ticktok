@@ -13,7 +13,6 @@
 		D34794191E8437FE00D9D593 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D34794171E8437FE00D9D593 /* Main.storyboard */; };
 		D347941B1E8437FE00D9D593 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D347941A1E8437FE00D9D593 /* Assets.xcassets */; };
 		D347941E1E8437FE00D9D593 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D347941C1E8437FE00D9D593 /* LaunchScreen.storyboard */; };
-		D37C73BE1E8FB45700113D38 /* Alamofire.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = D37C73A71E8FB45700113D38 /* Alamofire.xcworkspace */; };
 		D37C73BF1E8FB45700113D38 /* AFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C73A91E8FB45700113D38 /* AFError.swift */; };
 		D37C73C01E8FB45700113D38 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C73AB1E8FB45700113D38 /* Alamofire.swift */; };
 		D37C73C11E8FB45700113D38 /* DispatchQueue+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C73AC1E8FB45700113D38 /* DispatchQueue+Alamofire.swift */; };
@@ -82,6 +81,7 @@
 		D38FF07B1E86A639007972EB /* IQToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38FF0691E86A639007972EB /* IQToolbar.swift */; };
 		D38FF07C1E86A639007972EB /* IQUIView+IQKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38FF06A1E86A639007972EB /* IQUIView+IQKeyboardToolbar.swift */; };
 		D38FF07D1E86A639007972EB /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D38FF06C1E86A639007972EB /* IQKeyboardManager.bundle */; };
+		D3BE0FCD1EE3E4FD00DEF692 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BE0FCC1EE3E4FD00DEF692 /* SocketIOManager.swift */; };
 		D3CB0E7F1E87DFA9004331D3 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E7E1E87DFA9004331D3 /* SettingsVC.swift */; };
 		D3CB0E841E87E078004331D3 /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E821E87E078004331D3 /* AppUtils.swift */; };
 		D3CB0E851E87E078004331D3 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E831E87E078004331D3 /* Constant.swift */; };
@@ -90,16 +90,6 @@
 		D3CB0E8F1E87EF82004331D3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E8E1E87EF82004331D3 /* ProfileVC.swift */; };
 		D3CB0E911E87EF92004331D3 /* LeaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E901E87EF92004331D3 /* LeaderVC.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		D37C73D41E8FB45700113D38 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D37C73A41E8FB45700113D38 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8111E3319A95C8B0040E7D1;
-			remoteInfo = "Alamofire iOS";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		D32076021EC7424D0058CC3A /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZTimerLabel.h; sourceTree = "<group>"; };
@@ -112,8 +102,6 @@
 		D347941A1E8437FE00D9D593 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D347941D1E8437FE00D9D593 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D347941F1E8437FE00D9D593 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D37C73A41E8FB45700113D38 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Alamofire.xcodeproj; sourceTree = "<group>"; };
-		D37C73A71E8FB45700113D38 /* Alamofire.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; path = Alamofire.xcworkspace; sourceTree = "<group>"; };
 		D37C73A91E8FB45700113D38 /* AFError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFError.swift; sourceTree = "<group>"; };
 		D37C73AA1E8FB45700113D38 /* Alamofire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alamofire.h; sourceTree = "<group>"; };
 		D37C73AB1E8FB45700113D38 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
@@ -185,6 +173,7 @@
 		D38FF0691E86A639007972EB /* IQToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQToolbar.swift; sourceTree = "<group>"; };
 		D38FF06A1E86A639007972EB /* IQUIView+IQKeyboardToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IQUIView+IQKeyboardToolbar.swift"; sourceTree = "<group>"; };
 		D38FF06C1E86A639007972EB /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
+		D3BE0FCC1EE3E4FD00DEF692 /* SocketIOManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		D3CB0E7E1E87DFA9004331D3 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsVC.swift; path = SettingsViewController/SettingsVC.swift; sourceTree = "<group>"; };
 		D3CB0E821E87E078004331D3 /* AppUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; };
 		D3CB0E831E87E078004331D3 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -234,6 +223,7 @@
 		D34794121E8437FE00D9D593 /* TickTock */ = {
 			isa = PBXGroup;
 			children = (
+				D3BE0FC91EE3E4D800DEF692 /* SocketManager */,
 				D32076011EC7424D0058CC3A /* MZTimerLabel */,
 				D37F5CB51EC4CCDB00310502 /* SocketSource */,
 				D37C73A31E8FB45700113D38 /* WebServiceClass */,
@@ -259,19 +249,9 @@
 		D37C73A31E8FB45700113D38 /* WebServiceClass */ = {
 			isa = PBXGroup;
 			children = (
-				D37C73A41E8FB45700113D38 /* Alamofire.xcodeproj */,
-				D37C73A71E8FB45700113D38 /* Alamofire.xcworkspace */,
 				D37C73A81E8FB45700113D38 /* Source */,
 			);
 			path = WebServiceClass;
-			sourceTree = "<group>";
-		};
-		D37C73A51E8FB45700113D38 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D37C73D51E8FB45700113D38 /* Alamofire.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		D37C73A81E8FB45700113D38 /* Source */ = {
@@ -420,6 +400,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		D3BE0FC91EE3E4D800DEF692 /* SocketManager */ = {
+			isa = PBXGroup;
+			children = (
+				D3BE0FCC1EE3E4FD00DEF692 /* SocketIOManager.swift */,
+			);
+			name = SocketManager;
+			sourceTree = "<group>";
+		};
 		D3CB0E7D1E87DF7D004331D3 /* SettingsViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -517,28 +505,12 @@
 			mainGroup = D34794071E8437FE00D9D593;
 			productRefGroup = D34794111E8437FE00D9D593 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = D37C73A51E8FB45700113D38 /* Products */;
-					ProjectRef = D37C73A41E8FB45700113D38 /* Alamofire.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				D347940F1E8437FE00D9D593 /* TickTock */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		D37C73D51E8FB45700113D38 /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = D37C73D41E8FB45700113D38 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D347940E1E8437FE00D9D593 /* Resources */ = {
@@ -550,7 +522,6 @@
 				D38FF04E1E8689FA007972EB /* Lato-Medium.ttf in Resources */,
 				D38FF04A1E8689FA007972EB /* Lato-Black.ttf in Resources */,
 				D38FF04B1E8689FA007972EB /* Lato-Bold.ttf in Resources */,
-				D37C73BE1E8FB45700113D38 /* Alamofire.xcworkspace in Resources */,
 				D38FF04F1E8689FA007972EB /* Lato-Regular.ttf in Resources */,
 				D38FF0501E8689FA007972EB /* Lato-Semibold.ttf in Resources */,
 				D347941E1E8437FE00D9D593 /* LaunchScreen.storyboard in Resources */,
@@ -634,6 +605,7 @@
 				D37F5CDD1EC4CCDB00310502 /* SocketIOClientOption.swift in Sources */,
 				D37F5CD21EC4CCDB00310502 /* SocketClientManager.swift in Sources */,
 				D38FF07B1E86A639007972EB /* IQToolbar.swift in Sources */,
+				D3BE0FCD1EE3E4FD00DEF692 /* SocketIOManager.swift in Sources */,
 				D37C73CE1E8FB45700113D38 /* TaskDelegate.swift in Sources */,
 				D37C73CD1E8FB45700113D38 /* SessionManager.swift in Sources */,
 				D37C73C81E8FB45700113D38 /* Response.swift in Sources */,
