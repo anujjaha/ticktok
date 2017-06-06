@@ -94,6 +94,37 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
+        switch indexPath.row
+        {
+        case 0:
+            let storyTab = UIStoryboard(name: "Main", bundle: nil)
+            let objPrivacyVC = storyTab.instantiateViewController(withIdentifier: "PrivacyVC") as! PrivacyVC
+            objPrivacyVC.iPrivacy = 1
+            self.navigationController?.pushViewController(objPrivacyVC, animated: true)
+            break
+        case 2:
+            let storyTab = UIStoryboard(name: "Main", bundle: nil)
+            let objPrivacyVC = storyTab.instantiateViewController(withIdentifier: "PrivacyVC") as! PrivacyVC
+            objPrivacyVC.iPrivacy = 2
+            self.navigationController?.pushViewController(objPrivacyVC, animated: true)
+            break
+        case 3:
+            UserDefaults.standard.set("", forKey: kkeyLoginData)
+            UserDefaults.standard.set(false, forKey: kkeyisUserLogin)
+            
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let homeViewController = mainStoryboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+            let nav = UINavigationController(rootViewController: homeViewController)
+            nav.isNavigationBarHidden = true
+            appdelegate.window!.rootViewController = nav
+            break
+
+        default:
+            break
+        }
+        
+        /*
         if indexPath.row == 3
         {
             UserDefaults.standard.set("", forKey: kkeyLoginData)
@@ -106,6 +137,7 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource
             nav.isNavigationBarHidden = true
             appdelegate.window!.rootViewController = nav
         }
+         */
     }
 }
 class SettingsCell: UITableViewCell

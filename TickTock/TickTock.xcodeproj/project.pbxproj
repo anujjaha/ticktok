@@ -82,6 +82,7 @@
 		D38FF07C1E86A639007972EB /* IQUIView+IQKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38FF06A1E86A639007972EB /* IQUIView+IQKeyboardToolbar.swift */; };
 		D38FF07D1E86A639007972EB /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D38FF06C1E86A639007972EB /* IQKeyboardManager.bundle */; };
 		D3BE0FCD1EE3E4FD00DEF692 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BE0FCC1EE3E4FD00DEF692 /* SocketIOManager.swift */; };
+		D3C449A71EE72F6E00FF2BAD /* PrivacyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C449A61EE72F6E00FF2BAD /* PrivacyVC.swift */; };
 		D3CB0E7F1E87DFA9004331D3 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E7E1E87DFA9004331D3 /* SettingsVC.swift */; };
 		D3CB0E841E87E078004331D3 /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E821E87E078004331D3 /* AppUtils.swift */; };
 		D3CB0E851E87E078004331D3 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB0E831E87E078004331D3 /* Constant.swift */; };
@@ -174,6 +175,7 @@
 		D38FF06A1E86A639007972EB /* IQUIView+IQKeyboardToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IQUIView+IQKeyboardToolbar.swift"; sourceTree = "<group>"; };
 		D38FF06C1E86A639007972EB /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
 		D3BE0FCC1EE3E4FD00DEF692 /* SocketIOManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
+		D3C449A61EE72F6E00FF2BAD /* PrivacyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivacyVC.swift; path = SettingsViewController/PrivacyVC.swift; sourceTree = "<group>"; };
 		D3CB0E7E1E87DFA9004331D3 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsVC.swift; path = SettingsViewController/SettingsVC.swift; sourceTree = "<group>"; };
 		D3CB0E821E87E078004331D3 /* AppUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; };
 		D3CB0E831E87E078004331D3 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 			isa = PBXGroup;
 			children = (
 				D3CB0E7E1E87DFA9004331D3 /* SettingsVC.swift */,
+				D3C449A61EE72F6E00FF2BAD /* PrivacyVC.swift */,
 			);
 			name = SettingsViewController;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				D37F5CDF1EC4CCDB00310502 /* SocketIOClientStatus.swift in Sources */,
 				D38FF0741E86A639007972EB /* IQKeyboardManagerConstantsInternal.swift in Sources */,
 				D38FF0721E86A639007972EB /* IQUIWindow+Hierarchy.swift in Sources */,
+				D3C449A71EE72F6E00FF2BAD /* PrivacyVC.swift in Sources */,
 				D37F5CD71EC4CCDB00310502 /* SocketEngineSpec.swift in Sources */,
 				D38FF07C1E86A639007972EB /* IQUIView+IQKeyboardToolbar.swift in Sources */,
 				D37C73BF1E8FB45700113D38 /* AFError.swift in Sources */,
