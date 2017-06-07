@@ -109,7 +109,7 @@ class SignUpVC: UIViewController,UITextFieldDelegate,UINavigationControllerDeleg
                                     print("dictemp :> \(dictemp)")
                                     if dictemp.count > 0
                                     {
-                                        if  let dictemp2 = ((dictemp["data"] as! NSArray).object(at: 0)) as? NSDictionary
+                                        if  let dictemp2 = dictemp["data"] as? NSDictionary
                                         {
                                             if (dictemp2.count > 0)
                                             {

@@ -2715,6 +2715,7 @@
                                     <constraint firstAttribute="height" constant="30" id="84C-fM-CID"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Lato-Heavy" family="Lato" pointSize="20"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="BID"/>
                                 <connections>
                                     <action selector="btnBidAction" destination="zKE-K2-sUX" eventType="touchUpInside" id="I5d-Jv-Zl8"/>
@@ -2752,6 +2753,7 @@
                         <outlet property="lblAverageBidBank" destination="Sal-w9-YMh" id="Y6K-4w-Tt4"/>
                         <outlet property="lblDoomdsDayClock" destination="em1-oa-o5V" id="UCl-kU-zTm"/>
                         <outlet property="lblGameClock" destination="Fwk-hv-bsx" id="GKb-It-5qJ"/>
+                        <outlet property="lblGameTitle" destination="vLB-Ml-gSN" id="D0k-xg-PK6"/>
                         <outlet property="lblLongestBid" destination="KAY-FU-peB" id="v1d-4u-27l"/>
                         <outlet property="lblPlayersRemaining" destination="QCa-Kx-Nhh" id="EkN-s8-zp0"/>
                         <outlet property="lblUserBattleStreak" destination="bmV-1e-zhQ" id="bqn-O8-VAx"/>

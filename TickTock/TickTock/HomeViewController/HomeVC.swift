@@ -32,6 +32,9 @@ class HomeVC: UIViewController
     @IBOutlet weak var lblUserBattleWon : UILabel!
     @IBOutlet weak var lblUserBattleStreak : UILabel!
     
+    @IBOutlet weak var lblGameTitle : UILabel!
+
+    
     @IBOutlet weak var btnBid : UIButton!
 
     
@@ -59,14 +62,20 @@ class HomeVC: UIViewController
         lblGameClock.layer.borderColor = UIColor.black.cgColor
         lblGameClock.layer.borderWidth = 1.0
 
+        showProgress(inView: self.view)
+
         SocketIOManager.sharedInstance.socket.on("connect") {data, ack in
             print("socket connected")
             
             //            socket.emit("get", ["url": "/test"]) // I get the sails error
-            
+
             SocketIOManager.sharedInstance.socket.emitWithAck("post",  ["url": "/api/home?user_id=\(appDelegate.arrLoginData[kkeyuserid]!)"]).timingOut(after: 0) {data in
+                
+                hideProgress()
+                
                 if (data.count > 0)
                 {
+
                     print("data:>\(data)")
                     self.dictHomeData = (data[0] as? NSDictionary)!
                     print("self.dictHomeData:>\(self.dictHomeData)")
@@ -110,12 +119,16 @@ class HomeVC: UIViewController
             
             lblcurrentBid.text = "Current Bid: \(data["current_bid_name"]!)"
             
+            lblUserBidBank.text = "\(data["remaining_bids"] as! NSNumber)"
+            
             if ("\(data["last_bid_user_id"]!)" == "\(appDelegate.arrLoginData[kkeyuserid]!)")
             {
                 btnBid.isEnabled = false
+                btnBid.backgroundColor = UIColor.darkGray
             }
             else
             {
+                btnBid.backgroundColor = UIColor.black
                 btnBid.isEnabled = true
             }
         }
@@ -125,6 +138,17 @@ class HomeVC: UIViewController
     {
         if (self.dataofHome.count > 0)
         {
+            lblActivePlayers.text = "Active Players: \((self.dataofHome.object(forKey: "active_players")) as! NSNumber)"
+            lblAverageBidBank.text = "Average Bid Bank: \((self.dataofHome.object(forKey: "ave_bid_bank")) as! NSNumber)"
+            lblPlayersRemaining.text = "Players Remaining: \((self.dataofHome.object(forKey: "ave_bid_bank")) as! NSNumber)"
+            
+            lblGameTitle.text = "\((self.dataofHome.object(forKey: "title")) as! String)"
+            
+            lblUserBidBank.text = "\((self.dataofHome.object(forKey: "bid_bank")) as! NSNumber)"
+            lblUserLognestBid.text = "\(self.dataofHome.object(forKey: "my_longest_bid")!)"
+            lblUserBattleWon.text = "\((self.dataofHome.object(forKey: "battle_won")) as! NSNumber)"
+            lblUserBattleStreak.text = "\((self.dataofHome.object(forKey: "battle_streak")) as! NSNumber)"
+
             txtAmount.text = "$\(self.dataofHome.object(forKey: "amount")!)"
             
             var idhours: Int = Int((self.dataofHome.object(forKey: "d_hours")) as! NSNumber)
@@ -164,13 +188,15 @@ class HomeVC: UIViewController
             if (data.count > 0)
             {
                 print("data:>\(data)")
-                let bisPlaced = (self.dictHomeData.object(forKey: "body") as! NSDictionary).object(forKey: "status") as! String
-                if(bisPlaced == "Fail")
+                let bisPlaced = ((data[0] as? NSDictionary)!.object(forKey: "body") as! NSDictionary).object(forKey: "status") as! String
+               /* if(bisPlaced == "Fail")
                 {
+                    
                 }
                 else
-                {
-                }
+                {*/
+                    App_showAlert(withMessage: ((data[0] as? NSDictionary)!.object(forKey: "body") as! NSDictionary).object(forKey: "message") as! String, inView: self)
+                //}
             }
         }
     }
