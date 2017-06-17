@@ -24,6 +24,8 @@ class ProfileVC: UIViewController
     @IBOutlet weak var lblgender : UILabel!
     @IBOutlet weak var lbldob : UILabel!
     @IBOutlet weak var lblcountry : UILabel!
+    @IBOutlet weak var lblEmail : UILabel!
+
 
     
     override func viewDidLoad()
@@ -87,6 +89,7 @@ class ProfileVC: UIViewController
                                     self.lbldob.text = "\((dictemp2["personal"] as! NSDictionary).value(forKey: "dob")!)"
                                     self.lblgender.text = "\((dictemp2["personal"] as! NSDictionary).value(forKey: "gender")!)"
                                     self.lblcountry.text = "\((dictemp2["personal"] as! NSDictionary).value(forKey: "country")!)"
+                                    self.lblEmail.text = "\((dictemp2["personal"] as! NSDictionary).value(forKey: "email")!)"
                                 }
                                 else
                                 {

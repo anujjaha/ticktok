@@ -114,15 +114,27 @@ class HomeVC: UIViewController
         {
             print("data:>\(data)")
             
-            let iincrementSeconds: Int = Int(data["increment"] as! NSNumber)
-            lblGameClock.addTimeCounted(byTime: TimeInterval(iincrementSeconds))
+            var ighours: Int = Int(data["g_hours"] as! NSNumber)
+            var igmins: Int = Int(data["g_mins"] as! NSNumber)
+            let igsecs: Int = Int(data["g_secs"] as! NSNumber)
+            ighours = ighours*3600
+            igmins = igmins*60
+            let iincrementSeconds = ighours+igmins+igsecs
+            lblGameClock.reset()
+            lblGameClock.setCountDownTime(TimeInterval(iincrementSeconds))
+            lblGameClock.start()
+
+            //            let iincrementSeconds: Int = Int(data["increment"] as! NSNumber)
+//            lblGameClock.addTimeCounted(byTime: TimeInterval(iincrementSeconds))
             
             lblcurrentBid.text = "Current Bid: \(data["current_bid_name"]!)"
             
-            lblUserBidBank.text = "\(data["remaining_bids"] as! NSNumber)"
-            
+            lblcurrentBidLength.text = "Current Bid Length: \(data["current_bid_time"]!)"
+            lblLongestBid.text = "Longest Bid: \(data["longest_bid_by"]!)"
+
             if ("\(data["last_bid_user_id"]!)" == "\(appDelegate.arrLoginData[kkeyuserid]!)")
             {
+                lblUserBidBank.text = "\(data["remaining_bids"] as! NSNumber)"
                 btnBid.isEnabled = false
                 btnBid.backgroundColor = UIColor.darkGray
             }
@@ -141,6 +153,11 @@ class HomeVC: UIViewController
             lblActivePlayers.text = "Active Players: \((self.dataofHome.object(forKey: "active_players")) as! NSNumber)"
             lblAverageBidBank.text = "Average Bid Bank: \((self.dataofHome.object(forKey: "ave_bid_bank")) as! NSNumber)"
             lblPlayersRemaining.text = "Players Remaining: \((self.dataofHome.object(forKey: "ave_bid_bank")) as! NSNumber)"
+            
+            lblcurrentBid.text = "Current Bid: \((self.dataofHome.object(forKey: "current_bid_by"))!)"
+            lblcurrentBidLength.text = "Current Bid Length: \((self.dataofHome.object(forKey: "current_bid_time"))!)"
+            lblLongestBid.text = "Longest Bid: \((self.dataofHome.object(forKey: "longest_bid_by"))!)"
+
             
             lblGameTitle.text = "\((self.dataofHome.object(forKey: "title")) as! String)"
             

@@ -1781,6 +1781,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="lblEmail" destination="NYp-iA-n5d" id="86g-N2-kEZ"/>
                         <outlet property="lblcareer_earnings" destination="SCv-7Z-mTU" id="daZ-Ex-yf3"/>
                         <outlet property="lblcarrer_battle_wins" destination="idg-ZO-A7h" id="qeL-dq-Xrp"/>
                         <outlet property="lblcountry" destination="rSx-YI-lTI" id="hUf-4F-kIQ"/>
