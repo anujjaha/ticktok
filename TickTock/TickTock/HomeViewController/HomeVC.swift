@@ -14,12 +14,10 @@ class HomeVC: UIViewController
     @IBOutlet weak var vwPlayers : UIView!
     @IBOutlet weak var csofscrvwHieght : NSLayoutConstraint!
     
-    @IBOutlet weak var lblDoomdsDayClock: MZTimerLabel!
-    @IBOutlet weak var lblGameClock: MZTimerLabel!
-
     @IBOutlet weak var txtGameClock: UITextField!
     @IBOutlet weak var txtAmount: UITextField!
-    
+    @IBOutlet weak var txtDoomdsDayClock: UITextField!
+
     @IBOutlet weak var lblcurrentBid : UILabel!
     @IBOutlet weak var lblcurrentBidLength : UILabel!
     @IBOutlet weak var lblLongestBid : UILabel!
@@ -42,7 +40,8 @@ class HomeVC: UIViewController
     var dictHomeData = NSDictionary()
     var dataofHome = NSDictionary()
     var gameId = Int()
-
+    var strjackpotUniqueId = String()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -56,76 +55,46 @@ class HomeVC: UIViewController
         
         csofscrvwHieght.constant = 322
         
-        lblDoomdsDayClock.layer.borderColor = UIColor.black.cgColor
-        lblDoomdsDayClock.layer.borderWidth = 1.0
+       // showProgress(inView: self.view)
         
-        lblGameClock.layer.borderColor = UIColor.black.cgColor
-        lblGameClock.layer.borderWidth = 1.0
-
-        showProgress(inView: self.view)
-
         SocketIOManager.sharedInstance.socket.on("connect") {data, ack in
+            
             print("socket connected")
-            
-            //            socket.emit("get", ["url": "/test"]) // I get the sails error
-
-            SocketIOManager.sharedInstance.socket.emitWithAck("post",  ["url": "/api/home?user_id=\(appDelegate.arrLoginData[kkeyuserid]!)"]).timingOut(after: 0) {data in
-                
-                hideProgress()
-                
-                if (data.count > 0)
-                {
-
-                    print("data:>\(data)")
-                    self.dictHomeData = (data[0] as? NSDictionary)!
-                    print("self.dictHomeData:>\(self.dictHomeData)")
-                    self.dataofHome = (self.dictHomeData.object(forKey: "body") as! NSDictionary).object(forKey: "data") as! NSDictionary
-                    print("self.dataofHome:>\(self.dataofHome)")
-                    self.setViewLayoutwithData()
-                    self.GetGameUpdates()
-                }
-            }
-            
-            //            socket.emitWithAck("/api/home",  ["user_id": "\(appDelegate.arrLoginData[kkeyuserid]!)"]).timingOut(after: 0) {data in
-            //                print("data:>\(data)")
-            //            }
         }
         
-    NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameUpdateNotification(_:)), name: NSNotification.Name(rawValue: "callGameUpdateNotification"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameUpdateNotification(_:)), name: NSNotification.Name(rawValue: "callGameUpdateNotification"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameJoinedNotification(_:)), name: NSNotification.Name(rawValue: "callGameJoinedNotification"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameUpdateTimerNotification(_:)), name: NSNotification.Name(rawValue: "callGameUpdateTimerNotification"), object: nil)
+
+    
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameJackpotDataNotification(_:)), name: NSNotification.Name(rawValue: "callGameJackpotDataNotification"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameUserPlacedBidNotification(_:)), name: NSNotification.Name(rawValue: "callGameCanPlacedBidNotification"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameUserBidsNotification(_:)), name: NSNotification.Name(rawValue: "callGameMyPlacedBidNotification"), object: nil)
+
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameFinishNotification(_:)), name: NSNotification.Name(rawValue: "callGameFinishNotification"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameQuitNotification(_:)), name: NSNotification.Name(rawValue: "callGameQuitNotification"), object: nil)
 
         SocketIOManager.sharedInstance.establishConnection()
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool)
     {
         self.navigationController?.isNavigationBarHidden = true
     }
 
-    func GetGameUpdates()
-    {
-        SocketIOManager.sharedInstance.socket.on("game_updates") {data, ack in
-            print("data:>\(data)")
-        }
-    }
     
     func handleGameUpdateNotification(_ notification: Notification)
     {
         if let data = notification.object as? [String: AnyObject]
         {
-            print("data:>\(data)")
-            
-            var ighours: Int = Int(data["g_hours"] as! NSNumber)
-            var igmins: Int = Int(data["g_mins"] as! NSNumber)
-            let igsecs: Int = Int(data["g_secs"] as! NSNumber)
-            ighours = ighours*3600
-            igmins = igmins*60
-            let iincrementSeconds = ighours+igmins+igsecs
-            lblGameClock.reset()
-            lblGameClock.setCountDownTime(TimeInterval(iincrementSeconds))
-            lblGameClock.start()
-
-            //            let iincrementSeconds: Int = Int(data["increment"] as! NSNumber)
-//            lblGameClock.addTimeCounted(byTime: TimeInterval(iincrementSeconds))
             
             lblcurrentBid.text = "Current Bid: \(data["current_bid_name"]!)"
             
@@ -146,6 +115,101 @@ class HomeVC: UIViewController
         }
     }
     
+    //MARK: Handle Server Listen Events
+    func handleGameJoinedNotification(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("handleGameJoinedNotificationdata:>\(data)")
+            lblGameTitle.text = "\((data["jackpotInfo"] as! NSDictionary).object(forKey: kkeyname)!)"
+            txtAmount.text = "$\((data["jackpotInfo"] as! NSDictionary).object(forKey: kkeyamount)!)"
+            lblUserBidBank.text = "\((data["userInfo"] as! NSDictionary).object(forKey: kkeyavailableBids)!)"
+            strjackpotUniqueId = "\((data["jackpotInfo"] as! NSDictionary).object(forKey: "uniqueId")!)"
+        }
+    }
+    func handleGameUpdateTimerNotification(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("handleGameUpdateTimerNotificationdata:>\(data)")
+            txtGameClock.text = "\(data["gameClockTime"]!)"
+            txtDoomdsDayClock.text = "\(data["doomsDayClockTime"]!)"
+            
+            if let latestValue = data["longestBidUserName"] as? String
+            {
+                lblLongestBid.text = "Longest Bid: \(latestValue)  \(data["longestBidDuration"]!)"
+            }
+            else
+            {
+                lblLongestBid.text = "Longest Bid: \(data["longestBidDuration"]!)"
+
+            }
+            
+            lblcurrentBidLength.text = "Current Bid Length: \(data["lastBidDuration"]!)"
+        }
+    }
+    func handleGameJackpotDataNotification(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("handleGameJackpotDataNotificationdata:>\(data)")
+            if(data.count > 0)
+            {
+                lblActivePlayers.text = "Active Players: \(data["activePlayers"]!)"
+                lblAverageBidBank.text = "Average Bid Bank: \(data["averageBidBank"]!)"
+                lblPlayersRemaining.text = "Players Remaining: \(data["remainingPlayers"]!)"
+                lblcurrentBid.text = "Current Bid: \((data["currentBidUser"] as! NSDictionary).object(forKey: kkeyname)!)"
+                
+                if(data["canIBid"] as!  NSNumber == 1)
+                {
+                    btnBid.backgroundColor = UIColor.black
+                    btnBid.isEnabled = true
+                }
+                else
+                {
+                    btnBid.isEnabled = false
+                    btnBid.backgroundColor = UIColor.darkGray
+                }
+            }
+        }
+    }
+    func handleGameUserPlacedBidNotification(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("handleGameUserPlacedBidNotificationdata:>\(data)")
+            if(data.count > 0)
+            {
+                if(data["canIBid"] as!  NSNumber == 1)
+                {
+                    btnBid.backgroundColor = UIColor.black
+                    btnBid.isEnabled = true
+
+                }
+                else
+                {
+                    btnBid.isEnabled = false
+                    btnBid.backgroundColor = UIColor.darkGray
+                }
+            }
+        }
+    }
+    
+    func handleGameUserBidsNotification(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("handleGameUserBidsNotificationdata:>\(data)")
+            if(data.count > 0)
+            {
+                lblUserBidBank.text = "\(data[kkeyavailableBids]!)"
+            }
+        }
+    }
+
+    
+    
+    //MARK: Extra Methods
     func setViewLayoutwithData()
     {
         if (self.dataofHome.count > 0)
@@ -167,58 +231,53 @@ class HomeVC: UIViewController
             lblUserBattleStreak.text = "\((self.dataofHome.object(forKey: "battle_streak")) as! NSNumber)"
 
             txtAmount.text = "$\(self.dataofHome.object(forKey: "amount")!)"
-            
-            var idhours: Int = Int((self.dataofHome.object(forKey: "d_hours")) as! NSNumber)
-            var idmins: Int = Int((self.dataofHome.object(forKey: "d_mins")) as! NSNumber)
-            let idsecs: Int = Int((self.dataofHome.object(forKey: "d_secs")) as! NSNumber)
-            
-            gameId = Int((self.dataofHome.object(forKey: "id")) as! NSNumber)
-            print("gameId:>\(gameId)")
-
-            idhours = idhours*3600
-            idmins = idmins*60
-            
-            let timevalue = idhours+idmins+idsecs
-            
-            lblDoomdsDayClock.timerType = MZTimerLabelTypeTimer
-            lblDoomdsDayClock.setCountDownTime(TimeInterval(timevalue))
-            lblDoomdsDayClock.start()
-            
-            var ighours: Int = Int((self.dataofHome.object(forKey: "g_hours")) as! NSNumber)
-            var igmins: Int = Int((self.dataofHome.object(forKey: "g_mins")) as! NSNumber)
-            let igsecs: Int = Int((self.dataofHome.object(forKey: "g_secs")) as! NSNumber)
-            
-            ighours = ighours*3600
-            igmins = igmins*60
-            
-            let gametimevalue = ighours+igmins+igsecs
-            lblGameClock.timerType = MZTimerLabelTypeTimer
-            lblGameClock.setCountDownTime(TimeInterval(gametimevalue))
-            lblGameClock.start()
         }
     }
     
+    //MARK: Place a Bid
     @IBAction func btnBidAction()
     {
-        print ("/api/jackpot/new-bid?user_id=\(appDelegate.arrLoginData[kkeyuserid]!)&game_id=\(self.gameId)")
-        SocketIOManager.sharedInstance.socket.emitWithAck("post",  ["url": "/api/jackpot/new-bid?user_id=\(appDelegate.arrLoginData[kkeyuserid]!)&game_id=\(self.gameId)"]).timingOut(after: 0) {data in
+        let myJSON = [
+            "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+            "jackpotUniqueId" : strjackpotUniqueId
+        ]
+        
+        print("data:>\(myJSON)")
+
+        SocketIOManager.sharedInstance.socket.emitWithAck("place_bid",  myJSON).timingOut(after: 0) {data in
             if (data.count > 0)
             {
                 print("data:>\(data)")
-                let bisPlaced = ((data[0] as? NSDictionary)!.object(forKey: "body") as! NSDictionary).object(forKey: "status") as! String
-               /* if(bisPlaced == "Fail")
-                {
-                    
-                }
-                else
-                {*/
-                    App_showAlert(withMessage: ((data[0] as? NSDictionary)!.object(forKey: "body") as! NSDictionary).object(forKey: "message") as! String, inView: self)
-                //}
+                App_showAlert(withMessage: ((data[0] as? NSDictionary)!.object(forKey: "body") as! NSDictionary).object(forKey: "message") as! String, inView: self)
             }
         }
     }
 
-    override func didReceiveMemoryWarning() {
+    //MARK: Game Finish and Quit Button
+    func handleGameFinishNotification(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("handleGameFinishNotificationdata:>\(data)")
+            if(data.count > 0)
+            {
+                
+            }
+        }
+    }
+    func handleGameQuitNotification(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("handleGameQuitNotificationdata:>\(data)")
+            if(data.count > 0)
+            {
+            }
+        }
+    }
+    
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

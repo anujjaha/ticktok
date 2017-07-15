@@ -41,6 +41,9 @@ let kkeyisUserLogin = "UserLogin"
 let kkeytext = "text"
 let kkeytime = "time"
 let kkeytitle = "title"
+let kkeyuser_id = "user_id"
+let kkeyamount = "amount"
+let kkeyavailableBids = "availableBids"
 
 let kNO = "NO"
 let kYES = "YES"
@@ -48,7 +51,8 @@ let kYES = "YES"
 let kFBAPPID = "128398547683260"
 
 
-let kServerURL = "http://35.154.46.190:1337/api/"
+//let kServerURL = "http://35.154.46.190:1337/api/"
+let kServerURL = "http://13.59.71.92:9000/"
 
 let kPrivacyURL = "http://35.154.46.190:1337/privacy"
 let kFAQURL = "http://35.154.46.190:1337/faq"

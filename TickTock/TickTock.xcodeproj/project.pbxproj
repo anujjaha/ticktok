@@ -738,15 +738,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Albert Lairson (G42CF8Q96B)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silver Truck Games, LLC (P7LEFGE66S)";
 				DEVELOPMENT_TEAM = P7LEFGE66S;
 				INFOPLIST_FILE = TickTock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ticktock.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "62e2949e-854b-467e-a68e-5b0efbb310e8";
-				PROVISIONING_PROFILE_SPECIFIER = TickTock_dev;
+				PROVISIONING_PROFILE = "d5c908e9-c961-4642-a074-947900415cff";
+				PROVISIONING_PROFILE_SPECIFIER = TickTock_Dist;
 				SWIFT_OBJC_BRIDGING_HEADER = "TickTock-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -756,15 +756,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Albert Lairson (G42CF8Q96B)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silver Truck Games, LLC (P7LEFGE66S)";
 				DEVELOPMENT_TEAM = P7LEFGE66S;
 				INFOPLIST_FILE = TickTock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ticktock.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "62e2949e-854b-467e-a68e-5b0efbb310e8";
-				PROVISIONING_PROFILE_SPECIFIER = TickTock_dev;
+				PROVISIONING_PROFILE = "d5c908e9-c961-4642-a074-947900415cff";
+				PROVISIONING_PROFILE_SPECIFIER = TickTock_Dist;
 				SWIFT_OBJC_BRIDGING_HEADER = "TickTock-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

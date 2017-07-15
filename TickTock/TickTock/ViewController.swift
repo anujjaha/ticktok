@@ -48,7 +48,7 @@ class ViewController: UIViewController,UITextFieldDelegate
             
             showProgress(inView: self.view)
             print("parameters:>\(parameters)")
-            request("\(kServerURL)user/login", method: .post, parameters:parameters).responseJSON { (response:DataResponse<Any>) in
+            request("\(kServerURL)auth/login", method: .post, parameters:parameters).responseJSON { (response:DataResponse<Any>) in
                 
                 print(response.result.debugDescription)
                 

@@ -87,7 +87,7 @@ class SignUpVC: UIViewController,UITextFieldDelegate,UINavigationControllerDeleg
                         multipartFormData.append(imageData2, withName: "image", fileName: "myImage.jpg", mimeType: "File")
                     }
                     
-                }, to: "\(kServerURL)user/register", method: .post, headers:nil, encodingCompletion:
+                }, to: "\(kServerURL)auth/register", method: .post, headers:nil, encodingCompletion:
                 {
                     (result) in
                     switch result

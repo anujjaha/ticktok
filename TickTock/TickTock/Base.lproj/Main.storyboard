@@ -29,7 +29,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="M8K-vA-Rms" sceneMemberID="viewController">
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="fA5-5w-dwi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fA5-5w-dwi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.85098039215686272" green="0.73333333333333328" blue="0.50588235294117645" alpha="1" colorSpace="calibratedRGB"/>
@@ -600,7 +600,7 @@
                 <navigationController title="BattleNavigation" id="LlJ-rv-dCu" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="b8q-iN-Foy"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="eLe-2H-lJ6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eLe-2H-lJ6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1298,7 +1298,7 @@
                 <navigationController title="LeaderBoardNavigation" id="dd9-rx-J0O" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="xxX-j2-Pzy"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="wxR-Gs-5fe">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="wxR-Gs-5fe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1316,7 +1316,7 @@
                 <navigationController title="ProfileNavigation" id="gyx-Wy-1u6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="ic3-Nv-xxE"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="cQa-5O-Edt">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cQa-5O-Edt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2160,7 +2160,7 @@
                 <navigationController title="SettingNavigation" id="GhG-xB-cEO" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="4py-xy-ezv"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="WSp-4z-hoE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WSp-4z-hoE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2378,7 +2378,7 @@
                                         <fontDescription key="fontDescription" name="Lato-Heavy" family="Lato" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="59:52" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Qc-Nr-1Yh">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="00:00" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Qc-Nr-1Yh">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="QhF-NX-Ti8"/>
                                             <constraint firstAttribute="width" constant="87" id="grc-At-RCr"/>
@@ -2396,27 +2396,13 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fwk-hv-bsx" customClass="MZTimerLabel">
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="1fi-Me-CQd"/>
-                                            <constraint firstAttribute="width" constant="87" id="OX9-Vc-jbU"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Login_logo" translatesAutoresizingMaskIntoConstraints="NO" id="FFb-MI-z9Z">
                                         <constraints>
                                             <constraint firstAttribute="width" constant="64" id="JhU-X6-2D1"/>
                                             <constraint firstAttribute="height" constant="56" id="jXm-Eh-pKJ"/>
                                         </constraints>
                                     </imageView>
-                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="72:45:12" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LbK-kA-cJM">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="00:00:00" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LbK-kA-cJM">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="VhM-Vy-SKM"/>
                                             <constraint firstAttribute="width" constant="100" id="kUn-dc-ndJ"/>
@@ -2434,33 +2420,14 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="em1-oa-o5V" customClass="MZTimerLabel">
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="Ij7-2a-Wn1"/>
-                                            <constraint firstAttribute="width" constant="100" id="cu7-oz-znR"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="em1-oa-o5V" firstAttribute="top" secondItem="lJ2-rh-Agt" secondAttribute="bottom" constant="2" id="0no-mB-p05"/>
                                     <constraint firstItem="LbK-kA-cJM" firstAttribute="top" secondItem="lJ2-rh-Agt" secondAttribute="bottom" constant="2" id="5dx-mj-3pG"/>
                                     <constraint firstItem="txK-XH-d6g" firstAttribute="centerX" secondItem="FAS-iK-v5T" secondAttribute="centerX" id="8U1-YJ-HJk"/>
-                                    <constraint firstItem="Fwk-hv-bsx" firstAttribute="leading" secondItem="FAS-iK-v5T" secondAttribute="leading" constant="8" id="BdC-7T-4Tj"/>
-                                    <constraint firstAttribute="trailing" secondItem="em1-oa-o5V" secondAttribute="trailing" constant="8" id="C8h-XW-JTI"/>
                                     <constraint firstItem="lJ2-rh-Agt" firstAttribute="leading" secondItem="LbK-kA-cJM" secondAttribute="leading" id="GX4-1D-vBc"/>
-                                    <constraint firstItem="em1-oa-o5V" firstAttribute="leading" secondItem="lJ2-rh-Agt" secondAttribute="leading" id="MsM-1M-arp"/>
                                     <constraint firstItem="lJ2-rh-Agt" firstAttribute="top" secondItem="txK-XH-d6g" secondAttribute="bottom" constant="5" id="NNd-TA-UKK"/>
                                     <constraint firstAttribute="height" constant="100" id="NmM-JE-Ffn"/>
-                                    <constraint firstItem="Fwk-hv-bsx" firstAttribute="top" secondItem="yBh-3Q-kFj" secondAttribute="bottom" constant="2" id="Ss3-zR-Bz4"/>
                                     <constraint firstItem="8Qc-Nr-1Yh" firstAttribute="leading" secondItem="FAS-iK-v5T" secondAttribute="leading" constant="8" id="TV8-B9-He3"/>
                                     <constraint firstItem="yBh-3Q-kFj" firstAttribute="leading" secondItem="FAS-iK-v5T" secondAttribute="leading" constant="8" id="U3y-jI-Jor"/>
                                     <constraint firstItem="FFb-MI-z9Z" firstAttribute="centerX" secondItem="FAS-iK-v5T" secondAttribute="centerX" id="UZf-k7-QTh"/>
@@ -2497,17 +2464,17 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Bid: John Smith" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhY-xN-nCj">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Bid:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhY-xN-nCj">
                                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Bid Length: 0:23" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y8h-Vs-rQ0">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Bid Length: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y8h-Vs-rQ0">
                                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Longest Bid: Mary Jones 1.12.345" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KAY-FU-peB">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Longest Bid: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KAY-FU-peB">
                                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -2541,7 +2508,7 @@
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r3b-pH-hkm">
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Players Remaining: 9,478" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCa-Kx-Nhh">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Players Remaining: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCa-Kx-Nhh">
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="14" id="oAm-p4-yP8"/>
                                                                 </constraints>
@@ -2549,7 +2516,7 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Active Players: 4,312" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSF-cX-KQk">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Active Players: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSF-cX-KQk">
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="14" id="TXo-fc-Utx"/>
                                                                 </constraints>
@@ -2557,7 +2524,7 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Average Bid Bank: 107" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sal-w9-YMh">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Average Bid Bank: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sal-w9-YMh">
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="14" id="u2c-th-Kev"/>
                                                                 </constraints>
@@ -2605,7 +2572,7 @@
                                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="122" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsk-kj-bdr">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsk-kj-bdr">
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="14" id="Enj-9r-ia3"/>
                                                             <constraint firstAttribute="width" constant="47" id="GWp-pC-dOt"/>
@@ -2622,7 +2589,7 @@
                                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.18.473" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lLw-Pb-vMH">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lLw-Pb-vMH">
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="14" id="COZ-9e-426"/>
                                                             <constraint firstAttribute="width" constant="58" id="XeG-pt-Iwt"/>
@@ -2639,7 +2606,7 @@
                                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmV-1e-zhQ">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmV-1e-zhQ">
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="14" id="TXf-EQ-hnx"/>
                                                             <constraint firstAttribute="width" constant="44" id="l7u-15-QJq"/>
@@ -2656,7 +2623,7 @@
                                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="35" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Jf-jw-g7H">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Jf-jw-g7H">
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="14" id="JsZ-zo-gSb"/>
                                                             <constraint firstAttribute="width" constant="47" id="adw-Fe-YSG"/>
@@ -2752,8 +2719,6 @@
                         <outlet property="csofscrvwHieght" destination="fDy-PY-yOY" id="FCF-aa-rrL"/>
                         <outlet property="lblActivePlayers" destination="qSF-cX-KQk" id="tUs-kb-qiK"/>
                         <outlet property="lblAverageBidBank" destination="Sal-w9-YMh" id="Y6K-4w-Tt4"/>
-                        <outlet property="lblDoomdsDayClock" destination="em1-oa-o5V" id="UCl-kU-zTm"/>
-                        <outlet property="lblGameClock" destination="Fwk-hv-bsx" id="GKb-It-5qJ"/>
                         <outlet property="lblGameTitle" destination="vLB-Ml-gSN" id="D0k-xg-PK6"/>
                         <outlet property="lblLongestBid" destination="KAY-FU-peB" id="v1d-4u-27l"/>
                         <outlet property="lblPlayersRemaining" destination="QCa-Kx-Nhh" id="EkN-s8-zp0"/>
@@ -2764,6 +2729,8 @@
                         <outlet property="lblcurrentBid" destination="fhY-xN-nCj" id="Cg5-VX-zi7"/>
                         <outlet property="lblcurrentBidLength" destination="Y8h-Vs-rQ0" id="9tt-Xp-qg1"/>
                         <outlet property="txtAmount" destination="txK-XH-d6g" id="voI-wn-n2H"/>
+                        <outlet property="txtDoomdsDayClock" destination="LbK-kA-cJM" id="lhl-6s-2zf"/>
+                        <outlet property="txtGameClock" destination="8Qc-Nr-1Yh" id="MUj-96-D0T"/>
                         <outlet property="vwGame" destination="ic4-I2-hQn" id="NjC-DB-N0W"/>
                         <outlet property="vwPlayers" destination="r3b-pH-hkm" id="pIL-L2-epx"/>
                     </connections>
@@ -2778,7 +2745,7 @@
                 <navigationController title="HomeNavigation" id="dDg-r7-zLr" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="zQr-MB-57N"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="mc9-D9-8kP">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mc9-D9-8kP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
