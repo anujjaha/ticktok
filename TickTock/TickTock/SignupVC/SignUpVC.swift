@@ -73,8 +73,74 @@ class SignUpVC: UIViewController,UITextFieldDelegate,UINavigationControllerDeleg
                 "email": "\(self.txtEmailAddress.text!)",
                 "password":"\(self.txtPassword.text!)"
             ]
+            showProgress(inView: self.view)
+            print("parameters:>\(parameters)")
+            request("\(kServerURL)auth/register", method: .post, parameters:parameters).responseJSON { (response:DataResponse<Any>) in
+                
+                print(response.result.debugDescription)
+                
+                hideProgress()
+                switch(response.result)
+                {
+                case .success(_):
+                    if response.result.value != nil
+                    {
+                        print(response.result.value)
+                        
+                        if let json = response.result.value
+                        {
+                            let dictemp = json as! NSDictionary
+                            print("dictemp :> \(dictemp)")
+                            
+                            if dictemp.count > 0
+                            {
+                                if  let dictemp2 = dictemp["data"] as? NSDictionary
+                                {
+                                    if (dictemp2.count > 0)
+                                    {
+                                        print("dictemp :> \(dictemp2)")
+                                        appDelegate.arrLoginData = dictemp2
+                                        
+                                        let data = NSKeyedArchiver.archivedData(withRootObject: appDelegate.arrLoginData)
+                                        UserDefaults.standard.set(data, forKey: kkeyLoginData)
+                                        UserDefaults.standard.set(true, forKey: kkeyisUserLogin)
+                                        
+                                        let alertView = UIAlertController(title: Application_Name, message: "Signup Successfully", preferredStyle: .alert)
+                                        let OKAction = UIAlertAction(title: "Ok", style: .default) { (action) in
+                                            let storyTab = UIStoryboard(name: "Main", bundle: nil)
+                                            let tabbar = storyTab.instantiateViewController(withIdentifier: "TabBarViewController")
+                                            self.navigationController?.pushViewController(tabbar, animated: true)
+                                        }
+                                        alertView.addAction(OKAction)
+                                        self.present(alertView, animated: true, completion: nil)
+                                    }
+                                    else
+                                    {
+                                        App_showAlert(withMessage: dictemp[kkeymessage]! as! String, inView: self)
+                                    }
+                                }
+                                else
+                                {
+                                    App_showAlert(withMessage: dictemp[kkeymessage]! as! String, inView: self)
+                                }
+                            }
+                            else
+                            {
+                                App_showAlert(withMessage: dictemp[kkeymessage]! as! String, inView: self)
+                            }
+                        }
+                    }
+                    break
+                    
+                case .failure(_):
+                    print(response.result.error)
+                    App_showAlert(withMessage: response.result.error.debugDescription, inView: self)
+                    break
+                }
+                
             
-            upload(multipartFormData:
+            
+           /* upload(multipartFormData:
                 { (multipartFormData) in
                     
                     for (key, value) in parameters
@@ -150,7 +216,8 @@ class SignUpVC: UIViewController,UITextFieldDelegate,UINavigationControllerDeleg
                         hideProgress()
                         print(encodingError)
                     }
-            })
+            })*/
+        }
         }
     }
     

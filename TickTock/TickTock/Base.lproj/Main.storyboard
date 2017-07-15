@@ -29,7 +29,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="M8K-vA-Rms" sceneMemberID="viewController">
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fA5-5w-dwi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="fA5-5w-dwi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.85098039215686272" green="0.73333333333333328" blue="0.50588235294117645" alpha="1" colorSpace="calibratedRGB"/>
@@ -600,7 +600,7 @@
                 <navigationController title="BattleNavigation" id="LlJ-rv-dCu" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="b8q-iN-Foy"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eLe-2H-lJ6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="eLe-2H-lJ6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1298,7 +1298,7 @@
                 <navigationController title="LeaderBoardNavigation" id="dd9-rx-J0O" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="xxX-j2-Pzy"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="wxR-Gs-5fe">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="wxR-Gs-5fe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1316,7 +1316,7 @@
                 <navigationController title="ProfileNavigation" id="gyx-Wy-1u6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="ic3-Nv-xxE"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cQa-5O-Edt">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="cQa-5O-Edt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2160,7 +2160,7 @@
                 <navigationController title="SettingNavigation" id="GhG-xB-cEO" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="4py-xy-ezv"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WSp-4z-hoE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="WSp-4z-hoE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2550,16 +2550,59 @@
                                                             <constraint firstItem="QCa-Kx-Nhh" firstAttribute="top" secondItem="r3b-pH-hkm" secondAttribute="top" constant="8" id="vpd-KB-ax4"/>
                                                         </constraints>
                                                     </view>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0EF-gW-J5X">
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jackpot Completed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="751-WM-iX7">
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="21" id="GlV-lI-PAP"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hpw-49-hZF">
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="21" id="zZO-pe-Juu"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GaS-XC-Kj0">
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="21" id="hLQ-ro-Wnv"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstItem="GaS-XC-Kj0" firstAttribute="top" secondItem="Hpw-49-hZF" secondAttribute="bottom" constant="8" id="0dw-Jf-0MW"/>
+                                                            <constraint firstItem="Hpw-49-hZF" firstAttribute="top" secondItem="751-WM-iX7" secondAttribute="bottom" constant="17" id="5Hr-uC-S6i"/>
+                                                            <constraint firstItem="751-WM-iX7" firstAttribute="centerX" secondItem="0EF-gW-J5X" secondAttribute="centerX" id="6Ks-cP-1XB"/>
+                                                            <constraint firstAttribute="trailing" secondItem="751-WM-iX7" secondAttribute="trailing" constant="64" id="GKV-5s-v1H"/>
+                                                            <constraint firstItem="751-WM-iX7" firstAttribute="leading" secondItem="0EF-gW-J5X" secondAttribute="leading" constant="64" id="N1q-wH-hZ5"/>
+                                                            <constraint firstItem="751-WM-iX7" firstAttribute="top" secondItem="0EF-gW-J5X" secondAttribute="top" constant="30" id="QGw-Es-nll"/>
+                                                            <constraint firstItem="Hpw-49-hZF" firstAttribute="centerX" secondItem="0EF-gW-J5X" secondAttribute="centerX" id="Z0m-M7-KQ0"/>
+                                                            <constraint firstItem="GaS-XC-Kj0" firstAttribute="centerX" secondItem="0EF-gW-J5X" secondAttribute="centerX" id="wpd-8r-p8h"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
+                                                    <constraint firstItem="0EF-gW-J5X" firstAttribute="top" secondItem="h8d-uf-U7x" secondAttribute="top" id="1SL-eT-BLg"/>
                                                     <constraint firstItem="ic4-I2-hQn" firstAttribute="leading" secondItem="h8d-uf-U7x" secondAttribute="leading" constant="8" id="2dI-TI-o9q"/>
                                                     <constraint firstAttribute="trailing" secondItem="ic4-I2-hQn" secondAttribute="trailing" constant="8" id="3Lj-Dl-afH"/>
+                                                    <constraint firstAttribute="trailing" secondItem="0EF-gW-J5X" secondAttribute="trailing" id="FBN-3d-m8D"/>
                                                     <constraint firstItem="r3b-pH-hkm" firstAttribute="leading" secondItem="h8d-uf-U7x" secondAttribute="leading" constant="40" id="FmJ-cY-9km"/>
                                                     <constraint firstAttribute="trailing" secondItem="r3b-pH-hkm" secondAttribute="trailing" constant="40" id="KcS-Rg-FPX"/>
                                                     <constraint firstItem="r3b-pH-hkm" firstAttribute="top" secondItem="ic4-I2-hQn" secondAttribute="bottom" constant="8" id="M7M-Lv-c6w"/>
+                                                    <constraint firstAttribute="bottom" secondItem="0EF-gW-J5X" secondAttribute="bottom" id="aX8-3X-F78"/>
                                                     <constraint firstAttribute="height" constant="204" id="iPs-pt-0E1"/>
                                                     <constraint firstItem="ic4-I2-hQn" firstAttribute="top" secondItem="h8d-uf-U7x" secondAttribute="top" constant="8" id="tQe-xs-SNQ"/>
+                                                    <constraint firstItem="0EF-gW-J5X" firstAttribute="leading" secondItem="h8d-uf-U7x" secondAttribute="leading" id="yPp-a6-PYS"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NAe-qf-gfw">
@@ -2720,6 +2763,8 @@
                         <outlet property="lblActivePlayers" destination="qSF-cX-KQk" id="tUs-kb-qiK"/>
                         <outlet property="lblAverageBidBank" destination="Sal-w9-YMh" id="Y6K-4w-Tt4"/>
                         <outlet property="lblGameTitle" destination="vLB-Ml-gSN" id="D0k-xg-PK6"/>
+                        <outlet property="lblGameWinner1" destination="Hpw-49-hZF" id="JjK-hA-knE"/>
+                        <outlet property="lblGameWinner2" destination="GaS-XC-Kj0" id="ylU-2k-EbV"/>
                         <outlet property="lblLongestBid" destination="KAY-FU-peB" id="v1d-4u-27l"/>
                         <outlet property="lblPlayersRemaining" destination="QCa-Kx-Nhh" id="EkN-s8-zp0"/>
                         <outlet property="lblUserBattleStreak" destination="bmV-1e-zhQ" id="bqn-O8-VAx"/>
@@ -2732,6 +2777,7 @@
                         <outlet property="txtDoomdsDayClock" destination="LbK-kA-cJM" id="lhl-6s-2zf"/>
                         <outlet property="txtGameClock" destination="8Qc-Nr-1Yh" id="MUj-96-D0T"/>
                         <outlet property="vwGame" destination="ic4-I2-hQn" id="NjC-DB-N0W"/>
+                        <outlet property="vwGameCompleted" destination="0EF-gW-J5X" id="a1h-AN-VEu"/>
                         <outlet property="vwPlayers" destination="r3b-pH-hkm" id="pIL-L2-epx"/>
                     </connections>
                 </viewController>
@@ -2745,7 +2791,7 @@
                 <navigationController title="HomeNavigation" id="dDg-r7-zLr" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="zQr-MB-57N"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mc9-D9-8kP">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="mc9-D9-8kP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

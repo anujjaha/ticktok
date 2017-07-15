@@ -22,29 +22,29 @@ class SocketIOManager: NSObject
         super.init()
         
         socket.on("me_joined") { dataArray, ack in
-            print(dataArray)
-            print(dataArray.count)
+           // print(dataArray)
+            //print(dataArray.count)
             
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "callGameJoinedNotification"), object: dataArray[0] as? [String: AnyObject])
         }
     
         socket.on("update_jackpot_timer") { dataArray, ack in
-            print(dataArray)
+           // print(dataArray)
             
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "callGameUpdateTimerNotification"), object: dataArray[0] as? [String: AnyObject])
         }
         
         socket.on("updated_jackpot_data") { dataArray, ack in
-            print(dataArray)
+           // print(dataArray)
             
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "callGameJackpotDataNotification"), object: dataArray[0] as? [String: AnyObject])
         }
 
         socket.on("can_i_bid") { dataArray, ack in
-            print(dataArray)
+          //  print(dataArray)
             
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "callGameCanPlacedBidNotification"), object: dataArray[0] as? [String: AnyObject])
@@ -52,21 +52,21 @@ class SocketIOManager: NSObject
         
         
         socket.on("my_bid_placed") { dataArray, ack in
-            print(dataArray)
+           // print(dataArray)
             
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "callGameMyPlacedBidNotification"), object: dataArray[0] as? [String: AnyObject])
         }
         
         socket.on("show_quit_button") { dataArray, ack in
-            print(dataArray)
+            //print(dataArray)
             
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "callGameQuitNotification"), object: dataArray[0] as? [String: AnyObject])
         }
 
         socket.on("game_finished") { dataArray, ack in
-            print(dataArray)
+           // print(dataArray)
             
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "callGameFinishNotification"), object: dataArray[0] as? [String: AnyObject])

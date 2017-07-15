@@ -32,7 +32,10 @@ class HomeVC: UIViewController
     
     @IBOutlet weak var lblGameTitle : UILabel!
 
-    
+    @IBOutlet weak var vwGameCompleted : UIView!
+    @IBOutlet weak var lblGameWinner1 : UILabel!
+    @IBOutlet weak var lblGameWinner2 : UILabel!
+
     @IBOutlet weak var btnBid : UIButton!
 
     
@@ -120,7 +123,7 @@ class HomeVC: UIViewController
     {
         if let data = notification.object as? [String: AnyObject]
         {
-            print("handleGameJoinedNotificationdata:>\(data)")
+           // print("handleGameJoinedNotificationdata:>\(data)")
             lblGameTitle.text = "\((data["jackpotInfo"] as! NSDictionary).object(forKey: kkeyname)!)"
             txtAmount.text = "$\((data["jackpotInfo"] as! NSDictionary).object(forKey: kkeyamount)!)"
             lblUserBidBank.text = "\((data["userInfo"] as! NSDictionary).object(forKey: kkeyavailableBids)!)"
@@ -131,7 +134,7 @@ class HomeVC: UIViewController
     {
         if let data = notification.object as? [String: AnyObject]
         {
-            print("handleGameUpdateTimerNotificationdata:>\(data)")
+          //  print("handleGameUpdateTimerNotificationdata:>\(data)")
             txtGameClock.text = "\(data["gameClockTime"]!)"
             txtDoomdsDayClock.text = "\(data["doomsDayClockTime"]!)"
             
@@ -152,7 +155,7 @@ class HomeVC: UIViewController
     {
         if let data = notification.object as? [String: AnyObject]
         {
-            print("handleGameJackpotDataNotificationdata:>\(data)")
+            //print("handleGameJackpotDataNotificationdata:>\(data)")
             if(data.count > 0)
             {
                 lblActivePlayers.text = "Active Players: \(data["activePlayers"]!)"
@@ -177,7 +180,7 @@ class HomeVC: UIViewController
     {
         if let data = notification.object as? [String: AnyObject]
         {
-            print("handleGameUserPlacedBidNotificationdata:>\(data)")
+          //  print("handleGameUserPlacedBidNotificationdata:>\(data)")
             if(data.count > 0)
             {
                 if(data["canIBid"] as!  NSNumber == 1)
@@ -199,7 +202,7 @@ class HomeVC: UIViewController
     {
         if let data = notification.object as? [String: AnyObject]
         {
-            print("handleGameUserBidsNotificationdata:>\(data)")
+            //print("handleGameUserBidsNotificationdata:>\(data)")
             if(data.count > 0)
             {
                 lblUserBidBank.text = "\(data[kkeyavailableBids]!)"
@@ -242,7 +245,7 @@ class HomeVC: UIViewController
             "jackpotUniqueId" : strjackpotUniqueId
         ]
         
-        print("data:>\(myJSON)")
+      //  print("data:>\(myJSON)")
 
         SocketIOManager.sharedInstance.socket.emitWithAck("place_bid",  myJSON).timingOut(after: 0) {data in
             if (data.count > 0)
@@ -272,6 +275,7 @@ class HomeVC: UIViewController
             print("handleGameQuitNotificationdata:>\(data)")
             if(data.count > 0)
             {
+                
             }
         }
     }

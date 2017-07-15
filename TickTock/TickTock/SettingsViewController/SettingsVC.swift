@@ -111,7 +111,8 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource
         case 3:
             UserDefaults.standard.set("", forKey: kkeyLoginData)
             UserDefaults.standard.set(false, forKey: kkeyisUserLogin)
-            
+            SocketIOManager.sharedInstance.closeConnection()
+
             let appdelegate = UIApplication.shared.delegate as! AppDelegate
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let homeViewController = mainStoryboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
