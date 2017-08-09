@@ -103,7 +103,7 @@ class HomeVC: UIViewController
             
             lblcurrentBidLength.text = "Current Bid Length: \(data["current_bid_time"]!)"
             lblLongestBid.text = "Longest Bid: \(data["longest_bid_by"]!)"
-
+            
             if ("\(data["last_bid_user_id"]!)" == "\(appDelegate.arrLoginData[kkeyuserid]!)")
             {
                 lblUserBidBank.text = "\(data["remaining_bids"] as! NSNumber)"
@@ -128,15 +128,19 @@ class HomeVC: UIViewController
             txtAmount.text = "$\((data["jackpotInfo"] as! NSDictionary).object(forKey: kkeyamount)!)"
             lblUserBidBank.text = "\((data["userInfo"] as! NSDictionary).object(forKey: kkeyavailableBids)!)"
             strjackpotUniqueId = "\((data["jackpotInfo"] as! NSDictionary).object(forKey: "uniqueId")!)"
+            appDelegate.strGameJackpotID = strjackpotUniqueId
         }
     }
     func handleGameUpdateTimerNotification(_ notification: Notification)
     {
         if let data = notification.object as? [String: AnyObject]
         {
-          //  print("handleGameUpdateTimerNotificationdata:>\(data)")
+            //  print("handleGameUpdateTimerNotificationdata:>\(data)")
             txtGameClock.text = "\(data["gameClockTime"]!)"
             txtDoomdsDayClock.text = "\(data["doomsDayClockTime"]!)"
+            
+            appDelegate.strGameClockTime  = txtGameClock.text!
+            appDelegate.strDoomdsDayClock = txtDoomdsDayClock.text!
             
             if let latestValue = data["longestBidUserName"] as? String
             {
@@ -145,7 +149,7 @@ class HomeVC: UIViewController
             else
             {
                 lblLongestBid.text = "Longest Bid: \(data["longestBidDuration"]!)"
-
+                
             }
             
             lblcurrentBidLength.text = "Current Bid Length: \(data["lastBidDuration"]!)"

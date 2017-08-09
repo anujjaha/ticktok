@@ -15,7 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var arrLoginData = NSDictionary() //Array of dictionary
     var strDeviceToken = NSString()
-
+    var strGameClockTime = String()
+    var strDoomdsDayClock = String()
+    var strGameJackpotID = String()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

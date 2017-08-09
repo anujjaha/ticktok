@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="M8K-vA-Rms">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="M8K-vA-Rms">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -1164,6 +1164,7 @@
                                                                 </userDefinedRuntimeAttributes>
                                                                 <connections>
                                                                     <outlet property="imgLock" destination="xP2-jb-IOQ" id="9OQ-2B-age"/>
+                                                                    <outlet property="lblBids" destination="U7d-wU-Mx0" id="Dh5-6G-5DO"/>
                                                                     <outlet property="lblLevel" destination="yc7-NI-AAG" id="tan-29-qlE"/>
                                                                 </connections>
                                                             </tableViewCell>
@@ -1239,6 +1240,8 @@
                         <outlet property="lblBattleNO" destination="t77-vN-ssh" id="7qI-Of-rdk"/>
                         <outlet property="lblPrizeNO" destination="4rk-6j-9J7" id="ooN-ij-qkt"/>
                         <outlet property="tblBattleBoard" destination="vCZ-3y-zLY" id="SYg-5q-Vof"/>
+                        <outlet property="txtDoomdsDayClock" destination="ZAX-Me-DR4" id="4Zg-th-dVp"/>
+                        <outlet property="txtGameClock" destination="81i-JZ-KMi" id="l9D-4O-Uxg"/>
                         <outlet property="vwBattleGame" destination="Mfa-vx-agS" id="k3O-8v-UcA"/>
                         <outlet property="vwBattleGame1" destination="2hs-zI-2mg" id="TNo-iZ-H8F"/>
                         <outlet property="vwBattleGame2" destination="J7P-oQ-upI" id="zua-2B-Ulv"/>
@@ -1792,6 +1795,8 @@
                         <outlet property="lbllongest_bid" destination="GTv-tE-CkG" id="hTV-We-8xa"/>
                         <outlet property="lblname" destination="8SX-Dk-O4V" id="Dc3-Bt-Az3"/>
                         <outlet property="segmentPG" destination="Xpp-Sr-bBj" id="k5e-J8-fS9"/>
+                        <outlet property="txtDoomdsDayClock" destination="A1g-JK-HmY" id="bFT-up-A7Q"/>
+                        <outlet property="txtGameClock" destination="dh5-XK-Xh9" id="je8-fG-ZyD"/>
                         <outlet property="vwGameState" destination="QxA-3N-8b1" id="dGY-ZR-yko"/>
                         <outlet property="vwProfile" destination="LaE-tm-cMc" id="1Uu-O2-Pqf"/>
                     </connections>
@@ -2148,6 +2153,8 @@
                         <outlet property="btnCategory" destination="GAD-hR-uC0" id="SpR-xo-uiu"/>
                         <outlet property="btnGame" destination="2gk-v9-Utw" id="9M6-cD-x2W"/>
                         <outlet property="tblLeaderBoard" destination="8YG-hF-dx2" id="86F-6B-SqU"/>
+                        <outlet property="txtDoomdsDayClock" destination="CYo-x8-PSN" id="fUj-cN-6MS"/>
+                        <outlet property="txtGameClock" destination="hni-u8-HMZ" id="hwO-zw-IVQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qLU-HV-weZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2349,6 +2356,8 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tblSetting" destination="3tC-fN-h1d" id="gPY-jo-KdY"/>
+                        <outlet property="txtDoomdsDayClock" destination="xLR-Vl-1dW" id="tXC-Ch-0bY"/>
+                        <outlet property="txtGameClock" destination="EiQ-Ak-i5s" id="SjT-43-HuZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WMp-ME-n3J" userLabel="First Responder" sceneMemberID="firstResponder"/>

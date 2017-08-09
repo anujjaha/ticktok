@@ -12,6 +12,9 @@ class SettingsVC: UIViewController
 {
     var arrSettings = NSMutableArray()
     @IBOutlet weak var tblSetting: UITableView!
+    
+    @IBOutlet weak var txtGameClock: UITextField!
+    @IBOutlet weak var txtDoomdsDayClock: UITextField!
 
     override func viewDidLoad()
     {
@@ -62,6 +65,10 @@ class SettingsVC: UIViewController
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        txtGameClock.text = appDelegate.strGameClockTime
+        txtDoomdsDayClock.text = appDelegate.strDoomdsDayClock
+        
+
     }
     /*
     // MARK: - Navigation

@@ -22,9 +22,15 @@ class BattleVC: UIViewController
     @IBOutlet weak var vwBattleGame2 : UIView!
     @IBOutlet weak var vwBattleGame3 : UIView!
     @IBOutlet weak var vwBattleGame4 : UIView!
+    
+    @IBOutlet weak var txtGameClock: UITextField!
+    @IBOutlet weak var txtDoomdsDayClock: UITextField!
+    
+    var arrBattelList = NSMutableArray()
 
     override func viewDidLoad()
     {
+        
         super.viewDidLoad()
         vwBattleList.isHidden = true
         vwBattleGame.isHidden = true
@@ -52,17 +58,168 @@ class BattleVC: UIViewController
         
         underlineAttributedString = NSAttributedString(string: "Prize: 50 Bids", attributes: underlineAttribute)
         lblPrizeNO.attributedText = underlineAttributedString
+        
+        
+        //Battel Screen
+        /*
+         export const EVT_EMIT_RESPONSE_BATTLE      						= 'response_battle';
+         export const EVT_EMIT_RESPONSE_JOIN_NORMAL_BATTLE_LEVEL 	 	= 'response_join_normal_battle_level';
+         export const EVT_EMIT_RESPONSE_PLACE_NORMAL_BATTLE_LEVEL_BID 	= 'response_place_normal_battle_level_bid';
+         export const EVT_EMIT_NO_ENOUGH_AVAILABLE_BIDS 					= 'no_enough_available_bids';
+         */
+        NotificationCenter.default.addObserver(self, selector: #selector(self.response_battle(_:)), name: NSNotification.Name(rawValue: "response_battle"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.response_join_normal_battle_level(_:)), name: NSNotification.Name(rawValue: "response_join_normal_battle_level"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.response_place_normal_battle_level_bid(_:)), name: NSNotification.Name(rawValue: "response_place_normal_battle_level_bid"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.no_enough_available_bids(_:)), name: NSNotification.Name(rawValue: "no_enough_available_bids"), object: nil)
+
+        
+        /*
+            export const EVT_EMIT_UPDATE_NORMAL_BATTLE_LEVEL_PLAYER_LIST    = 'update_normal_battle_level_player_list';
+            export const EVT_EMIT_NORMAL_BATTLE_LEVEL_TIMER                 = 'update_normal_battle_level_timer';
+            export const EVT_EMIT_NORMAL_BATTLE_GAME_STARTED                = 'normal_battle_level_game_started';
+         */
+        NotificationCenter.default.addObserver(self, selector: #selector(self.update_normal_battle_level_player_list(_:)), name: NSNotification.Name(rawValue: "update_normal_battle_level_player_list"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.update_normal_battle_level_timer(_:)), name: NSNotification.Name(rawValue: "update_normal_battle_level_timer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.normal_battle_level_game_started(_:)), name: NSNotification.Name(rawValue: "normal_battle_level_game_started"), object: nil)
+
+        
+        /*
+         export const EVT_EMIT_HIDE_NBL_PLACE_BID_BUTTON                 = 'hide_normal_battle_level_place_bid_button';
+         export const EVT_EMIT_SHOW_NBL_PLACE_BID_BUTTON                 = 'show_normal_battle_level_place_bid_button';
+         export const EVT_EMIT_NBL_GAME_FINISHED                         = 'normal_battle_level_game_finished';
+         */
+        NotificationCenter.default.addObserver(self, selector: #selector(self.hide_normal_battle_level_place_bid_button(_:)), name: NSNotification.Name(rawValue: "hide_normal_battle_level_place_bid_button"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.show_normal_battle_level_place_bid_button(_:)), name: NSNotification.Name(rawValue: "show_normal_battle_level_place_bid_button"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.normal_battle_level_game_finished(_:)), name: NSNotification.Name(rawValue: "normal_battle_level_game_finished"), object: nil)
     }
+    
+    //MARK: Hadnle Notification of battle
+    func response_battle(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("response_battle:>\(data)")
+            arrBattelList = NSMutableArray(array: (data["battleLevelsList"] as! NSArray))
+            tblBattleBoard.reloadData()
+        }
+    }
+    
+    func response_join_normal_battle_level(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("response_join_normal_battle_level:>\(data)")
+        }
+    }
+    
+    func response_place_normal_battle_level_bid(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("response_place_normal_battle_level_bid:>\(data)")
+        }
+    }
+
+    func no_enough_available_bids(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("response_place_normal_battle_level_bid:>\(data)")
+        }
+    }
+    
+    //MARK: Update Battle
+    func update_normal_battle_level_player_list(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("response_place_normal_battle_level_bid:>\(data)")
+        }
+    }
+
+    func update_normal_battle_level_timer(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("response_place_normal_battle_level_bid:>\(data)")
+        }
+    }
+    
+    func normal_battle_level_game_started(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("response_place_normal_battle_level_bid:>\(data)")
+        }
+    }
+    
+    //MARK: Hide or Show Battle
+    func hide_normal_battle_level_place_bid_button(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("response_place_normal_battle_level_bid:>\(data)")
+        }
+    }
+    func show_normal_battle_level_place_bid_button(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("response_place_normal_battle_level_bid:>\(data)")
+        }
+    }
+    func normal_battle_level_game_finished(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            print("response_place_normal_battle_level_bid:>\(data)")
+        }
+    }
+
+
     
     override func viewWillAppear(_ animated: Bool)
     {
         self.navigationController?.isNavigationBarHidden = true
+        
+        txtGameClock.text = appDelegate.strGameClockTime
+        txtDoomdsDayClock.text = appDelegate.strDoomdsDayClock
+
+        
+        
     }
 
     @IBAction func JoinBattleButtonPressed()
     {
         vwJoinBattle.isHidden = true
         vwBattleList.isHidden = false
+        
+        let myJSON = [
+            "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+            "jackpotUniqueId" : appDelegate.strGameJackpotID
+        ]
+        
+        //  print("data:>\(myJSON)")
+        SocketIOManager.sharedInstance.socket.emitWithAck("request_battle",  myJSON).timingOut(after: 0) {data in
+        }
+        
+     //   SocketIOManager.sharedInstance.socket.emitWithAck("needsAck", "test").onAck {data in
+          //  print("got ack with data: (data)")
+        //}
+        
+              
+        //        SocketIOManager.sharedInstance.socket.emitWithAck("request_battle", myJSON).timingOut(after: 0, callback: { data in
+//            print("CONNECTED FOR SURE")
+//            
+//            if (data.count > 0)
+//            {
+//                print("data:>\(data)")
+//            }
+//        })
+
     }
 
     override func didReceiveMemoryWarning()
@@ -87,12 +244,16 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 5
+        return self.arrBattelList.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BattleCell") as! BattleCell
-        cell.lblLevel.text = "Level \(indexPath.row+1)"
+        
+        let dict = self.arrBattelList[indexPath.row] as! NSDictionary
+        cell.lblLevel.text = "\(dict["levelName"]!)"
+        
+        cell.lblBids.text = "Jackpot: \(dict["prizeValue"]!) Bids"
         
         if (indexPath.row > 0)
         {
@@ -119,12 +280,23 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
     {
         vwBattleList.isHidden = true
         vwBattleGame.isHidden = false
+        let dict = self.arrBattelList[indexPath.row] as! NSDictionary
+
+        let myJSON = [
+            "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+            "jackpotUniqueId" : appDelegate.strGameJackpotID,
+            "levelUniqueId" : "\(dict["uniqueId"]!)",
+            "battleType" : "NORMAL"
+        ]
+        SocketIOManager.sharedInstance.socket.emitWithAck("request_join_normal_battle_level",  myJSON).timingOut(after: 0) {data in
+        }
     }
 }
 class BattleCell: UITableViewCell
 {
     @IBOutlet weak var lblLevel : UILabel!
     @IBOutlet weak var imgLock : UIImageView!
+    @IBOutlet weak var lblBids : UILabel!
 }
 class UnderlinedLabel: UILabel
 {

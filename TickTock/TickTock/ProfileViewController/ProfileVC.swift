@@ -26,6 +26,8 @@ class ProfileVC: UIViewController
     @IBOutlet weak var lblcountry : UILabel!
     @IBOutlet weak var lblEmail : UILabel!
 
+    @IBOutlet weak var txtGameClock: UITextField!
+    @IBOutlet weak var txtDoomdsDayClock: UITextField!
 
     
     override func viewDidLoad()
@@ -43,7 +45,11 @@ class ProfileVC: UIViewController
     override func viewWillAppear(_ animated: Bool)
     {
         self.navigationController?.isNavigationBarHidden = true
-        self.getProfileData()
+        txtGameClock.text = appDelegate.strGameClockTime
+        txtDoomdsDayClock.text = appDelegate.strDoomdsDayClock
+        
+
+      //  self.getProfileData()
     }
 
     func getProfileData()
