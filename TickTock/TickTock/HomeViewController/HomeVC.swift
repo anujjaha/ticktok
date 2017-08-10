@@ -82,6 +82,9 @@ class HomeVC: UIViewController
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameFinishNotification(_:)), name: NSNotification.Name(rawValue: "callGameFinishNotification"), object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameQuitNotification(_:)), name: NSNotification.Name(rawValue: "callGameQuitNotification"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.update_available_bid_after_battle_win(_:)), name: NSNotification.Name(rawValue: "update_available_bid_after_battle_win"), object: nil)
+
 
         SocketIOManager.sharedInstance.establishConnection()
     }
@@ -203,6 +206,18 @@ class HomeVC: UIViewController
     }
     
     func handleGameUserBidsNotification(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            //print("handleGameUserBidsNotificationdata:>\(data)")
+            if(data.count > 0)
+            {
+                lblUserBidBank.text = "\(data[kkeyavailableBids]!)"
+            }
+        }
+    }
+
+    func update_available_bid_after_battle_win(_ notification: Notification)
     {
         if let data = notification.object as? [String: AnyObject]
         {

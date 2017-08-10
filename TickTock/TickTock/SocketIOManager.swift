@@ -34,6 +34,10 @@ class SocketIOManager: NSObject
             
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "callGameUpdateTimerNotification"), object: dataArray[0] as? [String: AnyObject])
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "callGameUpdateTimerofBattle"), object: dataArray[0] as? [String: AnyObject])
+
         }
         
         socket.on("updated_jackpot_data") { dataArray, ack in
@@ -71,8 +75,13 @@ class SocketIOManager: NSObject
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "callGameFinishNotification"), object: dataArray[0] as? [String: AnyObject])
         }
-        
-        
+                
+        socket.on("update_available_bid_after_battle_win") { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "update_available_bid_after_battle_win"), object: dataArray[0] as? [String: AnyObject])
+        }
+
         //Battel Screen
         /*
          export const EVT_EMIT_RESPONSE_BATTLE      						= 'response_battle';
@@ -89,20 +98,20 @@ class SocketIOManager: NSObject
 
         socket.on("response_join_normal_battle_level") { dataArray, ack in
             // print(dataArray)
-            
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "response_join_normal_battle_level"), object: dataArray[0] as? [String: AnyObject])
-
         }
 
-        
         socket.on("response_place_normal_battle_level_bid") { dataArray, ack in
             // print(dataArray)
-            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "response_place_normal_battle_level_bid"), object: dataArray[0] as? [String: AnyObject])
+
         }
         socket.on("no_enough_available_bids") { dataArray, ack in
             // print(dataArray)
-            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "no_enough_available_bids"), object: nil)
         }
 
         /*
@@ -113,17 +122,19 @@ class SocketIOManager: NSObject
          */
         socket.on("update_normal_battle_level_player_list") { dataArray, ack in
             // print(dataArray)
-            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "update_normal_battle_level_player_list"), object: dataArray[0] as? [String: AnyObject])
         }
 
         socket.on("update_normal_battle_level_timer") { dataArray, ack in
-            // print(dataArray)
-            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "update_normal_battle_level_timer"), object: dataArray[0] as? [String: AnyObject])
         }
         
         socket.on("normal_battle_level_game_started") { dataArray, ack in
             // print(dataArray)
-            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "normal_battle_level_game_started"), object: dataArray[0] as? [String: AnyObject])
         }
         
         /*
@@ -134,17 +145,22 @@ class SocketIOManager: NSObject
          */
         socket.on("hide_normal_battle_level_place_bid_button") { dataArray, ack in
             // print(dataArray)
-            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "hide_normal_battle_level_place_bid_button"), object: nil)
         }
 
         socket.on("show_normal_battle_level_place_bid_button") { dataArray, ack in
-            // print(dataArray)
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "show_normal_battle_level_place_bid_button"), object: nil)
             
         }
 
         socket.on("normal_battle_level_game_finished") { dataArray, ack in
             // print(dataArray)
             
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "normal_battle_level_game_finished"), object: nil)
+
         }
 
 //        socket.on("game_updates") { dataArray, ack in
