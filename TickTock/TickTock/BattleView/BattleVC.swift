@@ -124,8 +124,17 @@ class BattleVC: UIViewController
         NotificationCenter.default.addObserver(self, selector: #selector(self.show_normal_battle_level_place_bid_button(_:)), name: NSNotification.Name(rawValue: "show_normal_battle_level_place_bid_button"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.normal_battle_level_game_finished(_:)), name: NSNotification.Name(rawValue: "normal_battle_level_game_finished"), object: nil)
         
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.update_normal_battle_jackpot_amount(_:)), name: NSNotification.Name(rawValue: "update_normal_battle_jackpot_amount"), object: nil)
+
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.CallUpdateTimer(_:)), name: NSNotification.Name(rawValue: "callGameUpdateTimerofBattle"), object: nil)
 
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.normal_battle_main_jackpot_finished(_:)), name: NSNotification.Name(rawValue: "normal_battle_main_jackpot_finished"), object: nil)
+
+        
+        
     }
     
     //MARK: Hadnle Notification of battle
@@ -133,7 +142,7 @@ class BattleVC: UIViewController
     {
         if let data = notification.object as? [String: AnyObject]
         {
-            print("response_battle:>\(data)")
+           // print("response_battle:>\(data)")
             arrBattelList = NSMutableArray(array: (data["battleLevelsList"] as! NSArray))
             tblBattleBoard.reloadData()
         }
@@ -193,22 +202,22 @@ class BattleVC: UIViewController
                 case 0:
                     self.vwBattleGame1.isHidden = false
                     self.lblPlayer1Name.text = "\(dict["name"]!)"
-                    self.lblPlayer1Bids.text = "\(dict["totalBids"]!) Bids"
+                    self.lblPlayer1Bids.text = "\(dict["remainingBids"]!) Bids"
                     break
                 case 1:
                     self.vwBattleGame2.isHidden = false
                     self.lblPlayer2Name.text = "\(dict["name"]!)"
-                    self.lblPlayer2Bids.text = "\(dict["totalBids"]!) Bids"
+                    self.lblPlayer2Bids.text = "\(dict["remainingBids"]!) Bids"
                     break
                 case 2:
                     self.vwBattleGame3.isHidden = false
                     self.lblPlayer3Name.text = "\(dict["name"]!)"
-                    self.lblPlayer3Bids.text = "\(dict["totalBids"]!) Bids"
+                    self.lblPlayer3Bids.text = "\(dict["remainingBids"]!) Bids"
                     break
                 case 3:
                     self.vwBattleGame4.isHidden = false
                     self.lblPlayer4Name.text = "\(dict["name"]!)"
-                    self.lblPlayer4Bids.text = "\(dict["totalBids"]!) Bids"
+                    self.lblPlayer4Bids.text = "\(dict["remainingBids"]!) Bids"
                     break
                 default:
                     break
@@ -230,7 +239,7 @@ class BattleVC: UIViewController
     {
         if let data = notification.object as? [String: AnyObject]
         {
-            print("response_place_normal_battle_level_bid:>\(data)")
+            //print("response_place_normal_battle_level_bid:>\(data)")
             lblMyBids.text = "My Battle Bids: \(data["availableBids"]!)"
         }
     }
@@ -247,7 +256,7 @@ class BattleVC: UIViewController
     {
         if let data = notification.object as? [String: AnyObject]
         {
-            print("response_place_normal_battle_level_bid:>\(data)")
+          //  print("response_place_normal_battle_level_bid:>\(data)")
             arrPlayers = NSMutableArray(array: (data["players"] as! NSArray))
 
             let iKeyuserid = (appDelegate.arrLoginData[kkeyuser_id]!) as! Int
@@ -268,22 +277,22 @@ class BattleVC: UIViewController
                 case 0:
                     self.vwBattleGame1.isHidden = false
                     self.lblPlayer1Name.text = "\(dict["name"]!)"
-                    self.lblPlayer1Bids.text = "\(dict["totalBids"]!) Bids"
+                    self.lblPlayer1Bids.text = "\(dict["remainingBids"]!) Bids"
                     break
                 case 1:
                     self.vwBattleGame2.isHidden = false
                     self.lblPlayer2Name.text = "\(dict["name"]!)"
-                    self.lblPlayer2Bids.text = "\(dict["totalBids"]!) Bids"
+                    self.lblPlayer2Bids.text = "\(dict["remainingBids"]!) Bids"
                     break
                 case 2:
                     self.vwBattleGame3.isHidden = false
                     self.lblPlayer3Name.text = "\(dict["name"]!)"
-                    self.lblPlayer3Bids.text = "\(dict["totalBids"]!) Bids"
+                    self.lblPlayer3Bids.text = "\(dict["remainingBids"]!) Bids"
                     break
                 case 3:
                     self.vwBattleGame4.isHidden = false
                     self.lblPlayer4Name.text = "\(dict["name"]!)"
-                    self.lblPlayer4Bids.text = "\(dict["totalBids"]!) Bids"
+                    self.lblPlayer4Bids.text = "\(dict["remainingBids"]!) Bids"
                     break
                 default:
                     break
@@ -306,7 +315,7 @@ class BattleVC: UIViewController
              }]
              */
             
-            print("update_normal_battle_level_timer:>\(data)")
+          //  print("update_normal_battle_level_timer:>\(data)")
             txtBattleClock.text = "\(data["battleClock"]!)"
             if let latestValue = data["longestBidUserName"] as? String
             {
@@ -334,34 +343,66 @@ class BattleVC: UIViewController
     {
         if let data = notification.object as? [String: AnyObject]
         {
-            print("normal_battle_level_game_started:>\(data)")
+           // print("normal_battle_level_game_started:>\(data)")
         }
+    }
+    
+    func update_normal_battle_jackpot_amount(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            //print("handleGameUserBidsNotificationdata:>\(data)")
+            if(data.count > 0)
+            {
+                txtJackpotAmount.text = "$\(data[kkeyamount] as! String)"
+            }
+        }
+    }
+
+    func normal_battle_main_jackpot_finished(_ notification: Notification)
+    {
+        self.tabBarController?.selectedIndex = 0
     }
     
     //MARK: Hide or Show Battle Bid Button
     func hide_normal_battle_level_place_bid_button(_ notification: Notification)
     {
-        print("hide_normal_battle_level_place_bid_button:")
+      //  print("hide_normal_battle_level_place_bid_button:")
         btnBid.isEnabled = false
         btnBid.backgroundColor = UIColor.darkGray
     }
     func show_normal_battle_level_place_bid_button(_ notification: Notification)
     {
-        print("hide_normal_battle_level_place_bid_button:")
+       // print("hide_normal_battle_level_place_bid_button:")
         
         btnBid.backgroundColor = UIColor.black
         btnBid.isEnabled = true
     }
     func normal_battle_level_game_finished(_ notification: Notification)
     {
-        if let data = notification.object as? [String: AnyObject]
-        {
-            print("normal_battle_level_game_finished:>\(data)")
+        vwJoinBattle.isHidden = true
+        vwBattleGame.isHidden = true
+        vwBattleList.isHidden = false
+        
+        self.vwBattleGame1.isHidden = true
+        self.vwBattleGame2.isHidden = true
+        self.vwBattleGame3.isHidden = true
+        self.vwBattleGame4.isHidden = true
+
+        
+        let myJSON = [
+            "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+            "jackpotUniqueId" : appDelegate.strGameJackpotID
+        ]
+        
+        //  print("data:>\(myJSON)")
+        SocketIOManager.sharedInstance.socket.emitWithAck("request_battle",  myJSON).timingOut(after: 0) {data in
         }
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
+        appDelegate.bisHomeScreen = false
         self.navigationController?.isNavigationBarHidden = true
         
         txtGameClock.text = appDelegate.strGameClockTime
@@ -471,6 +512,17 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
         
         cell.lblBids.text = "Jackpot: \(dict["prizeValue"]!) Bids"
         
+        if dict["isLocked"] as! Bool == true
+        {
+            cell.imgLock.isHidden = false
+            cell.btnJoin.isHidden = true
+        }
+        else
+        {
+            cell.imgLock.isHidden = true
+            cell.btnJoin.isHidden = false
+        }
+        /*
         if (indexPath.row > 0)
         {
             cell.imgLock.isHidden = false
@@ -479,6 +531,7 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
         {
             cell.imgLock.isHidden = true
         }
+ */
         cell.btnJoin.tag = indexPath.row
         cell.btnJoin.addTarget(self, action: #selector(btnJoinPressed(sender:)), for: .touchUpInside)
 

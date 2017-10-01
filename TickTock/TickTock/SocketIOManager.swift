@@ -15,7 +15,7 @@ class SocketIOManager: NSObject
 //    var socket = SocketIOClient(socketURL: URL(string: "http://35.154.46.190:1337")!, config: [.log(true), .forcePolling(true), .connectParams(["__sails_io_sdk_version":"0.11.0"])]) \(appDelegate.arrLoginData[kkeyuser_id]!)
 //    var socket = SocketIOClient(socketURL: URL(string: "http://13.59.71.92:9000")!, config: [.log(true), .forcePolling(true),.forceWebsockets(true), .path("/ticktock/socket.io"),.connectParams(["userId":"3"])])
 
-    var socket = SocketIOClient(socketURL: URL(string: "http://13.59.71.92:9000")!, config: [.log(true), .forcePolling(true),.forceWebsockets(true),.nsp("/jackpot"), .path("/ticktock/socket.io"),.connectParams(["userId":"\(appDelegate.arrLoginData[kkeyuser_id]!)"])])
+    var socket = SocketIOClient(socketURL: URL(string: "http://18.221.196.29:9000")!, config: [.log(true), .forcePolling(true),.forceWebsockets(true),.nsp("/jackpot"), .path("/ticktock/socket.io"),.connectParams(["userId":"\(appDelegate.arrLoginData[kkeyuser_id]!)"])])
     
     override init()
     {
@@ -32,12 +32,16 @@ class SocketIOManager: NSObject
         socket.on("update_jackpot_timer") { dataArray, ack in
            // print(dataArray)
             
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "callGameUpdateTimerNotification"), object: dataArray[0] as? [String: AnyObject])
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "callGameUpdateTimerofBattle"), object: dataArray[0] as? [String: AnyObject])
-
+            if appDelegate.bisHomeScreen == true
+            {
+                NotificationCenter.default
+                    .post(name: Notification.Name(rawValue: "callGameUpdateTimerNotification"), object: dataArray[0] as? [String: AnyObject])
+            }
+            else
+            {
+                NotificationCenter.default
+                    .post(name: Notification.Name(rawValue: "callGameUpdateTimerofBattle"), object: dataArray[0] as? [String: AnyObject])
+            }
         }
         
         socket.on("updated_jackpot_data") { dataArray, ack in
@@ -163,6 +167,30 @@ class SocketIOManager: NSObject
 
         }
 
+        socket.on("update_jackpot_amount") { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "update_jackpot_amount"), object: dataArray[0] as? [String: AnyObject])
+        }
+        
+        socket.on("update_normal_battle_jackpot_amount")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "update_normal_battle_jackpot_amount"), object: dataArray[0] as? [String: AnyObject])
+        }
+        
+        
+        socket.on("normal_battle_main_jackpot_finished") { dataArray, ack in
+            // print(dataArray)
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "normal_battle_main_jackpot_finished"), object: nil)
+        }
+
+        
+        
+        
+        
 //        socket.on("game_updates") { dataArray, ack in
 //           
 //            print("data:>\(dataArray)")

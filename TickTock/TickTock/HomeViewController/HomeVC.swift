@@ -85,7 +85,10 @@ class HomeVC: UIViewController
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.update_available_bid_after_battle_win(_:)), name: NSNotification.Name(rawValue: "update_available_bid_after_battle_win"), object: nil)
 
+        NotificationCenter.default.addObserver(self, selector: #selector(self.update_jackpot_amount(_:)), name: NSNotification.Name(rawValue: "update_jackpot_amount"), object: nil)
 
+
+        
         SocketIOManager.sharedInstance.establishConnection()
     }
     
@@ -93,6 +96,7 @@ class HomeVC: UIViewController
     
     override func viewWillAppear(_ animated: Bool)
     {
+        appDelegate.bisHomeScreen = true
         self.navigationController?.isNavigationBarHidden = true
     }
 
@@ -229,7 +233,18 @@ class HomeVC: UIViewController
         }
     }
 
-    
+    func update_jackpot_amount(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            //print("handleGameUserBidsNotificationdata:>\(data)")
+            if(data.count > 0)
+            {
+                txtAmount.text = "$\(data[kkeyamount] as! String)"
+            }
+        }
+    }
+
     
     //MARK: Extra Methods
     func setViewLayoutwithData()
