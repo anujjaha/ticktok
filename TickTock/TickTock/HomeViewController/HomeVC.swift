@@ -87,6 +87,8 @@ class HomeVC: UIViewController
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.update_jackpot_amount(_:)), name: NSNotification.Name(rawValue: "update_jackpot_amount"), object: nil)
 
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.update_home_jackpot_battle_info(_:)), name: NSNotification.Name(rawValue: "update_home_jackpot_battle_info"), object: nil)
 
         
         SocketIOManager.sharedInstance.establishConnection()
@@ -232,6 +234,19 @@ class HomeVC: UIViewController
             }
         }
     }
+    
+    func update_home_jackpot_battle_info(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            if(data.count > 0)
+            {
+                lblUserBattleWon.text = "\(data["battleWins"]!)"
+                lblUserBattleStreak.text = "\(data["battleStreak"]!)"
+            }
+        }
+    }
+    
 
     func update_jackpot_amount(_ notification: Notification)
     {

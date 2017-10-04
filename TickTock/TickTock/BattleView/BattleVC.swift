@@ -380,24 +380,53 @@ class BattleVC: UIViewController
     }
     func normal_battle_level_game_finished(_ notification: Notification)
     {
-        vwJoinBattle.isHidden = true
-        vwBattleGame.isHidden = true
-        vwBattleList.isHidden = false
-        
-        self.vwBattleGame1.isHidden = true
-        self.vwBattleGame2.isHidden = true
-        self.vwBattleGame3.isHidden = true
-        self.vwBattleGame4.isHidden = true
+        var strmessage = String()
+        if let data = notification.object as? [String: AnyObject]
+        {
+            if(data.count > 0)
+            {
+                let lastBidWinner = (data["lastBidWinner"] as! NSDictionary)
+                let longestBidWinner = (data["longestBidWinner"] as! NSDictionary)
 
-        
-        let myJSON = [
-            "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
-            "jackpotUniqueId" : appDelegate.strGameJackpotID
-        ]
-        
-        //  print("data:>\(myJSON)")
-        SocketIOManager.sharedInstance.socket.emitWithAck("request_battle",  myJSON).timingOut(after: 0) {data in
+                strmessage = "Battle Won info:\nLastBidWinner: \((lastBidWinner["name"]!))\nLongestBidWinner: \((longestBidWinner["name"]!))"
+            }
+            else
+            {
+                strmessage = "Battle finished"
+            }
         }
+        else
+        {
+            strmessage = "Battle finished"
+        }
+        
+        let alertView = UIAlertController(title: Application_Name, message: strmessage, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default)
+        { (action) in
+            
+            self.vwJoinBattle.isHidden = true
+            self.vwBattleGame.isHidden = true
+            self.vwBattleList.isHidden = false
+            
+            self.vwBattleGame1.isHidden = true
+            self.vwBattleGame2.isHidden = true
+            self.vwBattleGame3.isHidden = true
+            self.vwBattleGame4.isHidden = true
+            
+            
+            let myJSON = [
+                "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                "jackpotUniqueId" : appDelegate.strGameJackpotID
+            ]
+            
+            //  print("data:>\(myJSON)")
+            SocketIOManager.sharedInstance.socket.emitWithAck("request_battle",  myJSON).timingOut(after: 0) {data in
+            }
+        }
+        alertView.addAction(OKAction)
+        
+        self.present(alertView, animated: true, completion: nil)
+
     }
     
     override func viewWillAppear(_ animated: Bool)

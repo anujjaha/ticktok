@@ -112,6 +112,13 @@ class SocketIOManager: NSObject
                 .post(name: Notification.Name(rawValue: "response_place_normal_battle_level_bid"), object: dataArray[0] as? [String: AnyObject])
 
         }
+        
+        socket.on("update_home_jackpot_battle_info") { dataArray, ack in
+            // print(dataArray)
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "update_home_jackpot_battle_info"), object: dataArray[0] as? [String: AnyObject])
+        }
+
         socket.on("no_enough_available_bids") { dataArray, ack in
             // print(dataArray)
             NotificationCenter.default
@@ -163,7 +170,7 @@ class SocketIOManager: NSObject
             // print(dataArray)
             
             NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "normal_battle_level_game_finished"), object: nil)
+                .post(name: Notification.Name(rawValue: "normal_battle_level_game_finished"), object: dataArray[0] as? [String: AnyObject])
 
         }
 
