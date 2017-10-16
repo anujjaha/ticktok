@@ -22,7 +22,7 @@ class SocketIOManager: NSObject
         super.init()
         
         socket.on("me_joined") { dataArray, ack in
-           // print(dataArray)
+            // print(dataArray)
             //print(dataArray.count)
             
             NotificationCenter.default
@@ -194,8 +194,23 @@ class SocketIOManager: NSObject
                 .post(name: Notification.Name(rawValue: "normal_battle_main_jackpot_finished"), object: nil)
         }
 
+       // normal_battle_game_about_to_start
+        socket.on("normal_battle_game_about_to_start")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "normal_battle_game_about_to_start"), object: dataArray[0] as? [String: AnyObject])
+        }
         
-        
+        //game_finished
+        socket.on("game_finished")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "game_finished"), object: dataArray[0] as? [String: AnyObject])
+        }
+
+
         
         
 //        socket.on("game_updates") { dataArray, ack in

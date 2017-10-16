@@ -49,9 +49,12 @@ class BattleVC: UIViewController
     @IBOutlet weak var lblCurrentBid: UILabel!
     @IBOutlet weak var lblCurrentBidLength: UILabel!
     @IBOutlet weak var txtJackpotAmount: UITextField!
-    @IBOutlet weak var btnBid : UIButton!
-
     
+    @IBOutlet weak var btnBid : UIButton!
+    @IBOutlet weak var btnBack : UIButton!
+    @IBOutlet weak var vwTimer : UIView!
+    @IBOutlet weak var lbltimerSeconds: UILabel!
+
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -79,6 +82,9 @@ class BattleVC: UIViewController
         self.vwBattleGame2.isHidden = true
         self.vwBattleGame3.isHidden = true
         self.vwBattleGame4.isHidden = true
+        
+        self.vwTimer.isHidden = true
+        
 
         
         let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
@@ -133,8 +139,11 @@ class BattleVC: UIViewController
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.normal_battle_main_jackpot_finished(_:)), name: NSNotification.Name(rawValue: "normal_battle_main_jackpot_finished"), object: nil)
 
+        //normal_battle_game_about_to_start
+        NotificationCenter.default.addObserver(self, selector: #selector(self.normal_battle_game_about_to_start(_:)), name: NSNotification.Name(rawValue: "normal_battle_game_about_to_start"), object: nil)
+
         
-        
+        btnBack.isHidden = true
     }
     
     //MARK: Hadnle Notification of battle
@@ -344,6 +353,11 @@ class BattleVC: UIViewController
         if let data = notification.object as? [String: AnyObject]
         {
            // print("normal_battle_level_game_started:>\(data)")
+            
+            vwTimer.isHidden = true
+            vwBattleGame.isHidden = false
+            vwJoinBattle.isHidden = true
+            vwBattleList.isHidden = true
         }
     }
     
@@ -385,19 +399,23 @@ class BattleVC: UIViewController
         {
             if(data.count > 0)
             {
-                let lastBidWinner = (data["lastBidWinner"] as! NSDictionary)
-                let longestBidWinner = (data["longestBidWinner"] as! NSDictionary)
-
-                strmessage = "Battle Won info:\nLastBidWinner: \((lastBidWinner["name"]!))\nLongestBidWinner: \((longestBidWinner["name"]!))"
+                if let lastBidWinner = (data["lastBidWinner"] as? NSDictionary), let longestBidWinner = (data["longestBidWinner"] as? NSDictionary)
+                {
+                    strmessage = "Battle Won info:\nLastBidWinner: \((lastBidWinner["name"]!))\nLongestBidWinner: \((longestBidWinner["name"]!))"
+                }
+                else
+                {
+                    strmessage = "Battle Finished"
+                }
             }
             else
             {
-                strmessage = "Battle finished"
+                strmessage = "Battle Finished"
             }
         }
         else
         {
-            strmessage = "Battle finished"
+            strmessage = "Battle Finished"
         }
         
         let alertView = UIAlertController(title: Application_Name, message: strmessage, preferredStyle: .alert)
@@ -428,7 +446,21 @@ class BattleVC: UIViewController
         self.present(alertView, animated: true, completion: nil)
 
     }
-    
+    func normal_battle_game_about_to_start(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            if(data.count > 0)
+            {
+                vwBattleList.isHidden = true
+                vwBattleGame.isHidden = true
+                vwJoinBattle.isHidden = true
+                vwTimer.isHidden = false
+                
+                lbltimerSeconds.text = "\(data["time"] as! Int)"
+            }
+        }
+    }
     override func viewWillAppear(_ animated: Bool)
     {
         appDelegate.bisHomeScreen = false
@@ -487,6 +519,7 @@ class BattleVC: UIViewController
         SocketIOManager.sharedInstance.socket.emitWithAck("request_join_normal_battle_level",  myJSON).timingOut(after: 0) {data in
         }
         
+        btnBack.isHidden = false
         vwBattleList.isHidden = true
         vwBattleGame.isHidden = false
     }
@@ -514,6 +547,14 @@ class BattleVC: UIViewController
             }
         }
     }
+    
+    @IBAction func btnBackAction()
+    {
+        vwBattleList.isHidden = false
+        vwBattleGame.isHidden = true
+        btnBack.isHidden = true
+    }
+
 
     /*
     // MARK: - Navigation
@@ -540,6 +581,8 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
         cell.lblLevel.text = "\(dict["levelName"]!)"
         
         cell.lblBids.text = "Jackpot: \(dict["prizeValue"]!) Bids"
+        cell.selectionStyle = .none
+        
         
         if dict["isLocked"] as! Bool == true
         {
@@ -578,17 +621,26 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        vwBattleList.isHidden = true
-        vwBattleGame.isHidden = false
         let dict = self.arrBattelList[indexPath.row] as! NSDictionary
-
-        let myJSON = [
-            "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
-            "jackpotUniqueId" : appDelegate.strGameJackpotID,
-            "levelUniqueId" : "\(dict["uniqueId"]!)",
-            "battleType" : "NORMAL"
-        ]
-        SocketIOManager.sharedInstance.socket.emitWithAck("request_join_normal_battle_level",  myJSON).timingOut(after: 0) {data in
+        if dict["isLocked"] as! Bool == true
+        {
+            App_showAlert(withMessage: "You can not enter in locked battle", inView: self)
+        }
+        else
+        {
+            btnBack.isHidden = false
+            vwBattleList.isHidden = true
+            vwBattleGame.isHidden = false
+            let dict = self.arrBattelList[indexPath.row] as! NSDictionary
+            
+            let myJSON = [
+                "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                "jackpotUniqueId" : appDelegate.strGameJackpotID,
+                "levelUniqueId" : "\(dict["uniqueId"]!)",
+                "battleType" : "NORMAL"
+            ]
+            SocketIOManager.sharedInstance.socket.emitWithAck("request_join_normal_battle_level",  myJSON).timingOut(after: 0) {data in
+            }
         }
     }
 }

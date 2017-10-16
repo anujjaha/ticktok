@@ -91,6 +91,10 @@ class HomeVC: UIViewController
         NotificationCenter.default.addObserver(self, selector: #selector(self.update_home_jackpot_battle_info(_:)), name: NSNotification.Name(rawValue: "update_home_jackpot_battle_info"), object: nil)
 
         
+        //game_finished
+        NotificationCenter.default.addObserver(self, selector: #selector(self.game_finished(_:)), name: NSNotification.Name(rawValue: "game_finished"), object: nil)
+
+        
         SocketIOManager.sharedInstance.establishConnection()
     }
     
@@ -259,8 +263,54 @@ class HomeVC: UIViewController
             }
         }
     }
+ 
+    //MARK: game_finished
+    func game_finished(_ notification: Notification)
+    {
+        var strmessage = String()
 
-    
+        if let data = notification.object as? [String: AnyObject]
+        {
+            if(data.count > 0)
+            {
+                if let winnerData = (data["winnerData"] as? NSDictionary)
+                {
+                    if let lastBidWinner = (winnerData["lastBidUser"] as? NSDictionary), let longestBidWinner = (winnerData["longestBidUser"] as? NSDictionary)
+                    {
+                        strmessage = "Game Won info:\nLastBidWinner: \((lastBidWinner["name"]!))\nLongestBidWinner: \((longestBidWinner["name"]!))"
+                    }
+                    else
+                    {
+                        strmessage = "Game Finished"
+                    }
+                }
+                else
+                {
+                    strmessage = "Game Finished"
+                }
+
+            }
+            else
+            {
+                strmessage = "Game Finished"
+            }
+        }
+        else
+        {
+            strmessage = "Game Finished"
+        }
+
+        let alertView = UIAlertController(title: Application_Name, message: strmessage, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default)
+        { (action) in
+            
+            SocketIOManager.sharedInstance.closeConnection()
+            SocketIOManager.sharedInstance.establishConnection()
+        }
+        alertView.addAction(OKAction)
+        self.present(alertView, animated: true, completion: nil)
+    }
+
     //MARK: Extra Methods
     func setViewLayoutwithData()
     {
