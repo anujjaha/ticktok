@@ -817,7 +817,7 @@
                                                 <rect key="frame" x="0.0" y="58" width="320" height="332"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bid Battles" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdR-Lq-84r">
-                                                        <rect key="frame" x="120.5" y="8" width="80" height="21"/>
+                                                        <rect key="frame" x="120" y="8" width="80" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="21" id="9DG-I9-ovo"/>
                                                         </constraints>
@@ -826,7 +826,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DDI-BT-79V">
-                                                        <rect key="frame" x="120.5" y="33" width="80" height="2"/>
+                                                        <rect key="frame" x="120" y="33" width="80" height="2"/>
                                                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="2" id="FeB-pP-RBF"/>
@@ -2890,19 +2890,44 @@
                                                             <constraint firstItem="GaS-XC-Kj0" firstAttribute="centerX" secondItem="0EF-gW-J5X" secondAttribute="centerX" id="wpd-8r-p8h"/>
                                                         </constraints>
                                                     </view>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vxo-nT-grm">
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="204"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="je3-Ve-gtw">
+                                                                <rect key="frame" x="8" y="30" width="304" height="144"/>
+                                                                <string key="text">No Active Jackpot at the Moment.
+Please check again after few minutes.</string>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="je3-Ve-gtw" secondAttribute="trailing" constant="8" id="3ec-cz-vCA"/>
+                                                            <constraint firstItem="je3-Ve-gtw" firstAttribute="leading" secondItem="Vxo-nT-grm" secondAttribute="leading" constant="8" id="WTL-Pi-ZsH"/>
+                                                            <constraint firstItem="je3-Ve-gtw" firstAttribute="centerX" secondItem="Vxo-nT-grm" secondAttribute="centerX" id="Y1I-qP-OgL"/>
+                                                            <constraint firstItem="je3-Ve-gtw" firstAttribute="top" secondItem="Vxo-nT-grm" secondAttribute="top" constant="30" id="nek-xK-Mtc"/>
+                                                            <constraint firstItem="je3-Ve-gtw" firstAttribute="centerY" secondItem="Vxo-nT-grm" secondAttribute="centerY" id="ufT-Tw-iaG"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstItem="0EF-gW-J5X" firstAttribute="top" secondItem="h8d-uf-U7x" secondAttribute="top" id="1SL-eT-BLg"/>
                                                     <constraint firstItem="ic4-I2-hQn" firstAttribute="leading" secondItem="h8d-uf-U7x" secondAttribute="leading" constant="8" id="2dI-TI-o9q"/>
                                                     <constraint firstAttribute="trailing" secondItem="ic4-I2-hQn" secondAttribute="trailing" constant="8" id="3Lj-Dl-afH"/>
+                                                    <constraint firstItem="Vxo-nT-grm" firstAttribute="leading" secondItem="h8d-uf-U7x" secondAttribute="leading" id="5pt-Dw-wWB"/>
                                                     <constraint firstAttribute="trailing" secondItem="0EF-gW-J5X" secondAttribute="trailing" id="FBN-3d-m8D"/>
                                                     <constraint firstItem="r3b-pH-hkm" firstAttribute="leading" secondItem="h8d-uf-U7x" secondAttribute="leading" constant="40" id="FmJ-cY-9km"/>
                                                     <constraint firstAttribute="trailing" secondItem="r3b-pH-hkm" secondAttribute="trailing" constant="40" id="KcS-Rg-FPX"/>
                                                     <constraint firstItem="r3b-pH-hkm" firstAttribute="top" secondItem="ic4-I2-hQn" secondAttribute="bottom" constant="8" id="M7M-Lv-c6w"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Vxo-nT-grm" secondAttribute="trailing" id="YEs-gw-CR8"/>
                                                     <constraint firstAttribute="bottom" secondItem="0EF-gW-J5X" secondAttribute="bottom" id="aX8-3X-F78"/>
+                                                    <constraint firstItem="Vxo-nT-grm" firstAttribute="top" secondItem="h8d-uf-U7x" secondAttribute="top" id="cuE-bd-RCa"/>
                                                     <constraint firstAttribute="height" constant="204" id="iPs-pt-0E1"/>
                                                     <constraint firstItem="ic4-I2-hQn" firstAttribute="top" secondItem="h8d-uf-U7x" secondAttribute="top" constant="8" id="tQe-xs-SNQ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Vxo-nT-grm" secondAttribute="bottom" id="xiH-rw-64F"/>
                                                     <constraint firstItem="0EF-gW-J5X" firstAttribute="leading" secondItem="h8d-uf-U7x" secondAttribute="leading" id="yPp-a6-PYS"/>
                                                 </constraints>
                                             </view>
@@ -3094,12 +3119,13 @@
                         <outlet property="txtGameClock" destination="8Qc-Nr-1Yh" id="MUj-96-D0T"/>
                         <outlet property="vwGame" destination="ic4-I2-hQn" id="NjC-DB-N0W"/>
                         <outlet property="vwGameCompleted" destination="0EF-gW-J5X" id="a1h-AN-VEu"/>
+                        <outlet property="vwNoGame" destination="Vxo-nT-grm" id="Ech-9I-fJ7"/>
                         <outlet property="vwPlayers" destination="r3b-pH-hkm" id="pIL-L2-epx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8CA-au-IGM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2298.4000000000001" y="-315.29235382308849"/>
+            <point key="canvasLocation" x="2296.875" y="-315.84507042253523"/>
         </scene>
         <!--HomeNavigation-->
         <scene sceneID="FeN-xz-dX4">

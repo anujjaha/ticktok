@@ -45,6 +45,10 @@ class HomeVC: UIViewController
     var gameId = Int()
     var strjackpotUniqueId = String()
     
+    @IBOutlet weak var vwNoGame : UIView!
+
+    
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -93,6 +97,9 @@ class HomeVC: UIViewController
         
         //game_finished
         NotificationCenter.default.addObserver(self, selector: #selector(self.game_finished(_:)), name: NSNotification.Name(rawValue: "game_finished"), object: nil)
+        
+        //no_jackpot_to_play
+        NotificationCenter.default.addObserver(self, selector: #selector(self.no_jackpot_to_play(_:)), name: NSNotification.Name(rawValue: "no_jackpot_to_play"), object: nil)
 
         
         SocketIOManager.sharedInstance.establishConnection()
@@ -136,6 +143,12 @@ class HomeVC: UIViewController
     {
         if let data = notification.object as? [String: AnyObject]
         {
+            vwNoGame.isHidden = true
+            vwGame.isHidden = false
+            vwPlayers.isHidden = false
+            self.btnBid.isHidden = false
+
+
            // print("handleGameJoinedNotificationdata:>\(data)")
             lblGameTitle.text = "\((data["jackpotInfo"] as! NSDictionary).object(forKey: kkeyname)!)"
             txtAmount.text = "$\((data["jackpotInfo"] as! NSDictionary).object(forKey: kkeyamount)!)"
@@ -273,22 +286,14 @@ class HomeVC: UIViewController
         {
             if(data.count > 0)
             {
-                if let winnerData = (data["winnerData"] as? NSDictionary)
+                if let lastBidWinner = (data["lastBidUser"] as? NSDictionary), let longestBidWinner = (data["longestBidUser"] as? NSDictionary)
                 {
-                    if let lastBidWinner = (winnerData["lastBidUser"] as? NSDictionary), let longestBidWinner = (winnerData["longestBidUser"] as? NSDictionary)
-                    {
-                        strmessage = "Game Won info:\nLastBidWinner: \((lastBidWinner["name"]!))\nLongestBidWinner: \((longestBidWinner["name"]!))"
-                    }
-                    else
-                    {
-                        strmessage = "Game Finished"
-                    }
+                    strmessage = "Game Won info:\nLastBidWinner: \((lastBidWinner["name"]!))\nLongestBidWinner: \((longestBidWinner["name"]!))"
                 }
                 else
                 {
                     strmessage = "Game Finished"
                 }
-
             }
             else
             {
@@ -299,16 +304,29 @@ class HomeVC: UIViewController
         {
             strmessage = "Game Finished"
         }
-
+        
         let alertView = UIAlertController(title: Application_Name, message: strmessage, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "OK", style: .default)
         { (action) in
             
+            self.vwNoGame.isHidden = false
+            self.vwGame.isHidden = true
+            self.vwPlayers.isHidden = true
+            self.btnBid.isHidden = true
+
             SocketIOManager.sharedInstance.closeConnection()
             SocketIOManager.sharedInstance.establishConnection()
         }
         alertView.addAction(OKAction)
         self.present(alertView, animated: true, completion: nil)
+    }
+    
+    func no_jackpot_to_play(_ notification: Notification)
+    {
+        vwNoGame.isHidden = false
+        vwGame.isHidden = true
+        vwPlayers.isHidden = true
+        self.btnBid.isHidden = true
     }
 
     //MARK: Extra Methods

@@ -210,8 +210,14 @@ class SocketIOManager: NSObject
                 .post(name: Notification.Name(rawValue: "game_finished"), object: dataArray[0] as? [String: AnyObject])
         }
 
+        //no_jackpot_to_play
+        socket.on("no_jackpot_to_play")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "no_jackpot_to_play"), object: dataArray[0] as? [String: AnyObject])
+        }
 
-        
         
 //        socket.on("game_updates") { dataArray, ack in
 //           
