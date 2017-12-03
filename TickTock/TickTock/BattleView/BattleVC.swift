@@ -54,6 +54,7 @@ class BattleVC: UIViewController
     @IBOutlet weak var btnBack : UIButton!
     @IBOutlet weak var vwTimer : UIView!
     @IBOutlet weak var lbltimerSeconds: UILabel!
+    var iBattleLevelType = Int()
 
     override func viewDidLoad()
     {
@@ -153,6 +154,16 @@ class BattleVC: UIViewController
         {
            // print("response_battle:>\(data)")
             arrBattelList = NSMutableArray(array: (data["battleLevelsList"] as! NSArray))
+            
+            if data["battleType"] as! NSString == "NORMAL"
+            {
+                iBattleLevelType = 1
+            }
+            else
+            {
+                iBattleLevelType = 2
+            }
+            
             tblBattleBoard.reloadData()
         }
     }
@@ -510,13 +521,27 @@ class BattleVC: UIViewController
     {
         let dict = self.arrBattelList[sender.tag] as! NSDictionary
         
-        let myJSON = [
-            "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
-            "jackpotUniqueId" : appDelegate.strGameJackpotID,
-            "levelUniqueId" : "\(dict["uniqueId"]!)",
-            "battleType" : "NORMAL"
-        ]
-        SocketIOManager.sharedInstance.socket.emitWithAck("request_join_normal_battle_level",  myJSON).timingOut(after: 0) {data in
+        if iBattleLevelType == 1
+        {
+            let myJSON = [
+                "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                "jackpotUniqueId" : appDelegate.strGameJackpotID,
+                "levelUniqueId" : "\(dict["uniqueId"]!)",
+                "battleType" : "NORMAL"
+            ]
+            SocketIOManager.sharedInstance.socket.emitWithAck("request_join_normal_battle_level",  myJSON).timingOut(after: 0) {data in
+            }
+        }
+        else
+        {
+            let myJSON = [
+                "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                "jackpotUniqueId" : appDelegate.strGameJackpotID,
+                "levelUniqueId" : "\(dict["uniqueId"]!)",
+                "battleType" : "ADVANCE"
+            ]
+            SocketIOManager.sharedInstance.socket.emitWithAck("request_join_advance_battle_level",  myJSON).timingOut(after: 0) {data in
+            }
         }
         
         btnBack.isHidden = false
@@ -529,21 +554,44 @@ class BattleVC: UIViewController
     {
         if(dictjackpotInfo.count > 0)
         {
-            let myJSON = [
-                "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
-                "jackpotUniqueId" : "\(dictjackpotInfo["uniqueId"]!)",
-                "levelUniqueId" : "\(dictlevelInfo["uniqueId"]!)",
-                "gameUniqueId" : "\(dictgameInfo["uniqueId"]!)"
-            ]
-            
-            print("request_place_normal_battle_level_bid:>\(myJSON)")
-            
-            SocketIOManager.sharedInstance.socket.emitWithAck("request_place_normal_battle_level_bid",  myJSON).timingOut(after: 0) {data in
-                if (data.count > 0)
-                {
-                    print("data:>\(data)")
-                    App_showAlert(withMessage: ((data[0] as? NSDictionary)!.object(forKey: "body") as! NSDictionary).object(forKey: "message") as! String, inView: self)
+            if iBattleLevelType == 1
+            {
+                let myJSON = [
+                    "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                    "jackpotUniqueId" : "\(dictjackpotInfo["uniqueId"]!)",
+                    "levelUniqueId" : "\(dictlevelInfo["uniqueId"]!)",
+                    "gameUniqueId" : "\(dictgameInfo["uniqueId"]!)"
+                ]
+                
+                print("request_place_normal_battle_level_bid:>\(myJSON)")
+                
+                SocketIOManager.sharedInstance.socket.emitWithAck("request_place_normal_battle_level_bid",  myJSON).timingOut(after: 0) {data in
+                    if (data.count > 0)
+                    {
+                        print("data:>\(data)")
+                        App_showAlert(withMessage: ((data[0] as? NSDictionary)!.object(forKey: "body") as! NSDictionary).object(forKey: "message") as! String, inView: self)
+                    }
                 }
+            }
+            else
+            {
+                let myJSON = [
+                    "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                    "jackpotUniqueId" : "\(dictjackpotInfo["uniqueId"]!)",
+                    "levelUniqueId" : "\(dictlevelInfo["uniqueId"]!)",
+                    "gameUniqueId" : "\(dictgameInfo["uniqueId"]!)"
+                ]
+                
+                print("request_place_advance_battle_level_bid:>\(myJSON)")
+                
+                SocketIOManager.sharedInstance.socket.emitWithAck("request_place_advance_battle_level_bid",  myJSON).timingOut(after: 0) {data in
+                    if (data.count > 0)
+                    {
+                        print("data:>\(data)")
+                        App_showAlert(withMessage: ((data[0] as? NSDictionary)!.object(forKey: "body") as! NSDictionary).object(forKey: "message") as! String, inView: self)
+                    }
+                }
+                
             }
         }
     }
@@ -555,6 +603,8 @@ class BattleVC: UIViewController
         btnBack.isHidden = true
     }
 
+    //MARK: Battle Type 2 Level
+    
 
     /*
     // MARK: - Navigation

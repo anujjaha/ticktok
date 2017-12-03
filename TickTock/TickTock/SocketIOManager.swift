@@ -105,6 +105,14 @@ class SocketIOManager: NSObject
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "response_join_normal_battle_level"), object: dataArray[0] as? [String: AnyObject])
         }
+        
+        //TYPE 2
+        socket.on("response_join_advance_battle_level") { dataArray, ack in
+            // print(dataArray)
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "response_join_normal_battle_level"), object: dataArray[0] as? [String: AnyObject])
+        }
+
 
         socket.on("response_place_normal_battle_level_bid") { dataArray, ack in
             // print(dataArray)
@@ -112,7 +120,14 @@ class SocketIOManager: NSObject
                 .post(name: Notification.Name(rawValue: "response_place_normal_battle_level_bid"), object: dataArray[0] as? [String: AnyObject])
 
         }
-        
+        //TYPE 2
+        socket.on("response_place_advance_battle_level_bid") { dataArray, ack in
+            // print(dataArray)
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "response_place_normal_battle_level_bid"), object: dataArray[0] as? [String: AnyObject])
+            
+        }
+
         socket.on("update_home_jackpot_battle_info") { dataArray, ack in
             // print(dataArray)
             NotificationCenter.default
@@ -136,18 +151,35 @@ class SocketIOManager: NSObject
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "update_normal_battle_level_player_list"), object: dataArray[0] as? [String: AnyObject])
         }
+        //TYPE 2
+        socket.on("update_advance_battle_level_player_list") { dataArray, ack in
+            // print(dataArray)
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "update_normal_battle_level_player_list"), object: dataArray[0] as? [String: AnyObject])
+        }
 
         socket.on("update_normal_battle_level_timer") { dataArray, ack in
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "update_normal_battle_level_timer"), object: dataArray[0] as? [String: AnyObject])
         }
-        
+        //TYPE 2
+        socket.on("update_advance_battle_level_timer") { dataArray, ack in
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "update_normal_battle_level_timer"), object: dataArray[0] as? [String: AnyObject])
+        }
+
         socket.on("normal_battle_level_game_started") { dataArray, ack in
             // print(dataArray)
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "normal_battle_level_game_started"), object: dataArray[0] as? [String: AnyObject])
         }
-        
+         //TYPE 2
+        socket.on("advance_battle_level_game_started") { dataArray, ack in
+            // print(dataArray)
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "normal_battle_level_game_started"), object: dataArray[0] as? [String: AnyObject])
+        }
+
         /*
          export const EVT_EMIT_HIDE_NBL_PLACE_BID_BUTTON                 = 'hide_normal_battle_level_place_bid_button';
          export const EVT_EMIT_SHOW_NBL_PLACE_BID_BUTTON                 = 'show_normal_battle_level_place_bid_button';
@@ -159,8 +191,21 @@ class SocketIOManager: NSObject
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "hide_normal_battle_level_place_bid_button"), object: nil)
         }
+        //TYPE 2
+        socket.on("hide_advance_battle_level_place_bid_button") { dataArray, ack in
+            // print(dataArray)
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "hide_normal_battle_level_place_bid_button"), object: nil)
+        }
+
 
         socket.on("show_normal_battle_level_place_bid_button") { dataArray, ack in
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "show_normal_battle_level_place_bid_button"), object: nil)
+            
+        }
+        //TYPE 2
+        socket.on("show_advance_battle_level_place_bid_button") { dataArray, ack in
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "show_normal_battle_level_place_bid_button"), object: nil)
             
@@ -168,10 +213,14 @@ class SocketIOManager: NSObject
 
         socket.on("normal_battle_level_game_finished") { dataArray, ack in
             // print(dataArray)
-            
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "normal_battle_level_game_finished"), object: dataArray[0] as? [String: AnyObject])
-
+        }
+        //TYPE 2
+        socket.on("advance_battle_level_game_finished") { dataArray, ack in
+            // print(dataArray)
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "normal_battle_level_game_finished"), object: dataArray[0] as? [String: AnyObject])
         }
 
         socket.on("update_jackpot_amount") { dataArray, ack in
@@ -186,16 +235,37 @@ class SocketIOManager: NSObject
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "update_normal_battle_jackpot_amount"), object: dataArray[0] as? [String: AnyObject])
         }
-        
+        //TYPE 2
+        socket.on("update_advance_battle_jackpot_amount")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "update_normal_battle_jackpot_amount"), object: dataArray[0] as? [String: AnyObject])
+        }
+
         
         socket.on("normal_battle_main_jackpot_finished") { dataArray, ack in
             // print(dataArray)
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "normal_battle_main_jackpot_finished"), object: nil)
         }
+        //TYPE 2
+        socket.on("advance_battle_main_jackpot_finished") { dataArray, ack in
+            // print(dataArray)
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "normal_battle_main_jackpot_finished"), object: nil)
+        }
 
+        
        // normal_battle_game_about_to_start
         socket.on("normal_battle_game_about_to_start")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "normal_battle_game_about_to_start"), object: dataArray[0] as? [String: AnyObject])
+        }
+        //TYPE 2
+        socket.on("advance_battle_game_about_to_start")
         { dataArray, ack in
             
             NotificationCenter.default

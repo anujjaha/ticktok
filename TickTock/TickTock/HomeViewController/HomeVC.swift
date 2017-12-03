@@ -193,15 +193,18 @@ class HomeVC: UIViewController
                 lblPlayersRemaining.text = "Players Remaining: \(data["remainingPlayers"]!)"
                 lblcurrentBid.text = "Current Bid: \((data["currentBidUser"] as! NSDictionary).object(forKey: kkeyname)!)"
                 
-                if(data["canIBid"] as!  NSNumber == 1)
+                if let latestValue = data["canIBid"] as? NSNumber
                 {
-                    btnBid.backgroundColor = UIColor.black
-                    btnBid.isEnabled = true
-                }
-                else
-                {
-                    btnBid.isEnabled = false
-                    btnBid.backgroundColor = UIColor.darkGray
+                    if(latestValue == 1)
+                    {
+                        btnBid.backgroundColor = UIColor.black
+                        btnBid.isEnabled = true
+                    }
+                    else
+                    {
+                        btnBid.isEnabled = false
+                        btnBid.backgroundColor = UIColor.darkGray
+                    }
                 }
             }
         }
@@ -396,6 +399,10 @@ class HomeVC: UIViewController
             }
         }
     }
+    
+    //MARK: Type 2 Level
+    
+    
     
     override func didReceiveMemoryWarning()
     {
