@@ -45,6 +45,8 @@ let kkeyuser_id = "user_id"
 let kkeyamount = "amount"
 let kkeyavailableBids = "availableBids"
 
+let kUserBidBank = "UserBidBank"
+
 let kNO = "NO"
 let kYES = "YES"
 

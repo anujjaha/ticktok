@@ -44,6 +44,36 @@ class SocketIOManager: NSObject
             }
         }
         
+        
+        socket.on("something_went_wrong") { dataArray, ack in
+            // print(dataArray)
+            
+            if appDelegate.bisHomeScreen == true
+            {
+                NotificationCenter.default
+                    .post(name: Notification.Name(rawValue: "something_went_wrong_home"), object: dataArray[0] as? [String: AnyObject])
+            }
+            else
+            {
+                NotificationCenter.default
+                    .post(name: Notification.Name(rawValue: "something_went_wrong_battle"), object: dataArray[0] as? [String: AnyObject])
+            }
+        }
+
+        socket.on("place_bid_error") { dataArray, ack in
+            // print(dataArray)
+            //print(dataArray.count)
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "place_bid_error"), object: dataArray[0] as? [String: AnyObject])
+        }
+        
+        socket.on("jackpot_my_info_changed") { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "jackpot_my_info_changed"), object: dataArray[0] as? [String: AnyObject])
+        }
+        
         socket.on("updated_jackpot_data") { dataArray, ack in
            // print(dataArray)
             
@@ -70,9 +100,19 @@ class SocketIOManager: NSObject
             //print(dataArray)
             
             NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "callGameQuitNotification"), object: dataArray[0] as? [String: AnyObject])
+                .post(name: Notification.Name(rawValue: "callGameQuitNotification"), object: nil)
         }
 
+        socket.on("game_quitted") { dataArray, ack in
+            //print(dataArray)
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "game_quitted"), object: nil)
+        }
+
+        
+        
+        
         socket.on("game_finished") { dataArray, ack in
            // print(dataArray)
             
@@ -288,6 +328,56 @@ class SocketIOManager: NSObject
                 .post(name: Notification.Name(rawValue: "no_jackpot_to_play"), object: dataArray[0] as? [String: AnyObject])
         }
 
+        socket.on("advance_battle_not_eligible_to_join")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "advance_battle_not_eligible_to_join"), object: dataArray[0] as? [String: AnyObject])
+        }
+
+        //Battle Quite Methods
+        socket.on("show_normal_battle_quit_button")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "show_normal_battle_quit_button"), object: dataArray[0] as? [String: AnyObject])
+        }
+
+        socket.on("hide_normal_battle_quit_button")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "hide_normal_battle_quit_button"), object: dataArray[0] as? [String: AnyObject])
+        }
+
+        socket.on("show_advance_battle_quit_button")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "show_normal_battle_quit_button"), object: dataArray[0] as? [String: AnyObject])
+        }
+        
+        socket.on("hide_advance_battle_quit_button")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "hide_normal_battle_quit_button"), object: dataArray[0] as? [String: AnyObject])
+        }
+        
+        socket.on("normal_battle_game_quitted")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "normal_battle_game_quitted"), object: dataArray[0] as? [String: AnyObject])
+        }
+        
+        socket.on("advance_battle_game_quitted")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "normal_battle_game_quitted"), object: dataArray[0] as? [String: AnyObject])
+        }
+        
         
 //        socket.on("game_updates") { dataArray, ack in
 //           

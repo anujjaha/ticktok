@@ -55,6 +55,10 @@ class BattleVC: UIViewController
     @IBOutlet weak var vwTimer : UIView!
     @IBOutlet weak var lbltimerSeconds: UILabel!
     var iBattleLevelType = Int()
+    
+    @IBOutlet weak var btnQuiteBattle : UIButton!
+    @IBOutlet weak var CTheightofQuitBtn : NSLayoutConstraint!
+
 
     override func viewDidLoad()
     {
@@ -63,6 +67,9 @@ class BattleVC: UIViewController
         vwBattleGame.isHidden = true
         vwJoinBattle.layer.cornerRadius = 5.0
         // Do any additional setup after loading the view.
+        
+        CTheightofQuitBtn.constant = 0
+        btnQuiteBattle.isHidden = true
         
         self.tblBattleBoard.estimatedRowHeight = 65.0
         self.tblBattleBoard.rowHeight = UITableViewAutomaticDimension
@@ -143,6 +150,18 @@ class BattleVC: UIViewController
         //normal_battle_game_about_to_start
         NotificationCenter.default.addObserver(self, selector: #selector(self.normal_battle_game_about_to_start(_:)), name: NSNotification.Name(rawValue: "normal_battle_game_about_to_start"), object: nil)
 
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.advance_battle_not_eligible_to_join), name: NSNotification.Name(rawValue: "advance_battle_not_eligible_to_join"), object: nil)
+
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.something_went_wrong_battle(_:)), name: NSNotification.Name(rawValue: "something_went_wrong_battle"), object: nil)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.show_normal_battle_quit_button(_:)), name: NSNotification.Name(rawValue: "show_normal_battle_quit_button"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.hide_normal_battle_quit_button(_:)), name: NSNotification.Name(rawValue: "hide_normal_battle_quit_button"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.normal_battle_game_quitted(_:)), name: NSNotification.Name(rawValue: "normal_battle_game_quitted"), object: nil)        
         
         btnBack.isHidden = true
     }
@@ -534,13 +553,21 @@ class BattleVC: UIViewController
         }
         else
         {
-            let myJSON = [
-                "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
-                "jackpotUniqueId" : appDelegate.strGameJackpotID,
-                "levelUniqueId" : "\(dict["uniqueId"]!)",
-                "battleType" : "ADVANCE"
-            ]
-            SocketIOManager.sharedInstance.socket.emitWithAck("request_join_advance_battle_level",  myJSON).timingOut(after: 0) {data in
+            let iBidAvilable = UserDefaults.standard.value(forKey: kUserBidBank) as! Int
+            if dict["minRequiredBids"] as! Int >=  iBidAvilable
+            {
+                let myJSON = [
+                    "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                    "jackpotUniqueId" : appDelegate.strGameJackpotID,
+                    "levelUniqueId" : "\(dict["uniqueId"]!)",
+                    "battleType" : "ADVANCE"
+                ]
+                SocketIOManager.sharedInstance.socket.emitWithAck("request_join_advance_battle_level",  myJSON).timingOut(after: 0) {data in
+                }
+            }
+            else
+            {
+                App_showAlert(withMessage:"You Don't Have Enough Bids To Join This Battle", inView: self)
             }
         }
         
@@ -548,6 +575,18 @@ class BattleVC: UIViewController
         vwBattleList.isHidden = true
         vwBattleGame.isHidden = false
     }
+    
+    //MARK: Advance battlle
+    func advance_battle_not_eligible_to_join()
+    {
+        
+    }
+    
+    func something_went_wrong_battle(_ notification: Notification)
+    {
+        App_showAlert(withMessage:"Something went wrong. Please try again later", inView: self)
+    }
+    
 
     //MARK: Place a Bid
     @IBAction func btnBidAction()
@@ -603,8 +642,81 @@ class BattleVC: UIViewController
         btnBack.isHidden = true
     }
 
-    //MARK: Battle Type 2 Level
+    //MARK: Show Quite and hide and Place a Quit Button
+    func hide_normal_battle_quit_button(_ notification: Notification)
+    {
+        btnQuiteBattle.isHidden = true
+        CTheightofQuitBtn.constant = 0
+    }
     
+    func show_normal_battle_quit_button(_ notification: Notification)
+    {
+        btnQuiteBattle.isHidden = false
+        CTheightofQuitBtn.constant = 40
+    }
+    
+    func game_quitted(_ notification: Notification)
+    {
+        App_showAlert(withMessage:"You have quitted battle successfully", inView: self)
+        btnQuiteBattle.isHidden = true
+        CTheightofQuitBtn.constant = 0
+    }
+
+    @IBAction func btnQuiteGameAction()
+    {
+        if(dictjackpotInfo.count > 0)
+        {
+            if iBattleLevelType == 1
+            {
+                let myJSON = [
+                    "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                    "jackpotUniqueId" : "\(dictjackpotInfo["uniqueId"]!)",
+                    "levelUniqueId" : "\(dictlevelInfo["uniqueId"]!)",
+                    "gameUniqueId" : "\(dictgameInfo["uniqueId"]!)"
+                ]
+                
+                print("request_place_normal_battle_level_bid:>\(myJSON)")
+                
+                SocketIOManager.sharedInstance.socket.emitWithAck("quit_normal_battle_game",  myJSON).timingOut(after: 0) {data in
+                    if (data.count > 0)
+                    {
+                        print("data:>\(data)")
+                        App_showAlert(withMessage: ((data[0] as? NSDictionary)!.object(forKey: "body") as! NSDictionary).object(forKey: "message") as! String, inView: self)
+                    }
+                }
+            }
+            else
+            {
+                let myJSON = [
+                    "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                    "jackpotUniqueId" : "\(dictjackpotInfo["uniqueId"]!)",
+                    "levelUniqueId" : "\(dictlevelInfo["uniqueId"]!)",
+                    "gameUniqueId" : "\(dictgameInfo["uniqueId"]!)"
+                ]
+                
+                print("request_place_advance_battle_level_bid:>\(myJSON)")
+                
+                SocketIOManager.sharedInstance.socket.emitWithAck("quit_advance_battle_game",  myJSON).timingOut(after: 0) {data in
+                    if (data.count > 0)
+                    {
+                        print("data:>\(data)")
+                        App_showAlert(withMessage: ((data[0] as? NSDictionary)!.object(forKey: "body") as! NSDictionary).object(forKey: "message") as! String, inView: self)
+                    }
+                }
+            }
+        }
+    }
+    
+    func normal_battle_game_quitted(_ notification: Notification)
+    {
+        App_showAlert(withMessage:"You have quitted battle successfully", inView: self)
+        btnQuiteBattle.isHidden = true
+        CTheightofQuitBtn.constant = 0
+    }
+
+    
+    
+    //MARK: Battle Type 2 Level
 
     /*
     // MARK: - Navigation
@@ -683,13 +795,43 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
             vwBattleGame.isHidden = false
             let dict = self.arrBattelList[indexPath.row] as! NSDictionary
             
-            let myJSON = [
-                "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
-                "jackpotUniqueId" : appDelegate.strGameJackpotID,
-                "levelUniqueId" : "\(dict["uniqueId"]!)",
-                "battleType" : "NORMAL"
-            ]
-            SocketIOManager.sharedInstance.socket.emitWithAck("request_join_normal_battle_level",  myJSON).timingOut(after: 0) {data in
+//            let myJSON = [
+//                "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+//                "jackpotUniqueId" : appDelegate.strGameJackpotID,
+//                "levelUniqueId" : "\(dict["uniqueId"]!)",
+//                "battleType" : "NORMAL"
+//            ]
+//            SocketIOManager.sharedInstance.socket.emitWithAck("request_join_normal_battle_level",  myJSON).timingOut(after: 0) {data in
+//            }
+            if iBattleLevelType == 1
+            {
+                let myJSON = [
+                    "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                    "jackpotUniqueId" : appDelegate.strGameJackpotID,
+                    "levelUniqueId" : "\(dict["uniqueId"]!)",
+                    "battleType" : "NORMAL"
+                ]
+                SocketIOManager.sharedInstance.socket.emitWithAck("request_join_normal_battle_level",  myJSON).timingOut(after: 0) {data in
+                }
+            }
+            else
+            {
+                let iBidAvilable = UserDefaults.standard.value(forKey: kUserBidBank) as! Int
+                if dict["minRequiredBids"] as! Int >=  iBidAvilable
+                {
+                    let myJSON = [
+                        "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                        "jackpotUniqueId" : appDelegate.strGameJackpotID,
+                        "levelUniqueId" : "\(dict["uniqueId"]!)",
+                        "battleType" : "ADVANCE"
+                    ]
+                    SocketIOManager.sharedInstance.socket.emitWithAck("request_join_advance_battle_level",  myJSON).timingOut(after: 0) {data in
+                    }
+                }
+                else
+                {
+                    App_showAlert(withMessage:"You Don't Have Enough Bids To Join This Battle", inView: self)
+                }
             }
         }
     }
