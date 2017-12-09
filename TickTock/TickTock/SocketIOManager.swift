@@ -379,6 +379,15 @@ class SocketIOManager: NSObject
         }
         
         
+        socket.on("jackpot_doomsday_over")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "jackpot_doomsday_over"), object: nil)
+        }
+
+        
+        
 //        socket.on("game_updates") { dataArray, ack in
 //           
 //            print("data:>\(dataArray)")

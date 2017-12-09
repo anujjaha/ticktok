@@ -58,6 +58,7 @@ class BattleVC: UIViewController
     
     @IBOutlet weak var btnQuiteBattle : UIButton!
     @IBOutlet weak var CTheightofQuitBtn : NSLayoutConstraint!
+    @IBOutlet weak var lblNoJakpotFound: UILabel!
 
 
     override func viewDidLoad()
@@ -66,6 +67,7 @@ class BattleVC: UIViewController
         vwBattleList.isHidden = true
         vwBattleGame.isHidden = true
         vwJoinBattle.layer.cornerRadius = 5.0
+        lblNoJakpotFound.isHidden = true
         // Do any additional setup after loading the view.
         
         CTheightofQuitBtn.constant = 0
@@ -163,6 +165,9 @@ class BattleVC: UIViewController
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.normal_battle_game_quitted(_:)), name: NSNotification.Name(rawValue: "normal_battle_game_quitted"), object: nil)        
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.jackpot_doomsday_over(_:)), name: NSNotification.Name(rawValue: "jackpot_doomsday_over"), object: nil)
+
+        
         btnBack.isHidden = true
     }
     
@@ -174,16 +179,48 @@ class BattleVC: UIViewController
            // print("response_battle:>\(data)")
             arrBattelList = NSMutableArray(array: (data["battleLevelsList"] as! NSArray))
             
-            if data["battleType"] as! NSString == "NORMAL"
+            if arrBattelList.count > 0
             {
-                iBattleLevelType = 1
+                if data["battleType"] as! NSString == "NORMAL"
+                {
+                    iBattleLevelType = 1
+                }
+                else
+                {
+                    iBattleLevelType = 2
+                }
+                lblNoJakpotFound.isHidden = true
+                tblBattleBoard.isHidden = false
+                tblBattleBoard.reloadData()
             }
             else
             {
-                iBattleLevelType = 2
+                tblBattleBoard.isHidden = true
+                lblNoJakpotFound.isHidden = false
+                
+                if appDelegate.strGameJackpotID.characters.count == 0
+                {
+                    lblNoJakpotFound.text = "No Associated Jackpot Found To Play Bid Battle"
+                }
+                else
+                {
+                    lblNoJakpotFound.text = "The Jackpot you are playing in does not have any advance battle level associated to it"
+                }
             }
-            
-            tblBattleBoard.reloadData()
+        }
+        else
+        {
+            tblBattleBoard.isHidden = true
+            lblNoJakpotFound.isHidden = false
+
+            if appDelegate.strGameJackpotID.characters.count == 0
+            {
+                lblNoJakpotFound.text = "No Associated Jackpot Found To Play Bid Battle"
+            }
+            else
+            {
+                lblNoJakpotFound.text = "The Jackpot you are playing in does not have any advance battle level associated to it"
+            }
         }
     }
     
@@ -504,6 +541,8 @@ class BattleVC: UIViewController
     {
         vwJoinBattle.isHidden = true
         vwBattleList.isHidden = false
+        lblNoJakpotFound.isHidden = false
+        tblBattleBoard.isHidden = true
         
         let myJSON = [
             "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
@@ -712,6 +751,22 @@ class BattleVC: UIViewController
         App_showAlert(withMessage:"You have quitted battle successfully", inView: self)
         btnQuiteBattle.isHidden = true
         CTheightofQuitBtn.constant = 0
+    }
+    
+    func jackpot_doomsday_over(_ notification: Notification)
+    {
+        vwBattleGame.isHidden = true
+        vwJoinBattle.isHidden = true
+        vwBattleList.isHidden = false
+        vwTimer.isHidden = true
+
+        let myJSON = [
+            "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+            "jackpotUniqueId" : appDelegate.strGameJackpotID
+        ]
+        
+        SocketIOManager.sharedInstance.socket.emitWithAck("request_battle",  myJSON).timingOut(after: 0) {data in
+        }
     }
 
     

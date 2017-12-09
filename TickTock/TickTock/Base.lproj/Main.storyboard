@@ -817,7 +817,7 @@
                                                 <rect key="frame" x="0.0" y="58" width="320" height="378"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bid Battles" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdR-Lq-84r">
-                                                        <rect key="frame" x="120" y="8" width="80" height="21"/>
+                                                        <rect key="frame" x="120.5" y="8" width="80" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="21" id="9DG-I9-ovo"/>
                                                         </constraints>
@@ -826,12 +826,18 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DDI-BT-79V">
-                                                        <rect key="frame" x="120" y="33" width="80" height="2"/>
+                                                        <rect key="frame" x="120.5" y="33" width="80" height="2"/>
                                                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="2" id="FeB-pP-RBF"/>
                                                         </constraints>
                                                     </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Associated Jackpot Found To Play Bid Battle" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEp-Zf-kUa">
+                                                        <rect key="frame" x="8" y="178" width="304" height="21"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="vCZ-3y-zLY">
                                                         <rect key="frame" x="4" y="43" width="312" height="327"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -849,7 +855,7 @@
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gold_btn" translatesAutoresizingMaskIntoConstraints="NO" id="AKU-eO-RI1">
                                                                             <rect key="frame" x="0.0" y="0.0" width="72" height="54.5"/>
                                                                         </imageView>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yc7-NI-AAG">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level 1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yc7-NI-AAG">
                                                                             <rect key="frame" x="0.0" y="0.0" width="72" height="54.5"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                             <constraints>
@@ -1019,13 +1025,17 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstItem="wdR-Lq-84r" firstAttribute="top" secondItem="gmT-Xc-PIg" secondAttribute="top" constant="8" id="4jW-rA-p8t"/>
+                                                    <constraint firstItem="SEp-Zf-kUa" firstAttribute="centerX" secondItem="gmT-Xc-PIg" secondAttribute="centerX" id="69j-Qd-55t"/>
+                                                    <constraint firstItem="SEp-Zf-kUa" firstAttribute="centerY" secondItem="gmT-Xc-PIg" secondAttribute="centerY" id="GBy-ui-PL0"/>
                                                     <constraint firstItem="DDI-BT-79V" firstAttribute="top" secondItem="wdR-Lq-84r" secondAttribute="bottom" constant="4" id="O9a-g2-WW2"/>
                                                     <constraint firstAttribute="trailing" secondItem="vCZ-3y-zLY" secondAttribute="trailing" constant="4" id="Oaa-bK-eDs"/>
                                                     <constraint firstAttribute="bottom" secondItem="vCZ-3y-zLY" secondAttribute="bottom" constant="8" id="WMU-28-GKc"/>
                                                     <constraint firstItem="vCZ-3y-zLY" firstAttribute="leading" secondItem="gmT-Xc-PIg" secondAttribute="leading" constant="4" id="ZJd-89-xeA"/>
+                                                    <constraint firstAttribute="trailing" secondItem="SEp-Zf-kUa" secondAttribute="trailing" constant="8" id="ZKe-jQ-Gd9"/>
                                                     <constraint firstItem="DDI-BT-79V" firstAttribute="leading" secondItem="wdR-Lq-84r" secondAttribute="leading" id="e13-Q5-rYq"/>
                                                     <constraint firstItem="wdR-Lq-84r" firstAttribute="centerX" secondItem="gmT-Xc-PIg" secondAttribute="centerX" id="fFV-p1-ih3"/>
                                                     <constraint firstItem="DDI-BT-79V" firstAttribute="trailing" secondItem="wdR-Lq-84r" secondAttribute="trailing" id="hwk-5O-4Ua"/>
+                                                    <constraint firstItem="SEp-Zf-kUa" firstAttribute="leading" secondItem="gmT-Xc-PIg" secondAttribute="leading" constant="8" id="y7r-4s-KNb"/>
                                                     <constraint firstItem="vCZ-3y-zLY" firstAttribute="top" secondItem="DDI-BT-79V" secondAttribute="bottom" constant="8" id="zh9-Ac-Wk3"/>
                                                 </constraints>
                                             </view>
@@ -1264,6 +1274,9 @@
                                                                 <real key="value" value="5"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="btnQuiteGameAction" destination="EfS-P3-21d" eventType="touchUpInside" id="1Sh-CR-vq2"/>
+                                                        </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gJz-Oo-rS1">
                                                         <rect key="frame" x="0.0" y="253" width="320" height="34"/>
@@ -1427,6 +1440,7 @@
                         <outlet property="lblCurrentBidLength" destination="N5v-hb-BIO" id="0QX-uD-91g"/>
                         <outlet property="lblLongestBid" destination="htc-E7-nM8" id="LfG-Cv-eno"/>
                         <outlet property="lblMyBids" destination="Nqi-GE-pNm" id="rMQ-QW-jNI"/>
+                        <outlet property="lblNoJakpotFound" destination="SEp-Zf-kUa" id="bxF-o6-zSx"/>
                         <outlet property="lblPlayer1Bids" destination="PKy-X1-vaR" id="IZc-bg-Ag1"/>
                         <outlet property="lblPlayer1Name" destination="XlM-9t-Vro" id="Adw-BR-UnI"/>
                         <outlet property="lblPlayer2Bids" destination="PJN-6D-dVC" id="zXm-kF-QDG"/>

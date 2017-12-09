@@ -135,7 +135,15 @@ class HomeVC: UIViewController
     {
         if let data = notification.object as? [String: AnyObject]
         {
-            lblcurrentBid.text = "Current Bid: \(data["current_bid_name"]!)"
+            if let currentBidUser = data["current_bid_name"] as? String
+            {
+                lblcurrentBid.text = "Current Bid: \(currentBidUser)"
+            }
+            else
+            {
+                lblcurrentBid.text = "Current Bid:"
+
+            }
             
             lblcurrentBidLength.text = "Current Bid Length: \(data["current_bid_time"]!)"
             lblLongestBid.text = "Longest Bid: \(data["longest_bid_by"]!)"
@@ -228,7 +236,16 @@ class HomeVC: UIViewController
                 lblActivePlayers.text = "Active Players: \(data["activePlayers"]!)"
                 lblAverageBidBank.text = "Average Bid Bank: \(data["averageBidBank"]!)"
                 lblPlayersRemaining.text = "Players Remaining: \(data["remainingPlayers"]!)"
-                lblcurrentBid.text = "Current Bid: \((data["currentBidUser"] as! NSDictionary).object(forKey: kkeyname)!)"
+                
+                if let currentBidUser = (data["currentBidUser"] as! NSDictionary).object(forKey: kkeyname) as? String
+                {
+                    lblcurrentBid.text = "Current Bid: \(currentBidUser)"
+
+                }
+                else
+                {
+                    lblcurrentBid.text = "Current Bid:"
+                }
                 
                 /*
                 if let latestValue = data["canIBid"] as? NSNumber
@@ -359,6 +376,7 @@ class HomeVC: UIViewController
             self.vwGame.isHidden = true
             self.vwPlayers.isHidden = true
             self.btnBid.isHidden = true
+            self.btnQuitGame.isHidden = true
 
             SocketIOManager.sharedInstance.closeConnection()
             SocketIOManager.sharedInstance.establishConnection()
@@ -369,6 +387,10 @@ class HomeVC: UIViewController
     
     func no_jackpot_to_play(_ notification: Notification)
     {
+        self.tabBarController?.selectedIndex = 0
+        txtGameClock.text = "00:00:00"
+        txtDoomdsDayClock.text = "00:00:00"
+
         vwNoGame.isHidden = false
         vwGame.isHidden = true
         vwPlayers.isHidden = true
@@ -384,7 +406,15 @@ class HomeVC: UIViewController
             lblAverageBidBank.text = "Average Bid Bank: \((self.dataofHome.object(forKey: "ave_bid_bank")) as! NSNumber)"
             lblPlayersRemaining.text = "Players Remaining: \((self.dataofHome.object(forKey: "ave_bid_bank")) as! NSNumber)"
             
-            lblcurrentBid.text = "Current Bid: \((self.dataofHome.object(forKey: "current_bid_by"))!)"
+            if let currentBidUser = self.dataofHome.object(forKey: "current_bid_by") as? String
+            {
+                lblcurrentBid.text = "Current Bid: \(currentBidUser)"
+                
+            }
+            else
+            {
+                lblcurrentBid.text = "Current Bid:"
+            }
             lblcurrentBidLength.text = "Current Bid Length: \((self.dataofHome.object(forKey: "current_bid_time"))!)"
             lblLongestBid.text = "Longest Bid: \((self.dataofHome.object(forKey: "longest_bid_by"))!)"
 
