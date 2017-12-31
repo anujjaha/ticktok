@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var strDoomdsDayClock = String()
     var strGameJackpotID = String()
     var bisHomeScreen = Bool()
+    var bShowQuitGameButton = Bool()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

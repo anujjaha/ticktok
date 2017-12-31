@@ -24,18 +24,29 @@ class SocketIOManager: NSObject
         socket.on("me_joined") { dataArray, ack in
             // print(dataArray)
             //print(dataArray.count)
-            
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "callGameJoinedNotification"), object: dataArray[0] as? [String: AnyObject])
         }
-    
+       
+        //update_home_screen
+        socket.on("update_home_screen") { dataArray, ack in
+            // print(dataArray)
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "update_home_screen"), object: dataArray[0] as? [String: AnyObject])
+        }
+        
+        //Battel Screen
+        /*
+         export const EVT_EMIT_RESPONSE_BATTLE      						= 'response_battle';
+         export const EVT_EMIT_RESPONSE_JOIN_NORMAL_BATTLE_LEVEL 	 	= 'response_join_normal_battle_level';
+         export const EVT_EMIT_RESPONSE_PLACE_NORMAL_BATTLE_LEVEL_BID 	= 'response_place_normal_battle_level_bid';
+         export const EVT_EMIT_NO_ENOUGH_AVAILABLE_BIDS 					= 'no_enough_available_bids';
+         */
         socket.on("update_jackpot_timer") { dataArray, ack in
-           // print(dataArray)
+            // print(dataArray)
             
             if appDelegate.bisHomeScreen == true
             {
-                NotificationCenter.default
-                    .post(name: Notification.Name(rawValue: "callGameUpdateTimerNotification"), object: dataArray[0] as? [String: AnyObject])
             }
             else
             {
@@ -44,14 +55,11 @@ class SocketIOManager: NSObject
             }
         }
         
-        
         socket.on("something_went_wrong") { dataArray, ack in
             // print(dataArray)
             
             if appDelegate.bisHomeScreen == true
             {
-                NotificationCenter.default
-                    .post(name: Notification.Name(rawValue: "something_went_wrong_home"), object: dataArray[0] as? [String: AnyObject])
             }
             else
             {
@@ -60,79 +68,6 @@ class SocketIOManager: NSObject
             }
         }
 
-        socket.on("place_bid_error") { dataArray, ack in
-            // print(dataArray)
-            //print(dataArray.count)
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "place_bid_error"), object: dataArray[0] as? [String: AnyObject])
-        }
-        
-        socket.on("jackpot_my_info_changed") { dataArray, ack in
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "jackpot_my_info_changed"), object: dataArray[0] as? [String: AnyObject])
-        }
-        
-        socket.on("updated_jackpot_data") { dataArray, ack in
-           // print(dataArray)
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "callGameJackpotDataNotification"), object: dataArray[0] as? [String: AnyObject])
-        }
-
-        socket.on("can_i_bid") { dataArray, ack in
-          //  print(dataArray)
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "callGameCanPlacedBidNotification"), object: dataArray[0] as? [String: AnyObject])
-        }
-        
-        
-        socket.on("my_bid_placed") { dataArray, ack in
-           // print(dataArray)
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "callGameMyPlacedBidNotification"), object: dataArray[0] as? [String: AnyObject])
-        }
-        
-        socket.on("show_quit_button") { dataArray, ack in
-            //print(dataArray)
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "callGameQuitNotification"), object: nil)
-        }
-
-        socket.on("game_quitted") { dataArray, ack in
-            //print(dataArray)
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "game_quitted"), object: nil)
-        }
-
-        
-        
-        
-        socket.on("game_finished") { dataArray, ack in
-           // print(dataArray)
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "callGameFinishNotification"), object: dataArray[0] as? [String: AnyObject])
-        }
-                
-        socket.on("update_available_bid_after_battle_win") { dataArray, ack in
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "update_available_bid_after_battle_win"), object: dataArray[0] as? [String: AnyObject])
-        }
-
-        //Battel Screen
-        /*
-         export const EVT_EMIT_RESPONSE_BATTLE      						= 'response_battle';
-         export const EVT_EMIT_RESPONSE_JOIN_NORMAL_BATTLE_LEVEL 	 	= 'response_join_normal_battle_level';
-         export const EVT_EMIT_RESPONSE_PLACE_NORMAL_BATTLE_LEVEL_BID 	= 'response_place_normal_battle_level_bid';
-         export const EVT_EMIT_NO_ENOUGH_AVAILABLE_BIDS 					= 'no_enough_available_bids';
-         */
         socket.on("response_battle") { dataArray, ack in
             print("response_battle:>\(dataArray)")
             
@@ -168,11 +103,6 @@ class SocketIOManager: NSObject
             
         }
 
-        socket.on("update_home_jackpot_battle_info") { dataArray, ack in
-            // print(dataArray)
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "update_home_jackpot_battle_info"), object: dataArray[0] as? [String: AnyObject])
-        }
 
         socket.on("no_enough_available_bids") { dataArray, ack in
             // print(dataArray)
@@ -263,11 +193,6 @@ class SocketIOManager: NSObject
                 .post(name: Notification.Name(rawValue: "normal_battle_level_game_finished"), object: dataArray[0] as? [String: AnyObject])
         }
 
-        socket.on("update_jackpot_amount") { dataArray, ack in
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "update_jackpot_amount"), object: dataArray[0] as? [String: AnyObject])
-        }
         
         socket.on("update_normal_battle_jackpot_amount")
         { dataArray, ack in
@@ -312,22 +237,8 @@ class SocketIOManager: NSObject
                 .post(name: Notification.Name(rawValue: "normal_battle_game_about_to_start"), object: dataArray[0] as? [String: AnyObject])
         }
         
-        //game_finished
-        socket.on("game_finished")
-        { dataArray, ack in
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "game_finished"), object: dataArray[0] as? [String: AnyObject])
-        }
 
         //no_jackpot_to_play
-        socket.on("no_jackpot_to_play")
-        { dataArray, ack in
-            
-            NotificationCenter.default
-                .post(name: Notification.Name(rawValue: "no_jackpot_to_play"), object: dataArray[0] as? [String: AnyObject])
-        }
-
         socket.on("advance_battle_not_eligible_to_join")
         { dataArray, ack in
             

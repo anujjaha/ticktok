@@ -37,9 +37,7 @@ class HomeVC: UIViewController
     @IBOutlet weak var lblGameWinner2 : UILabel!
 
     @IBOutlet weak var btnBid : UIButton!
-    @IBOutlet weak var btnQuitGame : UIButton!
     @IBOutlet weak var CTLeadingofBidBtn : NSLayoutConstraint!
-    @IBOutlet weak var CTWidthofQuitBtn : NSLayoutConstraint!
     @IBOutlet weak var CTTrailingofBidBtn: NSLayoutConstraint!
 
     
@@ -56,8 +54,6 @@ class HomeVC: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        btnQuitGame.isHidden = true
-        CTWidthofQuitBtn.constant = 0
         // Do any additional setup after loading the view.
         
         self.vwGame.layer.borderWidth = 1.0
@@ -71,7 +67,6 @@ class HomeVC: UIViewController
        // showProgress(inView: self.view)
         
         SocketIOManager.sharedInstance.socket.on("connect") {data, ack in
-            
             print("socket connected")
         }
         
@@ -79,46 +74,10 @@ class HomeVC: UIViewController
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameJoinedNotification(_:)), name: NSNotification.Name(rawValue: "callGameJoinedNotification"), object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameUpdateTimerNotification(_:)), name: NSNotification.Name(rawValue: "callGameUpdateTimerNotification"), object: nil)
-
-    
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameJackpotDataNotification(_:)), name: NSNotification.Name(rawValue: "callGameJackpotDataNotification"), object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameUserPlacedBidNotification(_:)), name: NSNotification.Name(rawValue: "callGameCanPlacedBidNotification"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameUserBidsNotification(_:)), name: NSNotification.Name(rawValue: "callGameMyPlacedBidNotification"), object: nil)
+        //New Change only need to handle one event
+        NotificationCenter.default.addObserver(self, selector: #selector(self.update_home_screen(_:)), name: NSNotification.Name(rawValue: "update_home_screen"), object: nil)
 
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameFinishNotification(_:)), name: NSNotification.Name(rawValue: "callGameFinishNotification"), object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameQuitNotification(_:)), name: NSNotification.Name(rawValue: "callGameQuitNotification"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.update_available_bid_after_battle_win(_:)), name: NSNotification.Name(rawValue: "update_available_bid_after_battle_win"), object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.update_jackpot_amount(_:)), name: NSNotification.Name(rawValue: "update_jackpot_amount"), object: nil)
-
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.update_home_jackpot_battle_info(_:)), name: NSNotification.Name(rawValue: "update_home_jackpot_battle_info"), object: nil)
-
-        
-        //game_finished
-        NotificationCenter.default.addObserver(self, selector: #selector(self.game_finished(_:)), name: NSNotification.Name(rawValue: "game_finished"), object: nil)
-        
-        //no_jackpot_to_play
-        NotificationCenter.default.addObserver(self, selector: #selector(self.no_jackpot_to_play(_:)), name: NSNotification.Name(rawValue: "no_jackpot_to_play"), object: nil)
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.game_quitted(_:)), name: NSNotification.Name(rawValue: "game_quitted"), object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.something_went_wrong_home(_:)), name: NSNotification.Name(rawValue: "something_went_wrong_home"), object: nil)
-
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.place_bid_error(_:)), name: NSNotification.Name(rawValue: "place_bid_error"), object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.jackpot_my_info_changed(_:)), name: NSNotification.Name(rawValue: "jackpot_my_info_changed"), object: nil)
-
-        
-        
         SocketIOManager.sharedInstance.establishConnection()
     }
     
@@ -130,37 +89,120 @@ class HomeVC: UIViewController
         self.navigationController?.isNavigationBarHidden = true
     }
 
-    
-    func handleGameUpdateNotification(_ notification: Notification)
+    //MARK: Handle Home Screen Data in one Event
+    func update_home_screen(_ notification: Notification)
     {
         if let data = notification.object as? [String: AnyObject]
         {
-            if let currentBidUser = data["current_bid_name"] as? String
+            if let strscenename = data["scene"] as? String
             {
-                lblcurrentBid.text = "Current Bid: \(currentBidUser)"
-            }
-            else
-            {
-                lblcurrentBid.text = "Current Bid:"
-
-            }
-            
-            lblcurrentBidLength.text = "Current Bid Length: \(data["current_bid_time"]!)"
-            lblLongestBid.text = "Longest Bid: \(data["longest_bid_by"]!)"
-            
-            if ("\(data["last_bid_user_id"]!)" == "\(appDelegate.arrLoginData[kkeyuserid]!)")
-            {
-                lblUserBidBank.text = "\(data["remaining_bids"] as! NSNumber)"
-                UserDefaults.standard.set("\(data["remaining_bids"] as! NSNumber)", forKey: kUserBidBank)
-                UserDefaults.standard.synchronize()
-
-                btnBid.isEnabled = false
-                btnBid.backgroundColor = UIColor.darkGray
-            }
-            else
-            {
-                btnBid.backgroundColor = UIColor.black
-                btnBid.isEnabled = true
+                /*
+                 scene = game;
+                 */
+                if  strscenename == "game"
+                {
+                    if let dictheader = data["header"] as? NSDictionary
+                    {
+                        txtGameClock.text =  "\((dictheader).object(forKey: "gameClock")!)"
+                        txtDoomdsDayClock.text = "\((dictheader).object(forKey: "doomsdayClock")!)"
+                        lblGameTitle.text = "\((dictheader).object(forKey: kkeyname)!)"
+                        txtAmount.text = "$\((dictheader).object(forKey: kkeyamount)!)"
+                        
+                        appDelegate.strGameClockTime  = txtGameClock.text!
+                        appDelegate.strDoomdsDayClock = txtDoomdsDayClock.text!
+                        
+                        strjackpotUniqueId = "\((dictheader).object(forKey: "uniqueId")!)"
+                        appDelegate.strGameJackpotID = strjackpotUniqueId
+                    }
+                    
+                    if let dictfooter = data["footer"] as? NSDictionary
+                    {
+                        if(dictfooter["showBidButton"] as!  NSNumber == 1)
+                        {
+                            btnBid.backgroundColor = UIColor.black
+                            btnBid.isEnabled = true
+                        }
+                        else
+                        {
+                            btnBid.isEnabled = false
+                            btnBid.backgroundColor = UIColor.darkGray
+                        }
+                        
+                        if(dictfooter["showQuitButton"] as!  NSNumber == 1)
+                        {
+                            appDelegate.bShowQuitGameButton = true
+                        }
+                        else
+                        {
+                            appDelegate.bShowQuitGameButton = false
+                        }
+                    }
+                    
+                    if let dictplayers = data["players"] as? NSDictionary
+                    {
+                        lblActivePlayers.text = "Active Players: \(dictplayers["activePlayers"]!)"
+                        lblAverageBidBank.text = "Average Bid Bank: \(dictplayers["averageBidBank"]!)"
+                        lblPlayersRemaining.text = "Players Remaining: \(dictplayers["playersRemaining"]!)"
+                    }
+                    
+                    if let dictmyinfo = data["my_info"] as? NSDictionary
+                    {
+                        lblUserBattleWon.text = "\(dictmyinfo["battlesWon"]!)"
+                        lblUserBattleStreak.text = "\(dictmyinfo["battleStreak"]!)"
+                        lblLongestBid.text = "Longest Bid: \(dictmyinfo["myLongestBid"]!)"
+                        lblUserBidBank.text = "\(dictmyinfo["bidBank"] as! NSNumber)"
+                        UserDefaults.standard.set("\(dictmyinfo["bidBank"] as! NSNumber)", forKey: kUserBidBank)
+                        UserDefaults.standard.synchronize()
+                    }
+                    
+                    if let dictbids = data["bids"] as? NSDictionary
+                    {
+                        if let currentBidUser = (dictbids).object(forKey: "currentBidUser") as? String
+                        {
+                            lblcurrentBid.text = "Current Bid: \(currentBidUser)"
+                        }
+                        else
+                        {
+                            lblcurrentBid.text = "Current Bid:"
+                        }
+                        
+                        if let latestValue = dictbids["longestBidDuration"] as? String
+                        {
+                            lblLongestBid.text = "Longest Bid: \(latestValue)  \(dictbids["longestBidDuration"]!)"
+                        }
+                        else
+                        {
+                            if let longestBidDuration = dictbids["longestBidDuration"] as? String
+                            {
+                                lblLongestBid.text = "Longest Bid: \(longestBidDuration)"
+                                
+                            }
+                            else
+                            {
+                                lblLongestBid.text = "Longest Bid:"
+                            }
+                        }
+                        
+                        if let lastBidDuration = dictbids["currentBidDuration"] as? String
+                        {
+                            lblcurrentBidLength.text = "Current Bid Length: \(lastBidDuration)"
+                        }
+                        else
+                        {
+                            lblcurrentBidLength.text = "Current Bid Length:"
+                        }
+                    }
+                }
+                
+                /*
+                 self.tabBarController?.selectedIndex = 0
+                 txtGameClock.text = "00:00:00"
+                 txtDoomdsDayClock.text = "00:00:00"
+                 vwNoGame.isHidden = false
+                 vwGame.isHidden = true
+                 vwPlayers.isHidden = true
+                 self.btnBid.isHidden = true
+                */
             }
         }
     }
@@ -187,214 +229,6 @@ class HomeVC: UIViewController
             strjackpotUniqueId = "\((data["jackpotInfo"] as! NSDictionary).object(forKey: "uniqueId")!)"
             appDelegate.strGameJackpotID = strjackpotUniqueId
         }
-    }
-    func handleGameUpdateTimerNotification(_ notification: Notification)
-    {
-        if let data = notification.object as? [String: AnyObject]
-        {
-            //  print("handleGameUpdateTimerNotificationdata:>\(data)")
-            txtGameClock.text = "\(data["gameClockTime"]!)"
-            txtDoomdsDayClock.text = "\(data["doomsDayClockTime"]!)"
-            
-            appDelegate.strGameClockTime  = txtGameClock.text!
-            appDelegate.strDoomdsDayClock = txtDoomdsDayClock.text!
-            
-            if let latestValue = data["longestBidUserName"] as? String
-            {
-                lblLongestBid.text = "Longest Bid: \(latestValue)  \(data["longestBidDuration"]!)"
-            }
-            else
-            {
-                if let longestBidDuration = data["longestBidDuration"] as? String
-                {
-                    lblLongestBid.text = "Longest Bid: \(longestBidDuration)"
-
-                }
-                else
-                {
-                    lblLongestBid.text = "Longest Bid:"
-                }
-            }
-            
-            if let lastBidDuration = data["lastBidDuration"] as? String
-            {
-                lblcurrentBidLength.text = "Current Bid Length: \(lastBidDuration)"
-            }
-            else
-            {
-                lblcurrentBidLength.text = "Current Bid Length:"
-            }
-        }
-    }
-    func handleGameJackpotDataNotification(_ notification: Notification)
-    {
-        if let data = notification.object as? [String: AnyObject]
-        {
-            //print("handleGameJackpotDataNotificationdata:>\(data)")
-            if(data.count > 0)
-            {
-                lblActivePlayers.text = "Active Players: \(data["activePlayers"]!)"
-                lblAverageBidBank.text = "Average Bid Bank: \(data["averageBidBank"]!)"
-                lblPlayersRemaining.text = "Players Remaining: \(data["remainingPlayers"]!)"
-                
-                if let currentBidUser = (data["currentBidUser"] as! NSDictionary).object(forKey: kkeyname) as? String
-                {
-                    lblcurrentBid.text = "Current Bid: \(currentBidUser)"
-
-                }
-                else
-                {
-                    lblcurrentBid.text = "Current Bid:"
-                }
-                
-                /*
-                if let latestValue = data["canIBid"] as? NSNumber
-                {
-                    if(latestValue == 1)
-                    {
-                        btnBid.backgroundColor = UIColor.black
-                        btnBid.isEnabled = true
-                    }
-                    else
-                    {
-                        btnBid.isEnabled = false
-                        btnBid.backgroundColor = UIColor.darkGray
-                    }
-                }*/
-            }
-        }
-    }
-    func handleGameUserPlacedBidNotification(_ notification: Notification)
-    {
-        if let data = notification.object as? [String: AnyObject]
-        {
-          //  print("handleGameUserPlacedBidNotificationdata:>\(data)")
-            if(data.count > 0)
-            {
-                if(data["canIBid"] as!  NSNumber == 1)
-                {
-                    btnBid.backgroundColor = UIColor.black
-                    btnBid.isEnabled = true
-                    
-                }
-                else
-                {
-                    btnBid.isEnabled = false
-                    btnBid.backgroundColor = UIColor.darkGray
-                }
-            }
-        }
-    }
-    
-    func handleGameUserBidsNotification(_ notification: Notification)
-    {
-        if let data = notification.object as? [String: AnyObject]
-        {
-            //print("handleGameUserBidsNotificationdata:>\(data)")
-            if(data.count > 0)
-            {
-                lblUserBidBank.text = "\(data[kkeyavailableBids]!)"
-                UserDefaults.standard.set("\(data[kkeyavailableBids]!)", forKey: kUserBidBank)
-                UserDefaults.standard.synchronize()
-            }
-        }
-    }
-
-    func update_available_bid_after_battle_win(_ notification: Notification)
-    {
-        if let data = notification.object as? [String: AnyObject]
-        {
-            //print("handleGameUserBidsNotificationdata:>\(data)")
-            if(data.count > 0)
-            {
-                lblUserBidBank.text = "\(data[kkeyavailableBids]!)"
-                UserDefaults.standard.set("\(data[kkeyavailableBids]!)", forKey: kUserBidBank)
-                UserDefaults.standard.synchronize()
-
-            }
-        }
-    }
-    
-    func update_home_jackpot_battle_info(_ notification: Notification)
-    {
-        if let data = notification.object as? [String: AnyObject]
-        {
-            if(data.count > 0)
-            {
-                lblUserBattleWon.text = "\(data["battleWins"]!)"
-                lblUserBattleStreak.text = "\(data["battleStreak"]!)"
-            }
-        }
-    }
-    
-
-    func update_jackpot_amount(_ notification: Notification)
-    {
-        if let data = notification.object as? [String: AnyObject]
-        {
-            //print("handleGameUserBidsNotificationdata:>\(data)")
-            if(data.count > 0)
-            {
-                txtAmount.text = "$\(data[kkeyamount] as! String)"
-            }
-        }
-    }
- 
-    //MARK: game_finished
-    func game_finished(_ notification: Notification)
-    {
-        var strmessage = String()
-
-        if let data = notification.object as? [String: AnyObject]
-        {
-            if(data.count > 0)
-            {
-                if let lastBidWinner = (data["lastBidUser"] as? NSDictionary), let longestBidWinner = (data["longestBidUser"] as? NSDictionary)
-                {
-                    strmessage = "Game Won info:\nLastBidWinner: \((lastBidWinner["name"]!))\nLongestBidWinner: \((longestBidWinner["name"]!))"
-                }
-                else
-                {
-                    strmessage = "Game Finished"
-                }
-            }
-            else
-            {
-                strmessage = "Game Finished"
-            }
-        }
-        else
-        {
-            strmessage = "Game Finished"
-        }
-        
-        let alertView = UIAlertController(title: Application_Name, message: strmessage, preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "OK", style: .default)
-        { (action) in
-            
-            self.vwNoGame.isHidden = false
-            self.vwGame.isHidden = true
-            self.vwPlayers.isHidden = true
-            self.btnBid.isHidden = true
-            self.btnQuitGame.isHidden = true
-
-            SocketIOManager.sharedInstance.closeConnection()
-            SocketIOManager.sharedInstance.establishConnection()
-        }
-        alertView.addAction(OKAction)
-        self.present(alertView, animated: true, completion: nil)
-    }
-    
-    func no_jackpot_to_play(_ notification: Notification)
-    {
-        self.tabBarController?.selectedIndex = 0
-        txtGameClock.text = "00:00:00"
-        txtDoomdsDayClock.text = "00:00:00"
-
-        vwNoGame.isHidden = false
-        vwGame.isHidden = true
-        vwPlayers.isHidden = true
-        self.btnBid.isHidden = true
     }
 
     //MARK: Extra Methods
@@ -452,70 +286,7 @@ class HomeVC: UIViewController
         }
     }
     
-    func place_bid_error(_ notification: Notification)
-    {
-        if let data = notification.object as? [String: AnyObject]
-        {
-            print("handleGameFinishNotificationdata:>\(data)")
-            if(data.count > 0)
-            {
-                App_showAlert(withMessage:"\(data["error"])", inView: self)
-            }
-        }
-    }
-    
-    func jackpot_my_info_changed(_ notification: Notification)
-    {
-        if let data = notification.object as? [String: AnyObject]
-        {
-            print("handleGameFinishNotificationdata:>\(data)")
-            if(data.count > 0)
-            {
-                lblUserBidBank.text = "\(data["availableBids"] as! NSNumber)"
-                UserDefaults.standard.set("\(data["availableBids"] as! NSNumber)", forKey: kUserBidBank)
-                UserDefaults.standard.synchronize()
 
-            }
-        }
-    }
-
-    
-
-    //MARK: Game Finish and Quit Button
-    func handleGameFinishNotification(_ notification: Notification)
-    {
-        if let data = notification.object as? [String: AnyObject]
-        {
-            print("handleGameFinishNotificationdata:>\(data)")
-            if(data.count > 0)
-            {
-                
-            }
-        }
-    }
-    func handleGameQuitNotification(_ notification: Notification)
-    {
-        btnQuitGame.isHidden = false
-        CTWidthofQuitBtn.constant = 120
-        CTLeadingofBidBtn.constant = 8
-        CTTrailingofBidBtn.constant = MainScreen.width - 150
-    }
-    
-    func game_quitted(_ notification: Notification)
-    {
-        App_showAlert(withMessage:"You have quitted game successfully", inView: self)
-        btnQuitGame.isHidden = true
-        CTWidthofQuitBtn.constant = 0
-        CTLeadingofBidBtn.constant = 94
-        CTTrailingofBidBtn.constant = 94
-    }
-    
-    func something_went_wrong_home(_ notification: Notification)
-    {
-        App_showAlert(withMessage:"Something went wrong. Please try again later", inView: self)
-    }
-
-    
     @IBAction func btnQuiteGameAction()
     {
         let myJSON = [
