@@ -193,16 +193,45 @@ class HomeVC: UIViewController
                         }
                     }
                 }
-                
-                /*
-                 self.tabBarController?.selectedIndex = 0
-                 txtGameClock.text = "00:00:00"
-                 txtDoomdsDayClock.text = "00:00:00"
-                 vwNoGame.isHidden = false
-                 vwGame.isHidden = true
-                 vwPlayers.isHidden = true
-                 self.btnBid.isHidden = true
-                */
+                else if strscenename == "no_jackpot"
+                {
+                    self.tabBarController?.selectedIndex = 0
+                    txtGameClock.text = "00:00:00"
+                    txtDoomdsDayClock.text = "00:00:00"
+                    vwNoGame.isHidden = false
+                    vwGame.isHidden = true
+                    vwPlayers.isHidden = true
+                    self.btnBid.isHidden = true
+                }
+                else if strscenename == "winner"
+                {
+                    var strmessage = String()
+                    
+                    if let dictwinner = data["winner"] as? NSDictionary
+                    {
+                        strmessage = "Game Won info:\nLastBidWinner: \((dictwinner["lastBidWinner"]!))\nLongestBidWinner: \((dictwinner["longestBidWinner"]!))"
+                    }
+                    else
+                    {
+                        strmessage = "Game Finished"
+                    }
+                    
+                    let alertView = UIAlertController(title: Application_Name, message: strmessage, preferredStyle: .alert)
+                    let OKAction = UIAlertAction(title: "OK", style: .default)
+                    { (action) in
+                        
+                        self.vwNoGame.isHidden = false
+                        self.vwGame.isHidden = true
+                        self.vwPlayers.isHidden = true
+                        self.btnBid.isHidden = true
+                        appDelegate.bShowQuitGameButton = false
+                        
+                        SocketIOManager.sharedInstance.closeConnection()
+                        SocketIOManager.sharedInstance.establishConnection()
+                    }
+                    alertView.addAction(OKAction)
+                    self.present(alertView, animated: true, completion: nil)
+                }
             }
         }
     }
@@ -277,7 +306,8 @@ class HomeVC: UIViewController
         
       //  print("data:>\(myJSON)")
 
-        SocketIOManager.sharedInstance.socket.emitWithAck("place_bid",  myJSON).timingOut(after: 0) {data in
+//        SocketIOManager.sharedInstance.socket.emitWithAck("place_bid",  myJSON).timingOut(after: 0) {data in
+        SocketIOManager.sharedInstance.socket.emitWithAck("place_jackpot_bid",  myJSON).timingOut(after: 0) {data in
             if (data.count > 0)
             {
                 print("data:>\(data)")
