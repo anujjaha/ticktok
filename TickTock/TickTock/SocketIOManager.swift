@@ -298,6 +298,14 @@ class SocketIOManager: NSObject
         }
 
         
+        //NEW Battle Service
+        socket.on("update_level_screen")
+        { dataArray, ack in
+            
+            NotificationCenter.default
+                .post(name: Notification.Name(rawValue: "update_level_screen"), object: dataArray[0] as? [String: AnyObject])
+        }
+
         
 //        socket.on("game_updates") { dataArray, ack in
 //           

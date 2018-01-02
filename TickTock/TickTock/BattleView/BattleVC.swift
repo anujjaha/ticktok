@@ -29,6 +29,9 @@ class BattleVC: UIViewController
     @IBOutlet weak var txtBattleClock: UITextField!
     
     var arrBattelList = NSMutableArray()
+    var arrAdvanceBattleList = NSMutableArray()
+    var dictBattleList = NSMutableDictionary()
+
     var dictgameInfo = NSDictionary()
     var dictjackpotInfo = NSDictionary()
     var dictlevelInfo = NSDictionary()
@@ -105,6 +108,13 @@ class BattleVC: UIViewController
         lblPrizeNO.attributedText = underlineAttributedString
         
         
+        //New Updation as per new Services 
+       // update_level_screen
+        NotificationCenter.default.addObserver(self, selector: #selector(self.update_level_screen(_:)), name: NSNotification.Name(rawValue: "update_level_screen"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.update_battle_screen(_:)), name: NSNotification.Name(rawValue: "update_level_screen"), object: nil)
+        
+        
         //Battel Screen
         /*
          export const EVT_EMIT_RESPONSE_BATTLE      						= 'response_battle';
@@ -171,6 +181,100 @@ class BattleVC: UIViewController
         btnBack.isHidden = true
     }
     
+    //MARK: Update_level_screen
+    func update_level_screen(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            // print("response_battle:>\(data)")
+            dictBattleList = NSMutableDictionary(dictionary: (data["levels"] as! NSDictionary))
+            
+            if  dictBattleList.count > 0
+            {
+                arrAdvanceBattleList = NSMutableArray(array: (dictBattleList["advance"] as! NSArray))
+                arrBattelList = NSMutableArray(array: (dictBattleList["normal"] as! NSArray))
+                
+                if arrBattelList.count > 0 || arrAdvanceBattleList.count > 0
+                {
+                    lblNoJakpotFound.isHidden = true
+                    tblBattleBoard.isHidden = false
+                    tblBattleBoard.reloadData()
+                }
+                else
+                {
+                    tblBattleBoard.isHidden = true
+                    lblNoJakpotFound.isHidden = false
+                    
+                    if appDelegate.strGameJackpotID.characters.count == 0
+                    {
+                        lblNoJakpotFound.text = "No Associated Jackpot Found To Play Bid Battle"
+                    }
+                    else
+                    {
+                        lblNoJakpotFound.text = "The Jackpot you are playing in does not have any advance battle level associated to it"
+                    }
+                }
+            }
+            else
+            {
+                tblBattleBoard.isHidden = true
+                lblNoJakpotFound.isHidden = false
+                
+                if appDelegate.strGameJackpotID.characters.count == 0
+                {
+                    lblNoJakpotFound.text = "No Associated Jackpot Found To Play Bid Battle"
+                }
+                else
+                {
+                    lblNoJakpotFound.text = "The Jackpot you are playing in does not have any advance battle level associated to it"
+                }
+            }
+        }
+        else
+        {
+            tblBattleBoard.isHidden = true
+            lblNoJakpotFound.isHidden = false
+            
+            if appDelegate.strGameJackpotID.characters.count == 0
+            {
+                lblNoJakpotFound.text = "No Associated Jackpot Found To Play Bid Battle"
+            }
+            else
+            {
+                lblNoJakpotFound.text = "The Jackpot you are playing in does not have any advance battle level associated to it"
+            }
+        }
+    }
+
+    func update_battle_screen(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            if let strscenename = data["scene"] as? String
+            {
+                if(data.count > 0)
+                {
+                    if  strscenename == "game"
+                    {
+                        
+                    }
+                    else if strscenename == "countdown"
+                    {
+                        vwBattleList.isHidden = true
+                        vwBattleGame.isHidden = true
+                        vwJoinBattle.isHidden = true
+                        vwTimer.isHidden = false
+                        
+                        lbltimerSeconds.text = "\(data["time"] as! Int)"
+                    }
+                    else if strscenename == "winner"
+                    {
+                        
+                    }
+                }
+            }
+        }
+    }
     //MARK: Hadnle Notification of battle
     func response_battle(_ notification: Notification)
     {
@@ -537,6 +641,7 @@ class BattleVC: UIViewController
         txtDoomdsDayClock.text = appDelegate.strDoomdsDayClock
     }
 
+    //MARK: Battle Screen
     @IBAction func JoinBattleButtonPressed()
     {
         vwJoinBattle.isHidden = true
@@ -549,24 +654,8 @@ class BattleVC: UIViewController
             "jackpotUniqueId" : appDelegate.strGameJackpotID
         ]
         
-        //  print("data:>\(myJSON)")
-        SocketIOManager.sharedInstance.socket.emitWithAck("request_battle",  myJSON).timingOut(after: 0) {data in
+        SocketIOManager.sharedInstance.socket.emitWithAck("request_battle_levels",  myJSON).timingOut(after: 0) {data in
         }
-        
-     //   SocketIOManager.sharedInstance.socket.emitWithAck("needsAck", "test").onAck {data in
-          //  print("got ack with data: (data)")
-        //}
-        
-              
-        //        SocketIOManager.sharedInstance.socket.emitWithAck("request_battle", myJSON).timingOut(after: 0, callback: { data in
-//            print("CONNECTED FOR SURE")
-//            
-//            if (data.count > 0)
-//            {
-//                print("data:>\(data)")
-//            }
-//        })
-
     }
 
     override func didReceiveMemoryWarning()
@@ -575,41 +664,63 @@ class BattleVC: UIViewController
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: Join Battle Level
     @IBAction func btnJoinPressed(sender: UIButton)
     {
-        let dict = self.arrBattelList[sender.tag] as! NSDictionary
-        
-        if iBattleLevelType == 1
+        var dict = NSDictionary()
+        let buttonPosition = sender.convert(CGPoint.zero, to: self.tblBattleBoard)
+        let indexPath = self.tblBattleBoard.indexPathForRow(at: buttonPosition)
+
+        if  indexPath?.section == 0
         {
-            let myJSON = [
-                "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
-                "jackpotUniqueId" : appDelegate.strGameJackpotID,
-                "levelUniqueId" : "\(dict["uniqueId"]!)",
-                "battleType" : "NORMAL"
-            ]
-            SocketIOManager.sharedInstance.socket.emitWithAck("request_join_normal_battle_level",  myJSON).timingOut(after: 0) {data in
-            }
+            dict =  self.arrBattelList[(indexPath?.row)!] as! NSDictionary
+            iBattleLevelType = 1
         }
         else
         {
-            let iBidAvilable = UserDefaults.standard.value(forKey: kUserBidBank) as! Int
-            if dict["minRequiredBids"] as! Int >=  iBidAvilable
+            dict = self.arrAdvanceBattleList[(indexPath?.row)!] as! NSDictionary
+            iBattleLevelType = 2
+        }
+        
+        if dict["isLocked"] as! Bool == true
+        {
+            App_showAlert(withMessage: "You can not enter in locked battle", inView: self)
+        }
+        else
+        {
+            btnBack.isHidden = false
+            vwBattleList.isHidden = true
+            vwBattleGame.isHidden = false
+            
+            if iBattleLevelType == 1
             {
                 let myJSON = [
                     "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
                     "jackpotUniqueId" : appDelegate.strGameJackpotID,
-                    "levelUniqueId" : "\(dict["uniqueId"]!)",
-                    "battleType" : "ADVANCE"
+                    "levelUniqueId" : "\(dict["uniqueId"]!)"
                 ]
-                SocketIOManager.sharedInstance.socket.emitWithAck("request_join_advance_battle_level",  myJSON).timingOut(after: 0) {data in
+                SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
                 }
             }
             else
             {
-                App_showAlert(withMessage:"You Don't Have Enough Bids To Join This Battle", inView: self)
+                let iBidAvilable = UserDefaults.standard.value(forKey: kUserBidBank) as! Int
+                if dict["minRequiredBids"] as! Int >=  iBidAvilable
+                {
+                    let myJSON = [
+                        "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                        "jackpotUniqueId" : appDelegate.strGameJackpotID,
+                        "levelUniqueId" : "\(dict["uniqueId"]!)"
+                    ]
+                    SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
+                    }
+                }
+                else
+                {
+                    App_showAlert(withMessage:"You Don't Have Enough Bids To Join This Battle", inView: self)
+                }
             }
         }
-        
         btnBack.isHidden = false
         vwBattleList.isHidden = true
         vwBattleGame.isHidden = false
@@ -786,44 +897,106 @@ class BattleVC: UIViewController
 
 extension BattleVC : UITableViewDelegate, UITableViewDataSource
 {
+    func numberOfSections(in tableView: UITableView) -> Int
+    {
+        if arrBattelList.count > 0 && arrAdvanceBattleList.count > 0
+        {
+            return 2
+        }
+        else
+        {
+            return 1
+        }
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+    {
+        if section == 0
+        {
+            return "NORMAL"
+        }
+        else
+        {
+            return "ADVANCE"
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    {
+        return 30
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return self.arrBattelList.count
+        if section == 0
+        {
+            return self.arrBattelList.count
+        }
+        else
+        {
+            return self.arrAdvanceBattleList.count
+        }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BattleCell") as! BattleCell
-        
-        let dict = self.arrBattelList[indexPath.row] as! NSDictionary
-        cell.lblLevel.text = "\(dict["levelName"]!)"
-        
-        cell.lblBids.text = "Jackpot: \(dict["prizeValue"]!) Bids"
-        cell.selectionStyle = .none
-        
-        
-        if dict["isLocked"] as! Bool == true
-        {
-            cell.imgLock.isHidden = false
-            cell.btnJoin.isHidden = true
-        }
-        else
-        {
-            cell.imgLock.isHidden = true
-            cell.btnJoin.isHidden = false
-        }
-        /*
-        if (indexPath.row > 0)
-        {
-            cell.imgLock.isHidden = false
-        }
-        else
-        {
-            cell.imgLock.isHidden = true
-        }
- */
-        cell.btnJoin.tag = indexPath.row
-        cell.btnJoin.addTarget(self, action: #selector(btnJoinPressed(sender:)), for: .touchUpInside)
 
+        if  indexPath.section == 0
+        {
+            let dict = self.arrBattelList[indexPath.row] as! NSDictionary
+            cell.lblLevel.text = "\(dict["levelName"]!)"
+            
+            cell.lblBids.text = "Jackpot: \(dict["prizeValue"]!) Bids"
+            cell.lblPlayersCount.text = "Players: \(dict["playersCount"]!)"
+            cell.lblActivePlayersCount.text = "Active: \(dict["activePlayersCount"]!)"
+            /*
+             {
+             defaultAvailableBids: 10,
+             isLastLevel: false,
+             isLocked: false,
+             levelName: "Level 1",
+             order: 1,
+             prizeType:"BID",
+             prizeValue: 20
+             playersCount: 20,
+             activePlayersCount: 15
+             }
+             */
+            if dict["isLocked"] as! Bool == true
+            {
+                cell.imgLock.isHidden = false
+                cell.btnJoin.isHidden = true
+            }
+            else
+            {
+                cell.imgLock.isHidden = true
+                cell.btnJoin.isHidden = false
+            }
+            cell.btnJoin.tag = indexPath.row
+            cell.btnJoin.addTarget(self, action: #selector(btnJoinPressed(sender:)), for: .touchUpInside)
+        }
+        else if indexPath.section == 1
+        {
+            let dict = self.arrAdvanceBattleList[indexPath.row] as! NSDictionary
+            cell.lblLevel.text = "\(dict["levelName"]!)"
+            
+            cell.lblBids.text = "Jackpot: \(dict["prizeValue"]!) Bids"
+            cell.lblPlayersCount.text = "Players: \(dict["playersCount"]!)"
+            cell.lblActivePlayersCount.text = "Active: \(dict["activePlayersCount"]!)"
+            if dict["isLocked"] as! Bool == true
+            {
+                cell.imgLock.isHidden = false
+                cell.btnJoin.isHidden = true
+            }
+            else
+            {
+                cell.imgLock.isHidden = true
+                cell.btnJoin.isHidden = false
+            }
+            cell.btnJoin.tag = indexPath.row
+            cell.btnJoin.addTarget(self, action: #selector(btnJoinPressed(sender:)), for: .touchUpInside)
+        }
+        
+        cell.selectionStyle = .none
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
@@ -838,7 +1011,18 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        let dict = self.arrBattelList[indexPath.row] as! NSDictionary
+        var dict = NSDictionary()
+        if  indexPath.section == 0
+        {
+            dict =  self.arrBattelList[indexPath.row] as! NSDictionary
+            iBattleLevelType = 1
+        }
+        else
+        {
+            dict = self.arrAdvanceBattleList[indexPath.row] as! NSDictionary
+            iBattleLevelType = 2
+        }
+        
         if dict["isLocked"] as! Bool == true
         {
             App_showAlert(withMessage: "You can not enter in locked battle", inView: self)
@@ -848,25 +1032,15 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
             btnBack.isHidden = false
             vwBattleList.isHidden = true
             vwBattleGame.isHidden = false
-            let dict = self.arrBattelList[indexPath.row] as! NSDictionary
             
-//            let myJSON = [
-//                "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
-//                "jackpotUniqueId" : appDelegate.strGameJackpotID,
-//                "levelUniqueId" : "\(dict["uniqueId"]!)",
-//                "battleType" : "NORMAL"
-//            ]
-//            SocketIOManager.sharedInstance.socket.emitWithAck("request_join_normal_battle_level",  myJSON).timingOut(after: 0) {data in
-//            }
             if iBattleLevelType == 1
             {
                 let myJSON = [
                     "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
                     "jackpotUniqueId" : appDelegate.strGameJackpotID,
-                    "levelUniqueId" : "\(dict["uniqueId"]!)",
-                    "battleType" : "NORMAL"
+                    "levelUniqueId" : "\(dict["uniqueId"]!)"
                 ]
-                SocketIOManager.sharedInstance.socket.emitWithAck("request_join_normal_battle_level",  myJSON).timingOut(after: 0) {data in
+                SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
                 }
             }
             else
@@ -877,10 +1051,9 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
                     let myJSON = [
                         "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
                         "jackpotUniqueId" : appDelegate.strGameJackpotID,
-                        "levelUniqueId" : "\(dict["uniqueId"]!)",
-                        "battleType" : "ADVANCE"
+                        "levelUniqueId" : "\(dict["uniqueId"]!)"
                     ]
-                    SocketIOManager.sharedInstance.socket.emitWithAck("request_join_advance_battle_level",  myJSON).timingOut(after: 0) {data in
+                    SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
                     }
                 }
                 else
@@ -897,7 +1070,8 @@ class BattleCell: UITableViewCell
     @IBOutlet weak var imgLock : UIImageView!
     @IBOutlet weak var lblBids : UILabel!
     @IBOutlet weak var btnJoin : UIButton!
-
+    @IBOutlet weak var lblPlayersCount : UILabel!
+    @IBOutlet weak var lblActivePlayersCount : UILabel!
 }
 class UnderlinedLabel: UILabel
 {

@@ -54,11 +54,9 @@ class ProfileVC: UIViewController
 
     func getProfileData()
     {
-        
         let parameters = [
             "user_id":  "\(appDelegate.arrLoginData[kkeyuserid]!)"
         ]
-        
         
         showProgress(inView: self.view)
         print("parameters:>\(parameters)")
