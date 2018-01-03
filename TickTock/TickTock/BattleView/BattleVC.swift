@@ -63,7 +63,11 @@ class BattleVC: UIViewController
     @IBOutlet weak var CTheightofQuitBtn : NSLayoutConstraint!
     @IBOutlet weak var lblNoJakpotFound: UILabel!
 
-
+    //New Enhancement
+    var strjackpotUniqueId = String()
+    var strlevelUniqueId = String()
+    var strgameUniqueId = String()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -256,7 +260,95 @@ class BattleVC: UIViewController
                 {
                     if  strscenename == "game"
                     {
+                        vwTimer.isHidden = true
+                        vwBattleGame.isHidden = false
+                        vwJoinBattle.isHidden = true
+                        vwBattleList.isHidden = true
                         
+                        //Jackpot Timer
+                        /*
+                         "jackpot_timer":{
+                         "name":"First Jackpo",
+                         "amount":"2,000",
+                         "gameClock":"00:05:00",
+                         "doomsdayClock":"00:00:30"
+                         },
+                         */
+                        if let dictJackpotTimer = data["jackpot_timer"] as? NSDictionary
+                        {
+                            txtGameClock.text = "\(dictJackpotTimer["gameClock"]!)"
+                            txtDoomdsDayClock.text = "\(dictJackpotTimer["doomsdayClock"]!)"
+                            txtJackpotAmount.text = "\(dictJackpotTimer.object(forKey: "amount")!)"
+
+                            appDelegate.strGameClockTime  = txtGameClock.text!
+                            appDelegate.strDoomdsDayClock = txtDoomdsDayClock.text!
+                        }
+                        
+                        //Handle Timer
+                        /*
+                         "header":{
+                         "jackpotUniqueId":"Gpj65X5itoG7n65TvxrY",
+                         "levelUniqueId":"zvsVhpJYOLlwxQfOqwiG",
+                         "gameUniqueId":"lPdEHPmLcPcuUlbBRsGF",
+                         "levelName":"Level 1",
+                         "prizeValue":10,
+                         "prizeType":"BID",
+                         "gameClock":"00:05:00"
+                         },
+                        */
+                        if let dictheader = data["header"] as? NSDictionary
+                        {
+                            txtBattleClock.text = "\(dictheader["gameClock"]!)"
+                            lblPrizeNO.text = "Prize: \(dictheader.object(forKey: "prizeValue")!) Bids"
+                            lblBattleNO.text = "\(dictheader.object(forKey: "levelName")!)"
+                            self.strjackpotUniqueId = "\(dictheader["jackpotUniqueId"]!)"
+                            self.strlevelUniqueId = "\(dictheader["levelUniqueId"]!)"
+                            self.strgameUniqueId = "\(dictheader["gameUniqueId"]!)"
+                        }
+
+                        //My Info
+                        /*
+                         "my_info":{
+                         "bidBank":10
+                         },
+                         */
+                        if let dictMyInfo = data["my_info"] as? NSDictionary
+                        {
+                            lblMyBids.text = "My Battle Bids: \(dictMyInfo.object(forKey: "bidBank")!)"
+                        }
+                        
+                        
+                        //Handle Battle Timer
+                        if let dictbids = data["bids"] as? NSDictionary
+                        {
+                            /*
+                             "bids":{
+                             "currentBidDuration":null,
+                             "currentBidUser":null,
+                             "longestBidDuration":null,
+                             "longestBidUser":null
+                             },
+                             */
+                            if let latestValue = data["longestBidUser"] as? String
+                            {
+                                lblLongestBid.text = "Longest Bid: \(latestValue)  \(data["longestBidDuration"]!)"
+                            }
+                            else
+                            {
+                                lblLongestBid.text = "Longest Bid: \(data["longestBidDuration"]!)"
+                            }
+                            
+                            lblCurrentBidLength.text = "Current Bid Length: \(dictbids["currentBidDuration"]!)"
+                            
+                            if let latestValue = dictbids["currentBidUser"] as? String
+                            {
+                                lblCurrentBid.text = "Current Bid: \(latestValue)"
+                            }
+                            else
+                            {
+                                lblCurrentBid.text = "Current Bid: "
+                            }
+                        }
                     }
                     else if strscenename == "countdown"
                     {
