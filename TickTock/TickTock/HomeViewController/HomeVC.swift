@@ -74,7 +74,6 @@ class HomeVC: UIViewController
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleGameJoinedNotification(_:)), name: NSNotification.Name(rawValue: "callGameJoinedNotification"), object: nil)
 
-        
         //New Change only need to handle one event
         NotificationCenter.default.addObserver(self, selector: #selector(self.update_home_screen(_:)), name: NSNotification.Name(rawValue: "update_home_screen"), object: nil)
 
