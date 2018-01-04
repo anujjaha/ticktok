@@ -113,7 +113,6 @@ class HomeVC: UIViewController
                         strjackpotUniqueId = "\((dictheader).object(forKey: "uniqueId")!)"
                         appDelegate.strGameJackpotID = strjackpotUniqueId
                     }
-                    
                     if let dictfooter = data["footer"] as? NSDictionary
                     {
                         if(dictfooter["showBidButton"] as!  NSNumber == 1)

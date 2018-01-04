@@ -140,7 +140,7 @@ class SocketIOManager: NSObject
                 .post(name: Notification.Name(rawValue: "update_level_screen"), object: dataArray[0] as? [String: AnyObject])
         }
 
-        socket.on("update_battle_screen")
+        socket.on("update_battle_game_screen")
         { dataArray, ack in
             
             NotificationCenter.default

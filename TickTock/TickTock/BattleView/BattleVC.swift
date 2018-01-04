@@ -109,8 +109,7 @@ class BattleVC: UIViewController
         underlineAttributedString = NSAttributedString(string: "Prize: 50 Bids", attributes: underlineAttribute)
         lblPrizeNO.attributedText = underlineAttributedString
         
-        
-        //New Updation as per new Services 
+        //New Updation as per new Services
        // update_level_screen
         NotificationCenter.default.addObserver(self, selector: #selector(self.update_level_screen(_:)), name: NSNotification.Name(rawValue: "update_level_screen"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.update_battle_screen(_:)), name: NSNotification.Name(rawValue: "update_battle_screen"), object: nil)
@@ -271,7 +270,7 @@ class BattleVC: UIViewController
                         {
                             arrPlayers = NSMutableArray(array: arrplayers)
                             let iKeyuserid = (appDelegate.arrLoginData[kkeyuser_id]!) as! Int
-                            let namePredicate = NSPredicate(format: "%K = %d", "userId",iKeyuserid)
+                            let namePredicate = NSPredicate(format: "%K = %@", "userId","\(iKeyuserid)")
                             let temparray = arrPlayers.filter { namePredicate.evaluate(with: $0) } as NSArray
                             if temparray.count > 0
                             {
@@ -322,13 +321,13 @@ class BattleVC: UIViewController
                              "longestBidUser":null
                              },
                              */
-                            if let latestValue = data["longestBidUser"] as? String
+                            if let latestValue = dictbids["longestBidUser"] as? String
                             {
-                                lblLongestBid.text = "Longest Bid: \(latestValue)  \(data["longestBidDuration"]!)"
+                                lblLongestBid.text = "Longest Bid: \(latestValue)  \(dictbids["longestBidDuration"]!)"
                             }
                             else
                             {
-                                lblLongestBid.text = "Longest Bid: \(data["longestBidDuration"]!)"
+                                lblLongestBid.text = "Longest Bid: \(dictbids["longestBidDuration"]!)"
                             }
                             
                             lblCurrentBidLength.text = "Current Bid Length: \(dictbids["currentBidDuration"]!)"
