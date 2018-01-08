@@ -2,8 +2,8 @@
 //  BattleVC.swift
 //  TickTock
 //
-//  Created by Yash on 26/03/17.
-//  Copyright © 2017 Niyati. All rights reserved.
+//  Created by Kevin on 26/03/17.
+//  Copyright © 2017 Kevin. All rights reserved.
 //
 
 import UIKit
@@ -397,15 +397,33 @@ class BattleVC: UIViewController
 
                             */
                         var strmessage = String()
-                        if let dictwinner = data["winner"] as? NSDictionary
-                        {
-                            strmessage = "Battle Won info:\nLastBidWinner: \((dictwinner["lastBidUser"]!))\nLongestBidWinner: \((dictwinner["longestBidUser"]!))"
-                        }
-                        else
-                        {
-                            strmessage = "Battle Finished"
-                        }
-                        
+                            if let dictTemp = data["data"] as? NSDictionary
+                            {
+                                if dictTemp["bothAreSame"] as! Bool == true
+                                {
+                                    if let dictlastBidWinner = dictTemp["lastBidWinner"] as? NSDictionary
+                                    {
+                                        strmessage = "Battle Won info:\nLastBidWinner: \((dictlastBidWinner["name"]!))\nLongestBidWinner: \((dictlastBidWinner["name"]!))"
+                                    }
+                                }
+                                else
+                                {
+                                    var strlastBidWinner = String()
+                                    if let dictlastBidWinner = dictTemp["lastBidWinner"] as? NSDictionary
+                                    {
+                                        strlastBidWinner = "LastBidWinner: \((dictlastBidWinner["name"]!))"
+                                    }
+                                    if let dictlongestBidWinner = dictTemp["longestBidWinner"] as? NSDictionary
+                                    {
+                                        strmessage = "Battle Won info:\n\(strlastBidWinner)\nLongestBidWinner: \((dictlongestBidWinner["name"]!))"
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                strmessage = "Battle Finished"
+                            }
+                    
                         let alertView = UIAlertController(title: Application_Name, message: strmessage, preferredStyle: .alert)
                         let OKAction = UIAlertAction(title: "OK", style: .default)
                         { (action) in

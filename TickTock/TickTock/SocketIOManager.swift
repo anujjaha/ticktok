@@ -2,8 +2,8 @@
 //  SocketIOManager.swift
 //  TickTock
 //
-//  Created by Yash on 04/06/17.
-//  Copyright © 2017 Niyati. All rights reserved.
+//  Created by Kevin on 04/06/17.
+//  Copyright © 2017 Kevin. All rights reserved.
 //
 
 import Foundation

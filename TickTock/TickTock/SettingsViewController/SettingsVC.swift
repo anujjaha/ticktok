@@ -2,8 +2,8 @@
 //  SettingsVC.swift
 //  TickTock
 //
-//  Created by Yash on 26/03/17.
-//  Copyright © 2017 Niyati. All rights reserved.
+//  Created by Kevin on 26/03/17.
+//  Copyright © 2017 Kevin. All rights reserved.
 //
 
 import UIKit

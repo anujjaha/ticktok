@@ -2,8 +2,8 @@
 //  PrivacyVC.swift
 //  TickTock
 //
-//  Created by Yash on 07/06/17.
-//  Copyright © 2017 Niyati. All rights reserved.
+//  Created by Kevin on 07/06/17.
+//  Copyright © 2017 Kevin. All rights reserved.
 //
 
 import UIKit
