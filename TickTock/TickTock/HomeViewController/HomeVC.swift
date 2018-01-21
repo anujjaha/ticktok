@@ -76,6 +76,10 @@ class HomeVC: UIViewController
 
         //New Change only need to handle one event
         NotificationCenter.default.addObserver(self, selector: #selector(self.update_home_screen(_:)), name: NSNotification.Name(rawValue: "update_home_screen"), object: nil)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.show_error_popup(_:)), name: NSNotification.Name(rawValue: "show_error_popup_home"), object: nil)
+
 
         SocketIOManager.sharedInstance.establishConnection()
     }
@@ -166,19 +170,11 @@ class HomeVC: UIViewController
                         
                         if let latestValue = dictbids["longestBidDuration"] as? String
                         {
-                            lblLongestBid.text = "Longest Bid: \(latestValue)  \(dictbids["longestBidDuration"]!)"
+                            lblLongestBid.text = "Longest Bid: \(dictbids["longestBidUser"]!)  \(latestValue)"
                         }
                         else
                         {
-                            if let longestBidDuration = dictbids["longestBidDuration"] as? String
-                            {
-                                lblLongestBid.text = "Longest Bid: \(longestBidDuration)"
-                                
-                            }
-                            else
-                            {
-                                lblLongestBid.text = "Longest Bid:"
-                            }
+                            lblLongestBid.text = "Longest Bid:"
                         }
                         
                         if let lastBidDuration = dictbids["currentBidDuration"] as? String
@@ -259,6 +255,15 @@ class HomeVC: UIViewController
     }
 
     //MARK: Extra Methods
+    func show_error_popup(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            // print("response_battle:>\(data)")
+            App_showAlert(withMessage:"\(data["message"]!)", inView: self)
+        }
+    }
+
     func setViewLayoutwithData()
     {
         if (self.dataofHome.count > 0)
@@ -270,7 +275,6 @@ class HomeVC: UIViewController
             if let currentBidUser = self.dataofHome.object(forKey: "current_bid_by") as? String
             {
                 lblcurrentBid.text = "Current Bid: \(currentBidUser)"
-                
             }
             else
             {

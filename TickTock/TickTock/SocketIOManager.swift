@@ -12,11 +12,11 @@ import Foundation
 class SocketIOManager: NSObject
 {
     static let sharedInstance = SocketIOManager()
-//    var socket = SocketIOClient(socketURL: URL(string: "http://35.154.46.190:1337")!, config: [.log(true), .forcePolling(true), .connectParams(["__sails_io_sdk_version":"0.11.0"])]) \(appDelegate.arrLoginData[kkeyuser_id]!)
-//    var socket = SocketIOClient(socketURL: URL(string: "http://13.59.71.92:9000")!, config: [.log(true), .forcePolling(true),.forceWebsockets(true), .path("/ticktock/socket.io"),.connectParams(["userId":"3"])])
 
     var socket = SocketIOClient(socketURL: URL(string: "http://18.221.196.29:9000")!, config: [.log(true), .forcePolling(true),.forceWebsockets(true),.nsp("/jackpot"), .path("/ticktock/socket.io"),.connectParams(["userId":"\(appDelegate.arrLoginData[kkeyuser_id]!)"])])
-    
+
+//    var socket = SocketIOClient(socketURL: URL(string: "http://192.168.2.53:9000")!, config: [.log(true), .forcePolling(true),.forceWebsockets(true),.nsp("/jackpot"), .path("/ticktock/socket.io"),.connectParams(["userId":"\(appDelegate.arrLoginData[kkeyuser_id]!)"])])
+
     override init()
     {
         super.init()
@@ -42,9 +42,6 @@ class SocketIOManager: NSObject
          export const EVT_EMIT_RESPONSE_PLACE_NORMAL_BATTLE_LEVEL_BID 	= 'response_place_normal_battle_level_bid';
          export const EVT_EMIT_NO_ENOUGH_AVAILABLE_BIDS 					= 'no_enough_available_bids';
          */
-
-
-
         socket.on("response_place_normal_battle_level_bid") { dataArray, ack in
             // print(dataArray)
             NotificationCenter.default
@@ -146,6 +143,22 @@ class SocketIOManager: NSObject
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "update_battle_screen"), object: dataArray[0] as? [String: AnyObject])
         }
+        
+        socket.on("show_error_popup")
+        { dataArray, ack in
+            
+            if appDelegate.bisHomeScreen == true
+            {
+                NotificationCenter.default
+                    .post(name: Notification.Name(rawValue: "show_error_popup_home"), object: dataArray[0] as? [String: AnyObject])
+            }
+            else
+            {
+                NotificationCenter.default
+                    .post(name: Notification.Name(rawValue: "show_error_popup"), object: dataArray[0] as? [String: AnyObject])
+            }
+        }
+
 //        socket.on("game_updates") { dataArray, ack in
 //           
 //            print("data:>\(dataArray)")

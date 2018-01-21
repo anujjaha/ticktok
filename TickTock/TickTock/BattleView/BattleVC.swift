@@ -115,6 +115,8 @@ class BattleVC: UIViewController
         NotificationCenter.default.addObserver(self, selector: #selector(self.update_battle_screen(_:)), name: NSNotification.Name(rawValue: "update_battle_screen"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.battle_game_quitted(_:)), name: NSNotification.Name(rawValue: "battle_quitted"), object: nil)
 
+        NotificationCenter.default.addObserver(self, selector: #selector(self.show_error_popup(_:)), name: NSNotification.Name(rawValue: "show_error_popup"), object: nil)
+
         //Battel Screen
         NotificationCenter.default.addObserver(self, selector: #selector(self.response_place_normal_battle_level_bid(_:)), name: NSNotification.Name(rawValue: "response_place_normal_battle_level_bid"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.update_normal_battle_level_player_list(_:)), name: NSNotification.Name(rawValue: "update_normal_battle_level_player_list"), object: nil)
@@ -213,6 +215,7 @@ class BattleVC: UIViewController
                         vwBattleGame.isHidden = false
                         vwJoinBattle.isHidden = true
                         vwBattleList.isHidden = true
+                        btnBack.isHidden = false
                         
                         //Jackpot Timer
                         /*
@@ -564,7 +567,7 @@ class BattleVC: UIViewController
         let buttonPosition = sender.convert(CGPoint.zero, to: self.tblBattleBoard)
         let indexPath = self.tblBattleBoard.indexPathForRow(at: buttonPosition)
 
-        if  indexPath?.section == 0
+        if  indexPath?.section == 0 && self.arrBattelList.count > 0
         {
             dict =  self.arrBattelList[(indexPath?.row)!] as! NSDictionary
             iBattleLevelType = 1
@@ -581,25 +584,10 @@ class BattleVC: UIViewController
         }
         else
         {
-            btnBack.isHidden = false
+           /* btnBack.isHidden = false
             vwBattleList.isHidden = true
-            vwBattleGame.isHidden = false
+            vwBattleGame.isHidden = false*/
             
-            if iBattleLevelType == 1
-            {
-                let myJSON = [
-                    "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
-                    "jackpotUniqueId" : appDelegate.strGameJackpotID,
-                    "levelUniqueId" : "\(dict["uniqueId"]!)"
-                ]
-                SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
-                }
-            }
-            else
-            {
-                let iBidAvilable = UserDefaults.standard.value(forKey: kUserBidBank) as! Int
-                if dict["minRequiredBids"] as! Int >=  iBidAvilable
-                {
                     let myJSON = [
                         "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
                         "jackpotUniqueId" : appDelegate.strGameJackpotID,
@@ -607,16 +595,11 @@ class BattleVC: UIViewController
                     ]
                     SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
                     }
-                }
-                else
-                {
-                    App_showAlert(withMessage:"You Don't Have Enough Bids To Join This Battle", inView: self)
-                }
-            }
         }
+        /*
         btnBack.isHidden = false
         vwBattleList.isHidden = true
-        vwBattleGame.isHidden = false
+        vwBattleGame.isHidden = false*/
     }
     
     //MARK: Advance battlle
@@ -714,17 +697,14 @@ class BattleVC: UIViewController
         SocketIOManager.sharedInstance.socket.emitWithAck("request_battle",  myJSON).timingOut(after: 0) {data in
         }
     }
-
-    //MARK: Battle Type 2 Level
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func show_error_popup(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            // print("response_battle:>\(data)")
+            App_showAlert(withMessage:"\(data["message"]!)", inView: self)
+        }
     }
-    */
 }
 
 extension BattleVC : UITableViewDelegate, UITableViewDataSource
@@ -742,7 +722,7 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
-        if section == 0
+        if section == 0 && self.arrBattelList.count > 0
         {
             return "NORMAL"
         }
@@ -759,7 +739,7 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        if section == 0
+        if section == 0 && self.arrBattelList.count > 0
         {
             return self.arrBattelList.count
         }
@@ -772,7 +752,7 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BattleCell") as! BattleCell
 
-        if  indexPath.section == 0
+        if  indexPath.section == 0 && self.arrBattelList.count > 0
         {
             let dict = self.arrBattelList[indexPath.row] as! NSDictionary
             cell.lblLevel.text = "\(dict["levelName"]!)"
@@ -806,7 +786,7 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
             cell.btnJoin.tag = indexPath.row
             cell.btnJoin.addTarget(self, action: #selector(btnJoinPressed(sender:)), for: .touchUpInside)
         }
-        else if indexPath.section == 1
+        else if self.arrAdvanceBattleList.count > 0
         {
             let dict = self.arrAdvanceBattleList[indexPath.row] as! NSDictionary
             cell.lblLevel.text = "\(dict["levelName"]!)"
@@ -844,7 +824,7 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         var dict = NSDictionary()
-        if  indexPath.section == 0
+        if  indexPath.section == 0 && self.arrBattelList.count > 0
         {
             dict =  self.arrBattelList[indexPath.row] as! NSDictionary
             iBattleLevelType = 1
@@ -865,21 +845,7 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
             vwBattleList.isHidden = true
             vwBattleGame.isHidden = false
             
-            if iBattleLevelType == 1
-            {
-                let myJSON = [
-                    "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
-                    "jackpotUniqueId" : appDelegate.strGameJackpotID,
-                    "levelUniqueId" : "\(dict["uniqueId"]!)"
-                ]
-                SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
-                }
-            }
-            else
-            {
-                let iBidAvilable = UserDefaults.standard.value(forKey: kUserBidBank) as! Int
-                if dict["minRequiredBids"] as! Int >=  iBidAvilable
-                {
+           
                     let myJSON = [
                         "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
                         "jackpotUniqueId" : appDelegate.strGameJackpotID,
@@ -887,12 +853,6 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
                     ]
                     SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
                     }
-                }
-                else
-                {
-                    App_showAlert(withMessage:"You Don't Have Enough Bids To Join This Battle", inView: self)
-                }
-            }
         }
     }
 }
