@@ -123,6 +123,8 @@ class BattleVC: UIViewController
         NotificationCenter.default.addObserver(self, selector: #selector(self.normal_battle_main_jackpot_finished(_:)), name: NSNotification.Name(rawValue: "normal_battle_main_jackpot_finished"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.jackpot_doomsday_over(_:)), name: NSNotification.Name(rawValue: "jackpot_doomsday_over"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.battleScreenHeader(_:)), name: NSNotification.Name(rawValue: "battleScreenHeader"), object: nil)
+
         btnBack.isHidden = true
     }
     
@@ -230,7 +232,7 @@ class BattleVC: UIViewController
                         {
                             txtGameClock.text = "\(dictJackpotTimer["gameClock"]!)"
                             txtDoomdsDayClock.text = "\(dictJackpotTimer["doomsdayClock"]!)"
-                            txtJackpotAmount.text = "\(dictJackpotTimer.object(forKey: "amount")!)"
+                            txtJackpotAmount.text = "$\(dictJackpotTimer.object(forKey: "amount")!)"
 
                             appDelegate.strGameClockTime  = txtGameClock.text!
                             appDelegate.strDoomdsDayClock = txtDoomdsDayClock.text!
@@ -330,10 +332,24 @@ class BattleVC: UIViewController
                             }
                             else
                             {
-                                lblLongestBid.text = "Longest Bid: \(dictbids["longestBidDuration"]!)"
+                                if let longestBidDuration = dictbids["longestBidDuration"] as? String
+                                {
+                                    lblLongestBid.text = "Longest Bid: \(longestBidDuration)"
+                                }
+                                else
+                                {
+                                    lblLongestBid.text = "Longest Bid: "
+                                }
                             }
                             
-                            lblCurrentBidLength.text = "Current Bid Length: \(dictbids["currentBidDuration"]!)"
+                            if let currentBidDuration = dictbids["currentBidDuration"] as? String
+                            {
+                                lblCurrentBidLength.text = "Current Bid Length: \(currentBidDuration)"
+                            }
+                            else
+                            {
+                                lblCurrentBidLength.text = "Current Bid Length: "
+                            }
                             
                             if let latestValue = dictbids["currentBidUser"] as? String
                             {
@@ -439,7 +455,8 @@ class BattleVC: UIViewController
                             self.vwBattleGame2.isHidden = true
                             self.vwBattleGame3.isHidden = true
                             self.vwBattleGame4.isHidden = true
-                            
+                            self.btnBack.isHidden = true
+
                             let myJSON = [
                                 "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
                                 "jackpotUniqueId" : appDelegate.strGameJackpotID
@@ -531,6 +548,8 @@ class BattleVC: UIViewController
     override func viewWillAppear(_ animated: Bool)
     {
         appDelegate.bisHomeScreen = false
+        appDelegate.iScreenIndex = 2
+        
         self.navigationController?.isNavigationBarHidden = true
         
         txtGameClock.text = appDelegate.strGameClockTime
@@ -703,6 +722,23 @@ class BattleVC: UIViewController
         {
             // print("response_battle:>\(data)")
             App_showAlert(withMessage:"\(data["message"]!)", inView: self)
+        }
+    }
+    
+    //MARK: App Header
+    func battleScreenHeader(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            if let dictJackpotTimer = data["header"] as? NSDictionary
+            {
+                txtGameClock.text = "\(dictJackpotTimer["gameClock"]!)"
+                txtDoomdsDayClock.text = "\(dictJackpotTimer["doomsdayClock"]!)"
+                txtJackpotAmount.text = "$\(dictJackpotTimer.object(forKey: "amount")!)"
+                
+                appDelegate.strGameClockTime  = txtGameClock.text!
+                appDelegate.strDoomdsDayClock = txtDoomdsDayClock.text!
+            }
         }
     }
 }

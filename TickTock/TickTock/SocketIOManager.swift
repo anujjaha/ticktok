@@ -159,6 +159,37 @@ class SocketIOManager: NSObject
             }
         }
 
+        
+        socket.on("update_app_header")
+        { dataArray, ack in
+            
+            switch appDelegate.iScreenIndex
+            {
+            case 1:
+                break
+            case 2:
+                NotificationCenter.default
+                    .post(name: Notification.Name(rawValue: "battleScreenHeader"), object: dataArray[0] as? [String: AnyObject])
+                break
+            case 3:
+                NotificationCenter.default
+                    .post(name: Notification.Name(rawValue: "LeaderVCHeader"), object: dataArray[0] as? [String: AnyObject])
+                break
+            case 4:
+                NotificationCenter.default
+                    .post(name: Notification.Name(rawValue: "ProfileVCHeader"), object: dataArray[0] as? [String: AnyObject])
+                break
+            case 5:
+                NotificationCenter.default
+                    .post(name: Notification.Name(rawValue: "SettingsVCHeader"), object: dataArray[0] as? [String: AnyObject])
+                break
+
+            default:
+                break
+            }
+        }
+
+        
 //        socket.on("game_updates") { dataArray, ack in
 //           
 //            print("data:>\(dataArray)")

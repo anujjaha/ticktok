@@ -28,6 +28,7 @@ class ProfileVC: UIViewController
 
     @IBOutlet weak var txtGameClock: UITextField!
     @IBOutlet weak var txtDoomdsDayClock: UITextField!
+    @IBOutlet weak var txtJackpotAmount: UITextField!
 
     
     override func viewDidLoad()
@@ -40,6 +41,7 @@ class ProfileVC: UIViewController
         segmentPG.setFontSize(fontSize: 16)
 
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(self.ProfileVCHeader(_:)), name: NSNotification.Name(rawValue: "ProfileVCHeader"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -47,9 +49,25 @@ class ProfileVC: UIViewController
         self.navigationController?.isNavigationBarHidden = true
         txtGameClock.text = appDelegate.strGameClockTime
         txtDoomdsDayClock.text = appDelegate.strDoomdsDayClock
-        
-
+        appDelegate.iScreenIndex = 4
       //  self.getProfileData()
+    }
+    
+    //MARK: App Header
+    func ProfileVCHeader(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            if let dictJackpotTimer = data["header"] as? NSDictionary
+            {
+                txtGameClock.text = "\(dictJackpotTimer["gameClock"]!)"
+                txtDoomdsDayClock.text = "\(dictJackpotTimer["doomsdayClock"]!)"
+                txtJackpotAmount.text = "$\(dictJackpotTimer.object(forKey: "amount")!)"
+                
+                appDelegate.strGameClockTime  = txtGameClock.text!
+                appDelegate.strDoomdsDayClock = txtDoomdsDayClock.text!
+            }
+        }
     }
 
     func getProfileData()

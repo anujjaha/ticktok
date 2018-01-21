@@ -817,7 +817,7 @@
                                                 <rect key="frame" x="0.0" y="58" width="320" height="378"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bid Battles" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdR-Lq-84r">
-                                                        <rect key="frame" x="120" y="8" width="80" height="21"/>
+                                                        <rect key="frame" x="120.5" y="8" width="80" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="21" id="9DG-I9-ovo"/>
                                                         </constraints>
@@ -826,7 +826,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DDI-BT-79V">
-                                                        <rect key="frame" x="120" y="33" width="80" height="2"/>
+                                                        <rect key="frame" x="120.5" y="33" width="80" height="2"/>
                                                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="2" id="FeB-pP-RBF"/>
@@ -2052,6 +2052,7 @@
                         <outlet property="segmentPG" destination="Xpp-Sr-bBj" id="k5e-J8-fS9"/>
                         <outlet property="txtDoomdsDayClock" destination="A1g-JK-HmY" id="bFT-up-A7Q"/>
                         <outlet property="txtGameClock" destination="dh5-XK-Xh9" id="je8-fG-ZyD"/>
+                        <outlet property="txtJackpotAmount" destination="Tlv-Gp-loF" id="ltU-7A-wMF"/>
                         <outlet property="vwGameState" destination="QxA-3N-8b1" id="dGY-ZR-yko"/>
                         <outlet property="vwProfile" destination="LaE-tm-cMc" id="1Uu-O2-Pqf"/>
                     </connections>
@@ -2441,6 +2442,7 @@
                         <outlet property="tblLeaderBoard" destination="8YG-hF-dx2" id="86F-6B-SqU"/>
                         <outlet property="txtDoomdsDayClock" destination="CYo-x8-PSN" id="fUj-cN-6MS"/>
                         <outlet property="txtGameClock" destination="hni-u8-HMZ" id="hwO-zw-IVQ"/>
+                        <outlet property="txtJackpotAmount" destination="1Vz-ZP-KGD" id="pKy-Bz-sJu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qLU-HV-weZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2659,6 +2661,7 @@
                         <outlet property="tblSetting" destination="3tC-fN-h1d" id="gPY-jo-KdY"/>
                         <outlet property="txtDoomdsDayClock" destination="xLR-Vl-1dW" id="tXC-Ch-0bY"/>
                         <outlet property="txtGameClock" destination="EiQ-Ak-i5s" id="SjT-43-HuZ"/>
+                        <outlet property="txtJackpotAmount" destination="zUw-k0-fka" id="Bjh-c0-vgr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WMp-ME-n3J" userLabel="First Responder" sceneMemberID="firstResponder"/>

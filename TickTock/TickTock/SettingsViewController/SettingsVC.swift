@@ -15,6 +15,7 @@ class SettingsVC: UIViewController
     
     @IBOutlet weak var txtGameClock: UITextField!
     @IBOutlet weak var txtDoomdsDayClock: UITextField!
+    @IBOutlet weak var txtJackpotAmount: UITextField!
 
     override func viewDidLoad()
     {
@@ -22,6 +23,25 @@ class SettingsVC: UIViewController
         // Do any additional setup after loading the view.
         self.tblSetting.estimatedRowHeight = 47.0 ;
         self.tblSetting.rowHeight = UITableViewAutomaticDimension;
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.SettingsVCHeader(_:)), name: NSNotification.Name(rawValue: "SettingsVCHeader"), object: nil)
+
+    }
+    //MARK: App Header
+    func SettingsVCHeader(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            if let dictJackpotTimer = data["header"] as? NSDictionary
+            {
+                txtGameClock.text = "\(dictJackpotTimer["gameClock"]!)"
+                txtDoomdsDayClock.text = "\(dictJackpotTimer["doomsdayClock"]!)"
+                txtJackpotAmount.text = "$\(dictJackpotTimer.object(forKey: "amount")!)"
+                
+                appDelegate.strGameClockTime  = txtGameClock.text!
+                appDelegate.strDoomdsDayClock = txtDoomdsDayClock.text!
+            }
+        }
     }
 
     override func didReceiveMemoryWarning()
@@ -31,6 +51,8 @@ class SettingsVC: UIViewController
     }
     override func viewWillAppear(_ animated: Bool)
     {
+        appDelegate.iScreenIndex = 5
+
         self.navigationController?.isNavigationBarHidden = true
         txtGameClock.text = appDelegate.strGameClockTime
         txtDoomdsDayClock.text = appDelegate.strDoomdsDayClock

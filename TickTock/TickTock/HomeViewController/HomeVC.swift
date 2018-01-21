@@ -90,6 +90,7 @@ class HomeVC: UIViewController
     {
         appDelegate.bisHomeScreen = true
         self.navigationController?.isNavigationBarHidden = true
+        appDelegate.iScreenIndex = 1
     }
 
     //MARK: Handle Home Screen Data in one Event

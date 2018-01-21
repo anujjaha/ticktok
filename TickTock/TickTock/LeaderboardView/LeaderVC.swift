@@ -18,6 +18,7 @@ class LeaderVC: UIViewController {
 
     @IBOutlet weak var txtGameClock: UITextField!
     @IBOutlet weak var txtDoomdsDayClock: UITextField!
+    @IBOutlet weak var txtJackpotAmount: UITextField!
 
     override func viewDidLoad()
     {
@@ -43,6 +44,8 @@ class LeaderVC: UIViewController {
         buttonTitleStr = NSMutableAttributedString(string:"Category", attributes:attrs)
         attributedString.append(buttonTitleStr)
         btnCategory.setAttributedTitle(attributedString, for: .normal)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.LeaderVCHeader(_:)), name: NSNotification.Name(rawValue: "LeaderVCHeader"), object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool)
@@ -50,11 +53,27 @@ class LeaderVC: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         txtGameClock.text = appDelegate.strGameClockTime
         txtDoomdsDayClock.text = appDelegate.strDoomdsDayClock
-        
+        appDelegate.iScreenIndex = 3
 
     }
 
-    
+    //MARK: App Header
+    func LeaderVCHeader(_ notification: Notification)
+    {
+        if let data = notification.object as? [String: AnyObject]
+        {
+            if let dictJackpotTimer = data["header"] as? NSDictionary
+            {
+                txtGameClock.text = "\(dictJackpotTimer["gameClock"]!)"
+                txtDoomdsDayClock.text = "\(dictJackpotTimer["doomsdayClock"]!)"
+                txtJackpotAmount.text = "$\(dictJackpotTimer.object(forKey: "amount")!)"
+                
+                appDelegate.strGameClockTime  = txtGameClock.text!
+                appDelegate.strDoomdsDayClock = txtDoomdsDayClock.text!
+            }
+        }
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
