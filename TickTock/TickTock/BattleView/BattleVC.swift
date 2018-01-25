@@ -63,10 +63,16 @@ class BattleVC: UIViewController
     @IBOutlet weak var CTheightofQuitBtn : NSLayoutConstraint!
     @IBOutlet weak var lblNoJakpotFound: UILabel!
 
+
+    
     //New Enhancement
     var strjackpotUniqueId = String()
     var strlevelUniqueId = String()
     var strgameUniqueId = String()
+    
+    @IBOutlet weak var lblBattleRequired: UILabel!
+    @IBOutlet weak var CTheightoflblBattleRequired : NSLayoutConstraint!
+    var iwinsToUnlockNextLevel = NSNumber()
     
     override func viewDidLoad()
     {
@@ -76,6 +82,9 @@ class BattleVC: UIViewController
         vwJoinBattle.layer.cornerRadius = 5.0
         lblNoJakpotFound.isHidden = true
         // Do any additional setup after loading the view.
+        
+        lblBattleRequired.isHidden = true
+        CTheightoflblBattleRequired.constant = 0
         
         CTheightofQuitBtn.constant = 0
         btnQuiteBattle.isHidden = true
@@ -135,7 +144,9 @@ class BattleVC: UIViewController
         {
             // print("response_battle:>\(data)")
             dictBattleList = NSMutableDictionary(dictionary: (data["levels"] as! NSDictionary))
-            
+            self.lblBattleRequired.isHidden = true
+            self.CTheightoflblBattleRequired.constant = 0
+
             if  dictBattleList.count > 0
             {
                 arrAdvanceBattleList = NSMutableArray(array: (dictBattleList["advance"] as! NSArray))
@@ -146,6 +157,7 @@ class BattleVC: UIViewController
                     lblNoJakpotFound.isHidden = true
                     tblBattleBoard.isHidden = false
                     
+
                     self.vwJoinBattle.isHidden = true
                     self.vwBattleGame.isHidden = true
                     self.vwBattleList.isHidden = false
@@ -260,6 +272,18 @@ class BattleVC: UIViewController
                             self.strgameUniqueId = "\(dictheader["gameUniqueId"]!)"
                         }
 
+                        
+                        if(self.iBattleLevelType == 1)
+                        {
+                            self.lblBattleRequired.text = "Wins to Unlock \(self.lblBattleNO.text!): \(self.iwinsToUnlockNextLevel)"
+                            self.lblBattleRequired.isHidden = false
+                            self.CTheightoflblBattleRequired.constant = 21
+                        }
+                        else
+                        {
+                            self.lblBattleRequired.isHidden = true
+                            self.CTheightoflblBattleRequired.constant = 0
+                        }
                         //My Info
                         /*
                          "my_info":{
@@ -554,6 +578,22 @@ class BattleVC: UIViewController
         
         txtGameClock.text = appDelegate.strGameClockTime
         txtDoomdsDayClock.text = appDelegate.strDoomdsDayClock
+        
+        /*
+            Doomsday Clock Expiration- when the Doomsday clock expired, the Battle page did not immediately refresh to eliminate Normal Battles.  I could still see them on the screen.  I did not try and play a Normal Battle, so I don’t know if it would let me, because I tested the Advanced Battles instead.  After I played the first Advanced Battle, the Battle Level Screen was refreshed to eliminate Normal Battles, but it was only after I played the Advanced Battle.
+         */
+        if appDelegate.bDoomsDayClockOver == true
+        {
+            if vwBattleList.isHidden == false
+            {
+                let myJSON = [
+                    "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                    "jackpotUniqueId" : appDelegate.strGameJackpotID
+                ]
+                SocketIOManager.sharedInstance.socket.emitWithAck("request_battle_levels",  myJSON).timingOut(after: 0) {data in
+                }
+            }
+        }
     }
 
     //MARK: Battle Screen
@@ -589,6 +629,7 @@ class BattleVC: UIViewController
         if  indexPath?.section == 0 && self.arrBattelList.count > 0
         {
             dict =  self.arrBattelList[(indexPath?.row)!] as! NSDictionary
+            iwinsToUnlockNextLevel = dict["winsToUnlockNextLevel"] as! NSNumber
             iBattleLevelType = 1
         }
         else
@@ -606,7 +647,8 @@ class BattleVC: UIViewController
            /* btnBack.isHidden = false
             vwBattleList.isHidden = true
             vwBattleGame.isHidden = false*/
-            
+            if iBattleLevelType == 1
+            {
                     let myJSON = [
                         "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
                         "jackpotUniqueId" : appDelegate.strGameJackpotID,
@@ -614,6 +656,27 @@ class BattleVC: UIViewController
                     ]
                     SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
                     }
+            }
+            else
+            {
+                let alertView = UIAlertController(title: Application_Name, message: "\(dict["levelName"]!) will cost “\(dict["minBidsToPut"] as! NSNumber) amount of Bids to play”", preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "Confirm", style: .default)
+                { (action) in
+                    let myJSON = [
+                        "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                        "jackpotUniqueId" : appDelegate.strGameJackpotID,
+                        "levelUniqueId" : "\(dict["uniqueId"]!)"
+                    ]
+                    SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
+                    }
+                }
+                let CancelAction = UIAlertAction(title: "Cancel", style: .default)
+                { (action) in
+                }
+                alertView.addAction(OKAction)
+                alertView.addAction(CancelAction)
+                self.present(alertView, animated: true, completion: nil)
+            }
         }
         /*
         btnBack.isHidden = false
@@ -864,6 +927,7 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
         {
             dict =  self.arrBattelList[indexPath.row] as! NSDictionary
             iBattleLevelType = 1
+            iwinsToUnlockNextLevel = dict["winsToUnlockNextLevel"] as! NSNumber
         }
         else
         {
@@ -880,8 +944,30 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
             btnBack.isHidden = false
             vwBattleList.isHidden = true
             vwBattleGame.isHidden = false
-            
-           
+//
+//                    let myJSON = [
+//                        "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+//                        "jackpotUniqueId" : appDelegate.strGameJackpotID,
+//                        "levelUniqueId" : "\(dict["uniqueId"]!)"
+//                    ]
+//                    SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
+//                    }
+
+            if iBattleLevelType == 1
+            {
+                let myJSON = [
+                    "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+                    "jackpotUniqueId" : appDelegate.strGameJackpotID,
+                    "levelUniqueId" : "\(dict["uniqueId"]!)"
+                ]
+                SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
+                }
+            }
+            else
+            {
+                let alertView = UIAlertController(title: Application_Name, message: "\(dict["levelName"]!) will cost “\(dict["minBidsToPut"] as! NSNumber) amount of Bids to play”", preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "Confirm", style: .default)
+                { (action) in
                     let myJSON = [
                         "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
                         "jackpotUniqueId" : appDelegate.strGameJackpotID,
@@ -889,6 +975,14 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
                     ]
                     SocketIOManager.sharedInstance.socket.emitWithAck("join_battle",  myJSON).timingOut(after: 0) {data in
                     }
+                }
+                let CancelAction = UIAlertAction(title: "Cancel", style: .default)
+                { (action) in
+                }
+                alertView.addAction(OKAction)
+                alertView.addAction(CancelAction)
+                self.present(alertView, animated: true, completion: nil)
+            }
         }
     }
 }
