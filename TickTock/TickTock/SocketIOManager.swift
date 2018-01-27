@@ -24,7 +24,6 @@ class SocketIOManager: NSObject
         socket.on("me_joined") { dataArray, ack in
             // print(dataArray)
             //print(dataArray.count)
-            appDelegate.bDoomsDayClockOver = false
             NotificationCenter.default
                 .post(name: Notification.Name(rawValue: "callGameJoinedNotification"), object: dataArray[0] as? [String: AnyObject])
         }
@@ -36,12 +35,6 @@ class SocketIOManager: NSObject
                 .post(name: Notification.Name(rawValue: "update_home_screen"), object: dataArray[0] as? [String: AnyObject])
         }
         
-        
-        socket.on("home_doomsday_expired") { dataArray, ack in
-            // print(dataArray)
-            appDelegate.bDoomsDayClockOver = true
-        }
-
         
         //Battel Screen
         /*

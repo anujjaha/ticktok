@@ -152,7 +152,14 @@ class HomeVC: UIViewController
                     {
                         lblUserBattleWon.text = "\(dictmyinfo["battlesWon"]!)"
                         lblUserBattleStreak.text = "\(dictmyinfo["battleStreak"]!)"
-                        lblLongestBid.text = "Longest Bid: \(dictmyinfo["myLongestBid"]!)"
+                        if let myLongestBid = dictmyinfo["myLongestBid"] as? String
+                        {
+                            lblUserLognestBid.text = "\(myLongestBid)"
+                        }
+                        else
+                        {
+                            lblUserLognestBid.text = ""
+                        }
                         lblUserBidBank.text = "\(dictmyinfo["bidBank"] as! NSNumber)"
                         UserDefaults.standard.set("\(dictmyinfo["bidBank"] as! NSNumber)", forKey: kUserBidBank)
                         UserDefaults.standard.synchronize()
@@ -204,7 +211,25 @@ class HomeVC: UIViewController
                     
                     if let dictwinner = data["winner"] as? NSDictionary
                     {
-                        strmessage = "Game Won info:\nLastBidWinner: \((dictwinner["lastBidWinner"]!))\nLongestBidWinner: \((dictwinner["longestBidWinner"]!))"
+                        if dictwinner["bothAreSame"] as! Bool == true
+                        {
+                            if let dictlastBidWinner = dictwinner["lastBidWinner"] as? NSDictionary
+                            {
+                                strmessage = "Game Won info::\nLastBidWinner: \((dictlastBidWinner["name"]!))\nLongestBidWinner: \((dictlastBidWinner["name"]!))"
+                            }
+                        }
+                        else
+                        {
+                            var strlastBidWinner = String()
+                            if let dictlastBidWinner = dictwinner["lastBidWinner"] as? NSDictionary
+                            {
+                                strlastBidWinner = "LastBidWinner: \((dictlastBidWinner["name"]!))"
+                            }
+                            if let dictlongestBidWinner = dictwinner["longestBidWinner"] as? NSDictionary
+                            {
+                                strmessage = "Game Won info:\n\(strlastBidWinner)\nLongestBidWinner: \((dictlongestBidWinner["name"]!))"
+                            }
+                        }
                     }
                     else
                     {
@@ -215,14 +240,19 @@ class HomeVC: UIViewController
                     let OKAction = UIAlertAction(title: "OK", style: .default)
                     { (action) in
                         
-                        self.vwNoGame.isHidden = false
-                        self.vwGame.isHidden = true
-                        self.vwPlayers.isHidden = true
-                        self.btnBid.isHidden = true
+//                        self.vwNoGame.isHidden = false
+//                        self.vwGame.isHidden = true
+//                        self.vwPlayers.isHidden = true
+//                        self.btnBid.isHidden = true
+
+                        self.vwNoGame.isHidden = true
+                        self.vwGame.isHidden = false
+                        self.vwPlayers.isHidden = false
+                        self.btnBid.isHidden = false
                         appDelegate.bShowQuitGameButton = false
-                        
-                        SocketIOManager.sharedInstance.closeConnection()
-                        SocketIOManager.sharedInstance.establishConnection()
+
+//                                                SocketIOManager.sharedInstance.closeConnection()
+//                        SocketIOManager.sharedInstance.establishConnection()
                     }
                     alertView.addAction(OKAction)
                     self.present(alertView, animated: true, completion: nil)

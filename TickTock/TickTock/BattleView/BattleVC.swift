@@ -271,7 +271,6 @@ class BattleVC: UIViewController
                             self.strlevelUniqueId = "\(dictheader["levelUniqueId"]!)"
                             self.strgameUniqueId = "\(dictheader["gameUniqueId"]!)"
                         }
-
                         
                         if(self.iBattleLevelType == 1)
                         {
@@ -582,18 +581,6 @@ class BattleVC: UIViewController
         /*
             Doomsday Clock Expiration- when the Doomsday clock expired, the Battle page did not immediately refresh to eliminate Normal Battles.  I could still see them on the screen.  I did not try and play a Normal Battle, so I don’t know if it would let me, because I tested the Advanced Battles instead.  After I played the first Advanced Battle, the Battle Level Screen was refreshed to eliminate Normal Battles, but it was only after I played the Advanced Battle.
          */
-        if appDelegate.bDoomsDayClockOver == true
-        {
-            if vwBattleList.isHidden == false
-            {
-                let myJSON = [
-                    "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
-                    "jackpotUniqueId" : appDelegate.strGameJackpotID
-                ]
-                SocketIOManager.sharedInstance.socket.emitWithAck("request_battle_levels",  myJSON).timingOut(after: 0) {data in
-                }
-            }
-        }
     }
 
     //MARK: Battle Screen
