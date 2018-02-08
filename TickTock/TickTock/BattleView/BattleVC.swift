@@ -671,6 +671,29 @@ class BattleVC: UIViewController
         vwBattleGame.isHidden = false*/
     }
     
+    @IBAction func btnUnlockPressed(sender: UIButton)
+    {
+        var dict = NSDictionary()
+        let buttonPosition = sender.convert(CGPoint.zero, to: self.tblBattleBoard)
+        let indexPath = self.tblBattleBoard.indexPathForRow(at: buttonPosition)
+        
+        if  indexPath?.section == 0 && self.arrBattelList.count > 0
+        {
+            dict =  self.arrBattelList[(indexPath?.row)!] as! NSDictionary
+        }
+        else
+        {
+            dict = self.arrAdvanceBattleList[(indexPath?.row)!] as! NSDictionary
+        }
+        
+        let myJSON = [
+            "userId": "\(appDelegate.arrLoginData[kkeyuser_id]!)",
+            "jackpotUniqueId" : appDelegate.strGameJackpotID,
+            "levelUniqueId" : "\(dict["uniqueId"]!)"
+        ]
+        SocketIOManager.sharedInstance.socket.emitWithAck("unlock_battle",  myJSON).timingOut(after: 0) {data in
+        }
+    }
     //MARK: Advance battlle
     
 
@@ -863,14 +886,19 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
             {
                 cell.imgLock.isHidden = false
                 cell.btnJoin.isHidden = true
+                cell.btnUnlock.isHidden = false
             }
             else
             {
                 cell.imgLock.isHidden = true
                 cell.btnJoin.isHidden = false
+                cell.btnUnlock.isHidden = true
             }
             cell.btnJoin.tag = indexPath.row
             cell.btnJoin.addTarget(self, action: #selector(btnJoinPressed(sender:)), for: .touchUpInside)
+            
+            cell.btnUnlock.tag = indexPath.row
+            cell.btnUnlock.addTarget(self, action: #selector(btnUnlockPressed(sender:)), for: .touchUpInside)
         }
         else if self.arrAdvanceBattleList.count > 0
         {
@@ -884,14 +912,19 @@ extension BattleVC : UITableViewDelegate, UITableViewDataSource
             {
                 cell.imgLock.isHidden = false
                 cell.btnJoin.isHidden = true
+                cell.btnUnlock.isHidden = false
             }
             else
             {
                 cell.imgLock.isHidden = true
                 cell.btnJoin.isHidden = false
+                cell.btnUnlock.isHidden = true
             }
             cell.btnJoin.tag = indexPath.row
             cell.btnJoin.addTarget(self, action: #selector(btnJoinPressed(sender:)), for: .touchUpInside)
+            
+            cell.btnUnlock.tag = indexPath.row
+            cell.btnUnlock.addTarget(self, action: #selector(btnUnlockPressed(sender:)), for: .touchUpInside)
         }
         
         cell.selectionStyle = .none
@@ -979,6 +1012,7 @@ class BattleCell: UITableViewCell
     @IBOutlet weak var imgLock : UIImageView!
     @IBOutlet weak var lblBids : UILabel!
     @IBOutlet weak var btnJoin : UIButton!
+    @IBOutlet weak var btnUnlock : UIButton!
     @IBOutlet weak var lblPlayersCount : UILabel!
     @IBOutlet weak var lblActivePlayersCount : UILabel!
 }
