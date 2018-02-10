@@ -757,6 +757,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silver Truck Games, LLC (P7LEFGE66S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Silver Truck Games, LLC (P7LEFGE66S)";
 				DEVELOPMENT_TEAM = P7LEFGE66S;
 				INFOPLIST_FILE = TickTock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;

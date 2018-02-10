@@ -69,6 +69,7 @@ class BattleVC: UIViewController
     var strjackpotUniqueId = String()
     var strlevelUniqueId = String()
     var strgameUniqueId = String()
+    var strNextLevelName = String()
     
     @IBOutlet weak var lblBattleRequired: UILabel!
     @IBOutlet weak var CTheightoflblBattleRequired : NSLayoutConstraint!
@@ -157,16 +158,40 @@ class BattleVC: UIViewController
                     lblNoJakpotFound.isHidden = true
                     tblBattleBoard.isHidden = false
                     
-
                     self.vwJoinBattle.isHidden = true
                     self.vwBattleGame.isHidden = true
                     self.vwBattleList.isHidden = false
                     
-                    self.vwBattleGame1.isHidden = true
-                    self.vwBattleGame2.isHidden = true
-                    self.vwBattleGame3.isHidden = true
-                    self.vwBattleGame4.isHidden = true
-
+                    let iKeyuserid = (appDelegate.arrLoginData[kkeyuser_id]!) as! Int
+                    let namePredicate = NSPredicate(format: "%K = %@", "userId","\(iKeyuserid)")
+                    if arrPlayers.count > 0
+                    {
+                        let temparray = arrPlayers.filter { namePredicate.evaluate(with: $0) } as NSArray
+                        if temparray.count > 0
+                        {
+                            arrPlayers.remove(temparray[0])
+                        }
+                        
+                        for iIndexofPlayer in 0..<arrPlayers.count
+                        {
+                            if iIndexofPlayer == 0
+                            {
+                                self.vwBattleGame1.isHidden = true
+                            }
+                            else if iIndexofPlayer == 1
+                            {
+                                self.vwBattleGame2.isHidden = true
+                            }
+                            else if iIndexofPlayer == 2
+                            {
+                                self.vwBattleGame3.isHidden = true
+                            }
+                            else
+                            {
+                                self.vwBattleGame4.isHidden = true
+                            }
+                        }
+                    }
                     tblBattleBoard.reloadData()
                 }
                 else
@@ -274,7 +299,7 @@ class BattleVC: UIViewController
                         
                         if(self.iBattleLevelType == 1)
                         {
-                            self.lblBattleRequired.text = "Wins to Unlock \(self.lblBattleNO.text!): \(self.iwinsToUnlockNextLevel)"
+                            self.lblBattleRequired.text = "Wins to Unlock \(strNextLevelName): \(self.iwinsToUnlockNextLevel)"
                             self.lblBattleRequired.isHidden = false
                             self.CTheightoflblBattleRequired.constant = 21
                         }
@@ -617,6 +642,7 @@ class BattleVC: UIViewController
         {
             dict =  self.arrBattelList[(indexPath?.row)!] as! NSDictionary
             iwinsToUnlockNextLevel = dict["winsToUnlockNextLevel"] as! NSNumber
+            strNextLevelName = dict["nextLevelName"] as! String
             iBattleLevelType = 1
         }
         else
