@@ -29,6 +29,11 @@ class ProfileVC: UIViewController
     @IBOutlet weak var txtGameClock: UITextField!
     @IBOutlet weak var txtDoomdsDayClock: UITextField!
     @IBOutlet weak var txtJackpotAmount: UITextField!
+    @IBOutlet weak var lblUsername: UILabel!
+    @IBOutlet weak var lblWalletBallance: UILabel!
+    
+    @IBOutlet weak var imgUserProfile: UIImageView!
+
 
     
     override func viewDidLoad()
@@ -50,7 +55,7 @@ class ProfileVC: UIViewController
         txtGameClock.text = appDelegate.strGameClockTime
         txtDoomdsDayClock.text = appDelegate.strDoomdsDayClock
         appDelegate.iScreenIndex = 4
-      //  self.getProfileData()
+        self.getProfileData()
     }
     
     //MARK: App Header
@@ -72,13 +77,12 @@ class ProfileVC: UIViewController
 
     func getProfileData()
     {
-        let parameters = [
-            "user_id":  "\(appDelegate.arrLoginData[kkeyuserid]!)"
-        ]
+        let token = "\(appDelegate.arrLoginData["token"]!)"
+        let headers = ["Authorization":"Bearer \(token)"]
+
         
         showProgress(inView: self.view)
-        print("parameters:>\(parameters)")
-        request("\(kServerURL)user/profile", method: .post, parameters:parameters).responseJSON { (response:DataResponse<Any>) in
+        request("\(kServerURL)api/me/profile", method: .get, parameters:nil, headers: headers).responseJSON { (response:DataResponse<Any>) in
             
             print(response.result.debugDescription)
             
@@ -101,17 +105,29 @@ class ProfileVC: UIViewController
                             {
                                 if (dictemp2.count > 0)
                                 {
-                                    self.lblcareer_earnings.text = "\((dictemp2["game"] as! NSDictionary).value(forKey: "career_earnings")!)"
-                                    self.lblcarrer_battle_wins.text = "\((dictemp2["game"] as! NSDictionary).value(forKey: "carrer_battle_wins")!)"
-                                    self.lblcurrent_battle_streak.text = "\((dictemp2["game"] as! NSDictionary).value(forKey: "current_battle_streak")!)"
-                                    self.lbllongest_battle_streak.text = "\((dictemp2["game"] as! NSDictionary).value(forKey: "longest_battle_streak")!)"
-                                    self.lbllongest_bid.text = "\((dictemp2["game"] as! NSDictionary).value(forKey: "longest_bid")!)"
+                                    self.lblcareer_earnings.text = "\(dictemp2["careerEarnings"]!)"
+                                    self.lblcarrer_battle_wins.text = "\(dictemp2["careerBattleWins"]!)"
+//                                    self.lblcurrent_battle_streak.text = "\((dictemp2["game"] as! NSDictionary).value(forKey: "current_battle_streak")!)"
+                                    self.lbllongest_battle_streak.text = "\(dictemp2["longestBattleStreak"]!)"
+                                    self.lbllongest_bid.text = "\(dictemp2["longestBids"]!)"
                                     
-                                    self.lblname.text = "\((dictemp2["personal"] as! NSDictionary).value(forKey: "name")!)"
-                                    self.lbldob.text = "\((dictemp2["personal"] as! NSDictionary).value(forKey: "dob")!)"
-                                    self.lblgender.text = "\((dictemp2["personal"] as! NSDictionary).value(forKey: "gender")!)"
-                                    self.lblcountry.text = "\((dictemp2["personal"] as! NSDictionary).value(forKey: "country")!)"
-                                    self.lblEmail.text = "\((dictemp2["personal"] as! NSDictionary).value(forKey: "email")!)"
+                                    self.lblname.text = "\(dictemp2["name"]!)"
+                                    self.lbldob.text = "\(dictemp2["birthDate"]!)"
+                                    self.lblgender.text = "\(dictemp2["gender"]!)"
+//                                    self.lblcountry.text = "\((dictemp2["personal"] as! NSDictionary).value(forKey: "country")!)"
+                                    self.lblEmail.text = "\(dictemp2["email"]!)"
+                                    
+                                    self.lblUsername.text = "\(dictemp2["username"]!)"
+                                    self.lblWalletBallance.text = "\(dictemp2["walletBalance"]!)"
+                                    
+                                    if let strimageLink = dictemp2.value(forKey: "photo")
+                                    {
+                                        let strURL : String = (strimageLink as AnyObject).replacingOccurrences(of: " ", with: "%20")
+                                        let url2 = URL(string: strURL)
+                                        if url2 != nil {
+                                            self.imgUserProfile.sd_setImage(with: url2, placeholderImage: UIImage(named: "profile_pic"))
+                                        }
+                                    }
                                 }
                                 else
                                 {

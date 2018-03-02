@@ -153,11 +153,26 @@ extension SettingsVC : UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell") as! SettingsCell
         cell.lblName.text = (self.arrSettings[indexPath.row] as AnyObject).object(forKey: kkeyname) as? String
         cell.imgIcon.image = UIImage(named: ((self.arrSettings[indexPath.row] as AnyObject).object(forKey: kkeyimage) as? String)!)
+        
+        if indexPath.row == 1 {
+            cell.imgArrow.isHidden = true
+            cell.swpush.isHidden = false
+        }
+        else
+        {
+            cell.imgArrow.isHidden = false
+            cell.swpush.isHidden = true
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
+        if indexPath.row == 1
+        {
+            return 45
+        }
         return UITableViewAutomaticDimension
     }
     
@@ -232,5 +247,7 @@ class SettingsCell: UITableViewCell
 {
     @IBOutlet weak var lblName : UILabel!
     @IBOutlet weak var imgIcon : UIImageView!
+    @IBOutlet weak var swpush : UISwitch!
+    @IBOutlet weak var imgArrow : UIImageView!
 }
 

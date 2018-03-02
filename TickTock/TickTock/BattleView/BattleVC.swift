@@ -750,6 +750,9 @@ class BattleVC: UIViewController
                 App_showAlert(withMessage: ((data[0] as? NSDictionary)!.object(forKey: "body") as! NSDictionary).object(forKey: "message") as! String, inView: self)
             }
         }
+        
+        btnBid.isEnabled = false
+        btnBid.backgroundColor = UIColor.darkGray
     }
     
     @IBAction func btnBackAction()

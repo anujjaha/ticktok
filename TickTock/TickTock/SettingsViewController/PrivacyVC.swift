@@ -12,36 +12,117 @@ class PrivacyVC: UIViewController
 {
     @IBOutlet weak var wvPrivacy : UIWebView!
     var iPrivacy = Int()
+    @IBOutlet weak var lblTitlofScreen: UILabel!
+
     override func viewDidLoad()
     {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view.
-        wvPrivacy.isOpaque = false
-        wvPrivacy.backgroundColor = UIColor.clear
+//        wvPrivacy.isOpaque = false
+//        wvPrivacy.backgroundColor = UIColor.clear
 
         if (iPrivacy == 1)
         {
-            let url = NSURL (string: kPrivacyURL)
-            let requestObj = NSURLRequest(url: url! as URL);
-            wvPrivacy.loadRequest(requestObj as URLRequest)
+            lblTitlofScreen.text = "Privacy Policy"
+            showProgress(inView: self.view)
+            request("\(kServerURL)api/privacy-policy", method: .get, parameters:nil).responseJSON { (response:DataResponse<Any>) in
+                
+                hideProgress()
+                switch(response.result)
+                {
+                case .success(_):
+                    if response.result.value != nil
+                    {
+                        print(response.result.value)
+                        if let json = response.result.value
+                        {
+                            print("json :> \(json)")
+                            
+                            let dictemp = json as! NSDictionary
+                            print("dictemp :> \(dictemp)")
+                            
+                            if dictemp.count > 0
+                            {
+                                self.wvPrivacy.loadHTMLString(dictemp["data"] as! String, baseURL: nil)
+                            }
+                            else
+                            {
+                                App_showAlert(withMessage: dictemp[kkeymessage]! as! String, inView: self)
+                            }
+                        }
+                    }
+                    break
+                    
+                case .failure(_):
+                    print(response.result.error)
+                    App_showAlert(withMessage: response.result.error.debugDescription, inView: self)
+                    break
+                }
+            }
+            /*
+             let url = NSURL (string: kPrivacyURL)
+             let requestObj = NSURLRequest(url: url! as URL);
+             wvPrivacy.loadRequest(requestObj as URLRequest)*/
         }
         else
         {
-            let url = NSURL (string: kFAQURL)
-            let requestObj = NSURLRequest(url: url! as URL);
-            wvPrivacy.loadRequest(requestObj as URLRequest)
+            lblTitlofScreen.text = "FAQ"
+            showProgress(inView: self.view)
+            request("\(kServerURL)api/faq", method: .get, parameters:nil).responseJSON { (response:DataResponse<Any>) in
+                
+                hideProgress()
+                switch(response.result)
+                {
+                case .success(_):
+                    if response.result.value != nil
+                    {
+                        print(response.result.value)
+                        if let json = response.result.value
+                        {
+                            print("json :> \(json)")
+                            
+                            let dictemp = json as! NSDictionary
+                            print("dictemp :> \(dictemp)")
+                            
+                            if dictemp.count > 0
+                            {
+                                self.wvPrivacy.loadHTMLString(dictemp["data"] as! String, baseURL: nil)
+                            }
+                            else
+                            {
+                                App_showAlert(withMessage: dictemp[kkeymessage]! as! String, inView: self)
+                            }
+                        }
+                    }
+                    break
+                    
+                case .failure(_):
+                    print(response.result.error)
+                    App_showAlert(withMessage: response.result.error.debugDescription, inView: self)
+                    break
+                }
+            }
+            
+            /*
+             let url = NSURL (string: kFAQURL)
+             let requestObj = NSURLRequest(url: url! as URL);
+             wvPrivacy.loadRequest(requestObj as URLRequest)*/
         }
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
-        self.navigationController?.isNavigationBarHidden = false
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
     }
-    
+    //MARK : Action
+    @IBAction func btnBackPressed() {
+        _ = self.navigationController?.popViewController(animated: true)
+    }
+
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
