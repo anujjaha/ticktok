@@ -19,7 +19,16 @@ class LeaderVC: UIViewController {
     @IBOutlet weak var txtGameClock: UITextField!
     @IBOutlet weak var txtDoomdsDayClock: UITextField!
     @IBOutlet weak var txtJackpotAmount: UITextField!
+    
+    @IBOutlet weak var vwSelectCategory: UIView!
+    @IBOutlet weak var btnSelectCategory1 : UIButton!
+    @IBOutlet weak var btnSelectCategory2 : UIButton!
+    @IBOutlet weak var btnSelectCategory3 : UIButton!
+    @IBOutlet weak var btnSelectCategory4 : UIButton!
 
+    var arrCategoryData = NSMutableArray()
+    var strTypetoFileteLeaderBoard = String()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -46,6 +55,10 @@ class LeaderVC: UIViewController {
         btnCategory.setAttributedTitle(attributedString, for: .normal)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.LeaderVCHeader(_:)), name: NSNotification.Name(rawValue: "LeaderVCHeader"), object: nil)
+        
+        //Default We need to load data of battle wins
+        btnSelectCategory1.isSelected = true
+        strTypetoFileteLeaderBoard = "LAST_BID"
     }
 
     override func viewWillAppear(_ animated: Bool)
@@ -54,7 +67,8 @@ class LeaderVC: UIViewController {
         txtGameClock.text = appDelegate.strGameClockTime
         txtDoomdsDayClock.text = appDelegate.strDoomdsDayClock
         appDelegate.iScreenIndex = 3
-
+        
+        self.getLeaderBoardData()
     }
 
     //MARK: App Header
@@ -73,6 +87,118 @@ class LeaderVC: UIViewController {
             }
         }
     }
+    
+    //MARK: Select Category
+    @IBAction func btnselectCategoryAction(sender : UIButton)
+    {
+        /*
+         LONGEST_BID         = Descending by longest bid duration
+         LAST_BID                 = Descending by last bid duration
+         TOTAL_WINS            = Descending by total wins
+         LONGEST_STREAK = Descending by longest streak
+         */
+        switch sender.tag
+        {
+        case 1:
+            btnSelectCategory1.isSelected = true
+            btnSelectCategory2.isSelected = false
+            btnSelectCategory3.isSelected = false
+            btnSelectCategory4.isSelected = false
+            strTypetoFileteLeaderBoard = "LONGEST_BID"
+
+            break
+        case 2:
+            btnSelectCategory1.isSelected = false
+            btnSelectCategory2.isSelected = true
+            btnSelectCategory3.isSelected = false
+            btnSelectCategory4.isSelected = false
+            strTypetoFileteLeaderBoard = "TOTAL_WINS"
+            break
+        case 3:
+            btnSelectCategory1.isSelected = false
+            btnSelectCategory2.isSelected = false
+            btnSelectCategory3.isSelected = true
+            btnSelectCategory4.isSelected = false
+            strTypetoFileteLeaderBoard = "LAST_BID"
+            break
+        case 4:
+            btnSelectCategory1.isSelected = false
+            btnSelectCategory2.isSelected = false
+            btnSelectCategory3.isSelected = false
+            btnSelectCategory4.isSelected = true
+            strTypetoFileteLeaderBoard = "LONGEST_STREAK"
+            break
+        default:
+            break
+        }
+    }
+    
+    @IBAction func btnSelectCategorytoFilterData(_ sender : UIButton)
+    {
+        vwSelectCategory.isHidden = false
+    }
+    
+    @IBAction func btnCategoryViewSelected(_ sender : UIButton)
+    {
+        vwSelectCategory.isHidden = true
+    }
+    
+    @IBAction func btnSelectCategoryViewCancelled(_ sender : UIButton)
+    {
+        vwSelectCategory.isHidden = true
+        self.getLeaderBoardData()
+    }
+
+
+    func getLeaderBoardData()
+    {
+        let token = "\(appDelegate.arrLoginData["token"]!)"
+        let headers = ["Authorization":"Bearer \(token)"]
+        
+        showProgress(inView: self.view)
+        request("\(kServerURL)api/leaderboard?type=\(strTypetoFileteLeaderBoard)", method: .get, parameters:nil, headers: headers).responseJSON { (response:DataResponse<Any>) in
+            
+            print(response.result.debugDescription)
+            
+            hideProgress()
+            switch(response.result)
+            {
+            case .success(_):
+                if response.result.value != nil
+                {
+                    if let json = response.result.value
+                    {
+                        let dictemp = json as! NSDictionary
+                        print("dictemp/user/leaderboard :> \(dictemp)")
+                        
+                        if dictemp.count > 0
+                        {
+                            if  let arrTemp = dictemp["data"] as? NSArray
+                            {
+                                self.arrCategoryData = NSMutableArray(array: arrTemp)
+                                self.tblLeaderBoard.reloadData()
+                            }
+                            else
+                            {
+                                App_showAlert(withMessage: dictemp[kkeymessage]! as! String, inView: self)
+                            }
+                        }
+                        else
+                        {
+                            App_showAlert(withMessage: dictemp[kkeymessage]! as! String, inView: self)
+                        }
+                    }
+                }
+                break
+                
+            case .failure(_):
+                App_showAlert(withMessage: response.result.error.debugDescription, inView: self)
+                break
+            }
+        }
+    }
+    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -96,7 +222,7 @@ extension LeaderVC : UITableViewDelegate, UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 10
+        return arrCategoryData.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {

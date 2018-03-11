@@ -13,6 +13,7 @@
 		D34794191E8437FE00D9D593 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D34794171E8437FE00D9D593 /* Main.storyboard */; };
 		D347941B1E8437FE00D9D593 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D347941A1E8437FE00D9D593 /* Assets.xcassets */; };
 		D347941E1E8437FE00D9D593 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D347941C1E8437FE00D9D593 /* LaunchScreen.storyboard */; };
+		D348C4E8205561E4005C11DD /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D348C4E7205561E4005C11DD /* EditProfileVC.swift */; };
 		D37C73BF1E8FB45700113D38 /* AFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C73A91E8FB45700113D38 /* AFError.swift */; };
 		D37C73C01E8FB45700113D38 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C73AB1E8FB45700113D38 /* Alamofire.swift */; };
 		D37C73C11E8FB45700113D38 /* DispatchQueue+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C73AC1E8FB45700113D38 /* DispatchQueue+Alamofire.swift */; };
@@ -122,6 +123,7 @@
 		D347941A1E8437FE00D9D593 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D347941D1E8437FE00D9D593 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D347941F1E8437FE00D9D593 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D348C4E7205561E4005C11DD /* EditProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		D37C73A91E8FB45700113D38 /* AFError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFError.swift; sourceTree = "<group>"; };
 		D37C73AA1E8FB45700113D38 /* Alamofire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alamofire.h; sourceTree = "<group>"; };
 		D37C73AB1E8FB45700113D38 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 			isa = PBXGroup;
 			children = (
 				D3CB0E8E1E87EF82004331D3 /* ProfileVC.swift */,
+				D348C4E7205561E4005C11DD /* EditProfileVC.swift */,
 			);
 			path = ProfileViewController;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				D37C73C71E8FB45700113D38 /* Request.swift in Sources */,
 				D37F5CD81EC4CCDB00310502 /* SocketEngineWebsocket.swift in Sources */,
 				D3CB0E8F1E87EF82004331D3 /* ProfileVC.swift in Sources */,
+				D348C4E8205561E4005C11DD /* EditProfileVC.swift in Sources */,
 				D37C73CA1E8FB45700113D38 /* Result.swift in Sources */,
 				D37C73C51E8FB45700113D38 /* Notifications.swift in Sources */,
 				D37C73D01E8FB45700113D38 /* Validation.swift in Sources */,
@@ -862,15 +866,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Albert Lairson (G42CF8Q96B)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silver Truck Games, LLC (P7LEFGE66S)";
 				DEVELOPMENT_TEAM = P7LEFGE66S;
 				INFOPLIST_FILE = TickTock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ticktock.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c9f60518-b291-46aa-9956-1cf7c58df9f5";
-				PROVISIONING_PROFILE_SPECIFIER = TickTock_dev;
+				PROVISIONING_PROFILE = "fcf79e19-1b26-4f4a-9df0-ff144a10136f";
+				PROVISIONING_PROFILE_SPECIFIER = TickTock_Dist;
 				SWIFT_OBJC_BRIDGING_HEADER = "TickTock-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -880,16 +884,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Albert Lairson (G42CF8Q96B)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Albert Lairson (G42CF8Q96B)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silver Truck Games, LLC (P7LEFGE66S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Silver Truck Games, LLC (P7LEFGE66S)";
 				DEVELOPMENT_TEAM = P7LEFGE66S;
 				INFOPLIST_FILE = TickTock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ticktock.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c9f60518-b291-46aa-9956-1cf7c58df9f5";
-				PROVISIONING_PROFILE_SPECIFIER = TickTock_dev;
+				PROVISIONING_PROFILE = "fcf79e19-1b26-4f4a-9df0-ff144a10136f";
+				PROVISIONING_PROFILE_SPECIFIER = TickTock_Dist;
 				SWIFT_OBJC_BRIDGING_HEADER = "TickTock-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
