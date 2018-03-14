@@ -58,6 +58,11 @@ class ProfileVC: UIViewController
         self.getProfileData()
     }
     
+    //MARK: btn Edit Profile
+    @IBAction func btnEditProfileAction()
+    {
+    }
+    
     //MARK: App Header
     func ProfileVCHeader(_ notification: Notification)
     {
@@ -112,8 +117,25 @@ class ProfileVC: UIViewController
                                     self.lbllongest_bid.text = "\(dictemp2["longestBids"]!)"
                                     
                                     self.lblname.text = "\(dictemp2["name"]!)"
-                                    self.lbldob.text = "\(dictemp2["birthDate"]!)"
-                                    self.lblgender.text = "\(dictemp2["gender"]!)"
+                                    
+                                    if let strbirthDate = dictemp2["birthDate"] as? String
+                                    {
+                                          self.lbldob.text = strbirthDate
+                                    }
+                                    else
+                                    {
+                                        self.lbldob.text = ""
+                                    }
+                                    
+                                    if let strGender = dictemp2["gender"] as? String
+                                    {
+                                            self.lblgender.text = strGender
+                                    }
+                                    else
+                                    {
+                                        self.lblgender.text = ""
+                                    }
+                                    
 //                                    self.lblcountry.text = "\((dictemp2["personal"] as! NSDictionary).value(forKey: "country")!)"
                                     self.lblEmail.text = "\(dictemp2["email"]!)"
                                     
